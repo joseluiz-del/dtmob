@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Digital Twin • Mobile</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a2d;
+      --panel2:#0b1629;
+      --text:#e8eefc;
+      --muted:#9fb0d0;
+      --line:rgba(255,255,255,.08);
+      --brand:#5aa8ff;
+      --ok:#2dd4bf;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+
+      --r12:12px;
+      --r16:16px;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(90,168,255,.18), transparent 55%),
+                  radial-gradient(900px 600px at 110% 0%, rgba(45,212,191,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .app{
+      min-height:100%;
+      display:grid;
+      grid-template-columns: 300px 1fr;
+    }
+
+    /* SIDEBAR (Desktop) */
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:18px 14px;
+      border-right:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,26,45,.96), rgba(11,18,32,.92));
+      backdrop-filter: blur(10px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 10px 14px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:14px;
+    }
+    .brand-badge{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(90,168,255,.95), rgba(45,212,191,.75));
+      box-shadow: 0 10px 30px rgba(90,168,255,.18);
+    }
+    .brand h1{font-size:14px; margin:0; letter-spacing:.4px}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+    .nav{
+      display:flex; flex-direction:column; gap:8px;
+      padding:6px;
+    }
+    .nav button{
+      all:unset;
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      color:var(--text);
+    }
+    .nav button:hover{background:rgba(255,255,255,.04)}
+    .nav button.active{
+      background: rgba(90,168,255,.12);
+      border-color: rgba(90,168,255,.22);
+    }
+    .nav small{color:var(--muted)}
+    .nav .dot{
+      width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.2)
+    }
+    .nav button.active .dot{background:var(--brand)}
+
+    .sidebar-footer{
+      position:absolute;
+      left:14px; right:14px;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      border-top:1px solid var(--line);
+      padding-top:12px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:12px;
+    }
+
+    /* MAIN */
+    .main{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* TOPBAR (mobile + desktop) */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      background: rgba(11,18,32,.65);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex; align-items:center; gap:10px; min-width:0;
+    }
+    .hamburger{
+      display:none;
+      all:unset; cursor:pointer;
+      width:40px;height:40px;border-radius:12px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--line);
+    }
+    .title{
+      min-width:0;
+      display:flex; flex-direction:column;
+    }
+    .title b{font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .title span{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+    .topbar .right{
+      display:flex; align-items:center; gap:8px;
+    }
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .pulse{
+      width:8px;height:8px;border-radius:99px;
+      background: var(--ok);
+      box-shadow: 0 0 0 0 rgba(45,212,191,.55);
+      animation: ping 1.6s infinite;
+    }
+    @keyframes ping{
+      0%{box-shadow:0 0 0 0 rgba(45,212,191,.45)}
+      70%{box-shadow:0 0 0 12px rgba(45,212,191,0)}
+      100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}
+    }
+
+    .content{
+      padding:16px;
+      padding-bottom: calc(96px + env(safe-area-inset-bottom));
+      max-width: 1200px;
+      width:100%;
+      margin:0 auto;
+    }
+
+    /* GRID + CARDS */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:14px;
+      align-items:start;
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius: var(--r16);
+      background: linear-gradient(180deg, rgba(15,26,45,.92), rgba(11,22,41,.75));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 14px 12px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      border-bottom:1px solid var(--line);
+    }
+    .card .hd h2{margin:0; font-size:14px}
+    .card .hd p{margin:4px 0 0; font-size:12px; color:var(--muted)}
+    .card .bd{padding:14px}
+
+    .kpi-row{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+    }
+    .kpi{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding:12px;
+    }
+    .kpi b{display:block; font-size:16px}
+    .kpi span{display:block; margin-top:4px; font-size:12px; color:var(--muted)}
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* SCENE PLACEHOLDER (imagem / canvas / iframe) */
+    .scene{
+      position:relative;
+      border-radius: 14px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      min-height: 320px;
+    }
+    .scene .hint{
+      position:absolute;
+      left:12px; right:12px; bottom:12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .btn{
+      all:unset; cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-size:12px;
+      color:var(--text);
+    }
+    .btn.primary{
+      border-color: rgba(90,168,255,.3);
+      background: rgba(90,168,255,.12);
+    }
+
+    /* BOTTOM NAV (Mobile) */
+    .bottomnav{
+      position:fixed;
+      left:0; right:0;
+      bottom:0;
+      z-index:60;
+      display:none;
+      padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(11,18,32,.75);
+      backdrop-filter: blur(10px);
+      border-top:1px solid var(--line);
+    }
+    .tabs{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:8px;
+      max-width: 820px;
+      margin:0 auto;
+    }
+    .tab{
+      all:unset; cursor:pointer;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding:10px 8px;
+      text-align:center;
+      font-size:11px;
+      color:var(--muted);
+      display:flex; flex-direction:column; gap:4px;
+      align-items:center;
+      justify-content:center;
+    }
+    .tab strong{font-size:11px; color:var(--text); font-weight:600}
+    .tab.active{
+      border-color: rgba(90,168,255,.28);
+      background: rgba(90,168,255,.12);
+      color:var(--text);
+    }
+
+    /* DRAWER (Mobile) */
+    .drawer-overlay{
+      display:none;
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.45);
+      z-index:70;
+    }
+    .drawer{
+      position:fixed;
+      top:0; bottom:0;
+      left:0;
+      width:min(86vw, 340px);
+      transform: translateX(-110%);
+      transition: transform .22s ease;
+      z-index:80;
+      background: linear-gradient(180deg, rgba(15,26,45,.98), rgba(11,18,32,.95));
+      border-right:1px solid var(--line);
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+      padding:16px 12px;
+    }
+    .drawer.open{transform: translateX(0)}
+    .drawer-overlay.open{display:block}
+
+    /* MODAL (full screen no mobile) */
+    .modal-overlay{
+      display:none;
+      position:fixed; inset:0;
+      z-index:90;
+      background: rgba(0,0,0,.55);
+      padding: 16px;
+      padding-top: calc(16px + env(safe-area-inset-top));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+    .modal{
+      max-width: 980px;
+      margin:0 auto;
+      height: min(78vh, 680px);
+      background: linear-gradient(180deg, rgba(15,26,45,.98), rgba(11,22,41,.92));
+      border:1px solid var(--line);
+      border-radius: 18px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .modal .mh{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+    }
+    .modal .mh b{font-size:13px}
+    .modal .mb{
+      padding:12px;
+      overflow:auto;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr}
+      .kpi-row{grid-template-columns: repeat(2, 1fr)}
+      .scene{min-height: 260px}
+    }
+    @media (max-width: 860px){
+      .app{grid-template-columns: 1fr}
+      .sidebar{display:none}
+      .hamburger{display:grid}
+      .bottomnav{display:block}
+      .content{padding:14px}
+      .kpi-row{grid-template-columns: repeat(2, 1fr)}
+      .modal-overlay{padding:0}
+      .modal{
+        height: 100vh;
+        max-width: 100%;
+        border-radius:0;
+        border-left:0; border-right:0;
+      }
+    }
+    @media (max-width: 380px){
+      .kpi-row{grid-template-columns: 1fr}
+      .pill{display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar" aria-label="Menu lateral">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div>
+          <h1>Digital Twin</h1>
+          <p>Operação em tempo real</p>
+        </div>
+      </div>
+
+      <div class="nav" id="navDesktop">
+        <button class="active" data-view="dashboard"><span>Dashboard</span><span class="dot"></span></button>
+        <button data-view="quay"><span>Quay</span><small>Cais & STS</small></button>
+        <button data-view="gate"><span>Gate</span><small>OCR & fluxos</small></button>
+        <button data-view="yard"><span>Yard</span><small>Pátio & RTG</small></button>
+        <button data-view="alerts"><span>Alerts</span><small>Exceções</small></button>
+      </div>
+
+      <div class="sidebar-footer">
+        <span>vMobile</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="pulse" aria-hidden="true"></span>
+          Online
+        </span>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="left">
+          <button class="hamburger" id="btnMenu" aria-label="Abrir menu">
+            ☰
+          </button>
+          <div class="title">
+            <b id="pageTitle">Dashboard</b>
+            <span id="pageSubtitle">Visão executiva — KPIs e cena operacional</span>
+          </div>
+        </div>
+        <div class="right">
+          <div class="pill" title="Status de ingestão">
+            <span class="pulse" aria-hidden="true"></span>
+            Data feed ativo
+          </div>
+          <button class="btn primary" id="btnOpenPanel">Abrir painel</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <!-- VIEW: DASHBOARD -->
+        <div class="view" id="view-dashboard">
+          <div class="grid">
+            <section class="card">
+              <div class="hd">
+                <div>
+                  <h2>Cena do Terminal</h2>
+                  <p>Toque em “Abrir painel” para ver detalhes (full-screen no mobile).</p>
+                </div>
+                <span class="tag">Real-time</span>
+              </div>
+              <div class="bd">
+                <div class="scene" id="scene">
+                  <!-- ✅ Cole aqui tua imagem/canvas/iframe (digital twin) -->
+                  <!-- Ex.: <img src="yard.jpg" style="width:100%;height:100%;object-fit:cover" /> -->
+                  <div style="position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.55);font-size:12px;">
+                    Cole aqui a cena (imagem/canvas/iframe)
+                  </div>
+
+                  <div class="hint">
+                    <button class="btn" data-jump="quay">Ir p/ Quay</button>
+                    <button class="btn" data-jump="gate">Ir p/ Gate</button>
+                    <button class="btn" data-jump="yard">Ir p/ Yard</button>
+                    <button class="btn primary" id="btnDetails">Detalhes</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <aside class="card">
+              <div class="hd">
+                <div>
+                  <h2>KPIs rápidos</h2>
+                  <p>Cards já responsivos (2 colunas no mobile).</p>
+                </div>
+                <span class="tag">Ops</span>
+              </div>
+              <div class="bd">
+                <div class="kpi-row">
+                  <div class="kpi"><b>72%</b><span>Ocupação pátio</span></div>
+                  <div class="kpi"><b>18</b><span>CHE ativos</span></div>
+                  <div class="kpi"><b>04</b><span>Alertas críticos</span></div>
+                </div>
+                <div style="height:12px"></div>
+                <div class="kpi-row">
+                  <div class="kpi"><b>31</b><span>Gate moves/h</span></div>
+                  <div class="kpi"><b>96</b><span>Truck queue</span></div>
+                  <div class="kpi"><b>2.8</b><span>Avg dwell (d)</span></div>
+                </div>
+
+                <div style="height:14px"></div>
+                <button class="btn" style="width:100%" data-jump="alerts">Ver alertas</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <!-- VIEW: QUAY -->
+        <div class="view" id="view-quay" hidden>
+          <section class="card">
+            <div class="hd">
+              <div>
+                <h2>Quay</h2>
+                <p>STS, berços, produtividade. Mobile: cards empilham automaticamente.</p>
+              </div>
+              <span class="tag">Berth</span>
+            </div>
+            <div class="bd">
+              <!-- ✅ Cole aqui teu conteúdo do Quay -->
+              <div class="kpi-row">
+                <div class="kpi"><b>Berço 02</b><span>Ocupado</span></div>
+                <div class="kpi"><b>26.1</b><span>GMPH</span></div>
+                <div class="kpi"><b>3</b><span>STS em operação</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- VIEW: GATE -->
+        <div class="view" id="view-gate" hidden>
+          <section class="card">
+            <div class="hd">
+              <div>
+                <h2>Gate</h2>
+                <p>OCR, filas, exceções. Mobile: botões maiores, melhor toque.</p>
+              </div>
+              <span class="tag">OCR</span>
+            </div>
+            <div class="bd">
+              <!-- ✅ Cole aqui teu conteúdo do Gate -->
+              <div class="kpi-row">
+                <div class="kpi"><b>12 min</b><span>Tempo médio</span></div>
+                <div class="kpi"><b>7</b><span>Exceções</span></div>
+                <div class="kpi"><b>2</b><span>Faixas abertas</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- VIEW: YARD -->
+        <div class="view" id="view-yard" hidden>
+          <section class="card">
+            <div class="hd">
+              <div>
+                <h2>Yard</h2>
+                <p>Ocupação por bloco, reefers, IMDG, Smart Decking.</p>
+              </div>
+              <span class="tag">Stack</span>
+            </div>
+            <div class="bd">
+              <!-- ✅ Cole aqui teu conteúdo do Yard -->
+              <div class="kpi-row">
+                <div class="kpi"><b>BLK A</b><span>78%</span></div>
+                <div class="kpi"><b>Reefer</b><span>92% plugs</span></div>
+                <div class="kpi"><b>Housekeeping</b><span>+14 moves</span></div>
+              </div>
+              <div style="height:12px"></div>
+              <button class="btn primary" id="btnOpenPanel2">Abrir painel Yard</button>
+            </div>
+          </section>
+        </div>
+
+        <!-- VIEW: ALERTS -->
+        <div class="view" id="view-alerts" hidden>
+          <section class="card">
+            <div class="hd">
+              <div>
+                <h2>Alerts</h2>
+                <p>Exceções operacionais, SLA, anomalias.</p>
+              </div>
+              <span class="tag">AI</span>
+            </div>
+            <div class="bd">
+              <!-- ✅ Cole aqui tua lista real -->
+              <div class="kpi" style="border-left:4px solid var(--bad)">
+                <b style="font-size:13px">Congestionamento no Gate</b>
+                <span>Fila acima do limiar por 18 min</span>
+              </div>
+              <div style="height:10px"></div>
+              <div class="kpi" style="border-left:4px solid var(--warn)">
+                <b style="font-size:13px">Reefer: risco de saturação</b>
+                <span>Plugs > 90% (monitorar)</span>
+              </div>
+              <div style="height:10px"></div>
+              <div class="kpi" style="border-left:4px solid var(--ok)">
+                <b style="font-size:13px">Produtividade STS normalizada</b>
+                <span>GMPH voltou ao baseline</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- BOTTOM NAV (Mobile) -->
+      <nav class="bottomnav" aria-label="Navegação inferior">
+        <div class="tabs" id="navMobile">
+          <button class="tab active" data-view="dashboard">📊<strong>Dash</strong></button>
+          <button class="tab" data-view="quay">🚢<strong>Quay</strong></button>
+          <button class="tab" data-view="gate">🛂<strong>Gate</strong></button>
+          <button class="tab" data-view="yard">🧱<strong>Yard</strong></button>
+          <button class="tab" data-view="alerts">⚠️<strong>Alerts</strong></button>
+        </div>
+      </nav>
+    </main>
+  </div>
+
+  <!-- MOBILE DRAWER -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Menu móvel">
+    <div class="brand" style="margin-bottom:10px;">
+      <div class="brand-badge"></div>
+      <div>
+        <h1>Digital Twin</h1>
+        <p>Menu</p>
+      </div>
+    </div>
+    <div class="nav" id="navDrawer">
+      <button class="active" data-view="dashboard"><span>Dashboard</span><span class="dot"></span></button>
+      <button data-view="quay"><span>Quay</span><small>Cais & STS</small></button>
+      <button data-view="gate"><span>Gate</span><small>OCR & fluxos</small></button>
+      <button data-view="yard"><span>Yard</span><small>Pátio & RTG</small></button>
+      <button data-view="alerts"><span>Alerts</span><small>Exceções</small></button>
+    </div>
+    <div style="height:10px"></div>
+    <button class="btn" id="btnCloseDrawer" style="width:100%">Fechar</button>
+  </aside>
+
+  <!-- MODAL (painel / detalhes) -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Painel">
+      <div class="mh">
+        <b id="modalTitle">Painel</b>
+        <button class="btn" id="btnCloseModal">Fechar</button>
+      </div>
+      <div class="mb" id="modalBody">
+        <!-- ✅ Cole aqui o conteúdo detalhado (dashboards, tabelas, etc.) -->
+        <div class="card" style="box-shadow:none;">
+          <div class="hd">
+            <div>
+              <h2 style="margin:0;font-size:13px;">Detalhamento</h2>
+              <p style="margin:4px 0 0;">No mobile, isso ocupa a tela inteira para ficar usável.</p>
+            </div>
+            <span class="tag">Panel</span>
+          </div>
+          <div class="bd">
+            <div class="kpi-row">
+              <div class="kpi"><b>Work Queue</b><span>+12 tarefas</span></div>
+              <div class="kpi"><b>Eventos</b><span>stream OK</span></div>
+              <div class="kpi"><b>Heatmap</b><span>ativo</span></div>
+            </div>
+            <div style="height:12px"></div>
+            <div class="scene" style="min-height:240px;">
+              <div style="position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.55);font-size:12px;">
+                Cole aqui (iframe PowerBI / imagem / gráfico)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const views = ["dashboard","quay","gate","yard","alerts"];
+    const titles = {
+      dashboard: ["Dashboard","Visão executiva — KPIs e cena operacional"],
+      quay: ["Quay","Berços, STS e produtividade"],
+      gate: ["Gate","OCR, filas, exceções e SLA"],
+      yard: ["Yard","Ocupação, restrições, housekeeping e Smart Decking"],
+      alerts: ["Alerts","Anomalias, exceções e priorização"]
+    };
+
+    const pageTitle = document.getElementById("pageTitle");
+    const pageSubtitle = document.getElementById("pageSubtitle");
+
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalTitle = document.getElementById("modalTitle");
+
+    function setActiveNav(groupEl, view){
+      if(!groupEl) return;
+      [...groupEl.querySelectorAll("[data-view]")].forEach(btn=>{
+        btn.classList.toggle("active", btn.dataset.view === view);
+      });
+    }
+
+    function showView(view){
+      views.forEach(v=>{
+        const el = document.getElementById(`view-${v}`);
+        if(el) el.hidden = (v !== view);
+      });
+      const [t, s] = titles[view] || ["Digital Twin",""];
+      pageTitle.textContent = t;
+      pageSubtitle.textContent = s;
+
+      setActiveNav(document.getElementById("navDesktop"), view);
+      setActiveNav(document.getElementById("navDrawer"), view);
+
+      // bottom tabs
+      const navMobile = document.getElementById("navMobile");
+      if(navMobile){
+        [...navMobile.querySelectorAll(".tab")].forEach(btn=>{
+          btn.classList.toggle("active", btn.dataset.view === view);
+        });
+      }
+      // close drawer on navigation
+      closeDrawer();
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    // Drawer logic
+    const btnMenu = document.getElementById("btnMenu");
+    const drawer = document.getElementById("drawer");
+    const drawerOverlay = document.getElementById("drawerOverlay");
+    const btnCloseDrawer = document.getElementById("btnCloseDrawer");
+
+    function openDrawer(){
+      drawer.classList.add("open");
+      drawerOverlay.classList.add("open");
+    }
+    function closeDrawer(){
+      drawer.classList.remove("open");
+      drawerOverlay.classList.remove("open");
+    }
+
+    btnMenu?.addEventListener("click", openDrawer);
+    drawerOverlay?.addEventListener("click", closeDrawer);
+    btnCloseDrawer?.addEventListener("click", closeDrawer);
+
+    // Navigation bindings
+    function bindNav(containerId){
+      const el = document.getElementById(containerId);
+      if(!el) return;
+      el.addEventListener("click", (e)=>{
+        const btn = e.target.closest("[data-view]");
+        if(!btn) return;
+        showView(btn.dataset.view);
+      });
+    }
+    bindNav("navDesktop");
+    bindNav("navDrawer");
+    bindNav("navMobile");
+
+    // quick jumps
+    document.addEventListener("click", (e)=>{
+      const jump = e.target.closest("[data-jump]");
+      if(!jump) return;
+      showView(jump.dataset.jump);
+    });
+
+    // Modal
+    function openModal(title){
+      modalTitle.textContent = title || "Painel";
+      modalOverlay.style.display = "block";
+      modalOverlay.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(){
+      modalOverlay.style.display = "none";
+      modalOverlay.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+    document.getElementById("btnOpenPanel")?.addEventListener("click", ()=>openModal("Painel • Dashboard"));
+    document.getElementById("btnOpenPanel2")?.addEventListener("click", ()=>openModal("Painel • Yard"));
+    document.getElementById("btnDetails")?.addEventListener("click", ()=>openModal("Detalhes • Cena do Terminal"));
+    document.getElementById("btnCloseModal")?.addEventListener("click", closeModal);
+    modalOverlay?.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape") { closeModal(); closeDrawer(); }
+    });
+
+    // Default
+    showView("dashboard");
+  </script>
+</body>
+</html>
