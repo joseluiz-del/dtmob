@@ -1,875 +1,1693 @@
-<!DOCTYPE html>
-<!-- saved from url=(0093)file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-03 -->
-<html lang="pt-br"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Catálogo de 20 Automações RPA para o HXtos CY</title>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HXtos CY • YardIQ — AI Yard Control Matrix (navegação interna)</title>
   <style>
     :root{
-      --ink:#0b2d5c;
-      --ink2:#143a73;
-      --muted:#4a5568;
       --bg:#ffffff;
-      --panel:#f7fafc;
-      --grid:#d0d7e2;
-      --ok:#1a7f37;
-      --warn:#b54708;
+      --surface:#ffffff;
+      --surface2:#f7fbff;
+      --ink:#102033;
+      --muted:#5f6b7a;
+
+      --line:#e6edf5;
+      --line2:#d7e3f2;
+
+      --blue:#0b5ed7;
+      --blue-2:#eaf2ff;
+      --green:#1f9d66;
+      --green-2:#e9fbf3;
+
+      --warn:#f59e0b;
+      --warn-2:#fff7e6;
+      --danger:#ef4444;
+      --danger-2:#fff1f2;
+
+      --shadow: 0 10px 28px rgba(12, 33, 66, .10);
+      --shadow2: 0 6px 18px rgba(12, 33, 66, .08);
+
+      --radius:16px;
+      --radius2:12px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial; color:#111; background:var(--bg);}
-    header{position:sticky;top:0;z-index:5;background:linear-gradient(90deg,var(--ink),#0e3b7a);color:#fff;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.15)}
-    header h1{margin:0;font-size:18px;letter-spacing:.2px}
-    header .sub{margin-top:6px;opacity:.9;font-size:13px}
-    .wrap{display:grid;grid-template-columns:320px 1fr;gap:0;min-height:100vh}
-    nav{border-right:1px solid var(--grid);background:#fbfdff;position:sticky;top:78px;align-self:start;max-height:calc(100vh - 78px);overflow:auto;padding:14px 12px}
-    nav .cat{margin:10px 0 6px;font-weight:700;color:var(--ink);font-size:13px}
-    nav a{display:block;text-decoration:none;color:#1f2937;padding:6px 8px;border-radius:8px;font-size:12.6px;line-height:1.25}
-    nav a:hover{background:var(--panel)}
-    main{padding:18px 22px}
-    .card{border:1px solid var(--grid);border-radius:14px;background:#fff;box-shadow:0 1px 0 rgba(16,24,40,.02);padding:16px 16px;margin:14px 0}
-    .id{display:inline-block;font-weight:800;color:var(--ink);font-size:12px;background:var(--panel);border:1px solid var(--grid);padding:4px 8px;border-radius:999px}
-    .title{margin:10px 0 6px;font-size:18px;color:var(--ink)}
-    .meta{display:grid;grid-template-columns:160px 1fr;gap:8px 12px;background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:12px;margin:12px 0}
-    .k{font-weight:700;color:#111;font-size:12.5px}
-    .v{color:#111;font-size:12.5px}
-    h2{margin:22px 0 8px;color:var(--ink);font-size:16px}
-    h3{margin:14px 0 6px;color:var(--ink2);font-size:13.5px}
-    ul,ol{margin:6px 0 10px 22px}
-    li{margin:4px 0}
-    .fields{width:100%;border-collapse:collapse;margin-top:8px}
-    .fields td{border:1px solid var(--grid);vertical-align:top;padding:10px;background:#fff;font-size:12.5px}
-    .fields td:first-child{width:170px;font-weight:800;background:var(--panel)}
-    .footer{margin:30px 0 10px;color:var(--muted);font-size:12px}
-    @media (max-width: 980px){
-      .wrap{grid-template-columns:1fr}
-      nav{position:relative;top:0;max-height:none}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(900px 400px at 25% -10%, rgba(11,94,215,.14), transparent 60%),
+        radial-gradient(800px 380px at 85% -20%, rgba(31,157,102,.12), transparent 55%),
+        linear-gradient(180deg, var(--surface2) 0%, #ffffff 36%, #ffffff 100%);
     }
-    
-    [id]{scroll-margin-top:96px}
-</style>
+
+    .app{
+      display:grid;
+      grid-template-columns: 260px 1fr;
+      min-height:100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:18px 14px;
+      border-right:1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 10px 14px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow2);
+    }
+    .logo{
+      width:40px;height:40px;border-radius: 12px;
+      background: conic-gradient(from 220deg, var(--blue), var(--green), var(--blue));
+      box-shadow: 0 10px 22px rgba(11,94,215,.18);
+      flex:0 0 auto;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 13px;
+      letter-spacing:.2px;
+      line-height:1.2;
+    }
+    .brand .sub{
+      margin-top:4px;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.2;
+    }
+
+    .nav{
+      margin-top:14px;
+      padding:10px 8px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow: var(--shadow2);
+    }
+    .nav a{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color: #17314a;
+      padding:10px 10px;
+      border-radius: 12px;
+      font-size:12.5px;
+      font-weight:800;
+      letter-spacing:.1px;
+      user-select:none;
+      border:1px solid transparent;
+    }
+    .nav a span.ico{
+      width:26px;height:26px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid var(--line2);
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      color:#244a70;
+      font-weight:950;
+      font-family: var(--mono);
+      font-size:12px;
+    }
+    .nav a:hover{ background:#fbfdff; border-color: rgba(11,94,215,.10); }
+    .nav a.active{
+      background: linear-gradient(90deg, var(--blue-2), var(--green-2));
+      border:1px solid rgba(11,94,215,.18);
+    }
+
+    .sidefoot{
+      margin-top:14px;
+      padding:12px 10px;
+      border-radius: var(--radius);
+      border:1px dashed var(--line2);
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+      background: rgba(255,255,255,.75);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line2);
+      background: linear-gradient(90deg, var(--blue-2), var(--green-2));
+      color:#0f2a3a;
+      font-size:11px;
+      white-space:nowrap;
+      margin-top:8px;
+    }
+    .pill b{font-family:var(--mono); font-weight:950; color:#0b2b55}
+
+    /* Main */
+    .main{ padding: 18px 18px 34px; }
+
+    .topbar{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px 14px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .crumb{ display:flex; flex-direction:column; gap:6px; }
+    .crumb .path{ font-size:11px; color:var(--muted); }
+    .crumb .title{ font-size:14px; font-weight:950; letter-spacing:.2px; margin:0; }
+    .crumb .desc{ margin:0; color:var(--muted); font-size:11.5px; line-height:1.35; }
+
+    .ctx{
+      display:grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap:10px;
+      align-items:end;
+      flex:1 1 auto;
+      max-width: 760px;
+      margin-left: 10px;
+    }
+    .field{display:flex;flex-direction:column;gap:6px;min-width:0}
+    .field label{font-size:10.5px;color:var(--muted)}
+    input,select{
+      width:100%;
+      padding:10px 10px;
+      border-radius: 12px;
+      border:1px solid var(--line2);
+      background:#fff;
+      outline:none;
+      font-size:13px;
+      color:var(--ink);
+    }
+    input:focus, select:focus{
+      border-color: rgba(11,94,215,.45);
+      box-shadow: 0 0 0 3px rgba(11,94,215,.12);
+    }
+
+    .actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-width: 200px;
+    }
+    .btn{
+      border:1px solid var(--line2);
+      background:#fff;
+      padding:10px 12px;
+      border-radius: 14px;
+      font-weight:900;
+      font-size:12.5px;
+      cursor:pointer;
+      transition:.15s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 10px 22px rgba(12,33,66,.10)}
+    .btn.primary{
+      border-color: rgba(11,94,215,.30);
+      background: linear-gradient(180deg, #ffffff 0%, #f2f7ff 100%);
+      color:#093a86;
+    }
+    .btn.good{
+      border-color: rgba(31,157,102,.30);
+      background: linear-gradient(180deg, #ffffff 0%, #f1fff8 100%);
+      color:#0b5a3a;
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--muted);
+      font-weight:900;
+    }
+
+    /* YardIQ internal tabs */
+    .subnav{
+      margin-top: 12px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      padding:10px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      position: sticky;
+      top: 14px;
+      z-index: 10;
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .tab{
+      border:1px solid var(--line2);
+      background:#fff;
+      padding:9px 12px;
+      border-radius: 999px;
+      font-weight:950;
+      font-size:12px;
+      color:#17314a;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+    }
+    .tab .t{
+      width:8px;height:8px;border-radius:99px;background:var(--blue);
+      box-shadow: 0 0 0 3px rgba(11,94,215,.10);
+    }
+    .tab.green .t{ background: var(--green); box-shadow: 0 0 0 3px rgba(31,157,102,.10); }
+    .tab.warn .t{ background: var(--warn); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+    .tab.active{
+      background: linear-gradient(90deg, var(--blue-2), var(--green-2));
+      border-color: rgba(11,94,215,.18);
+    }
+    .subtools{
+      display:flex; gap:8px; flex-wrap:wrap;
+      align-items:center; justify-content:flex-end;
+    }
+    .subtools .btn{ padding:9px 12px; border-radius: 999px; min-width:auto; }
+    .subtools .btn:hover{ transform:none; }
+
+    .section{
+      scroll-margin-top: 92px; /* for sticky subnav */
+    }
+
+    /* Content grid */
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1.35fr .75fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .cardhead{
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }
+    .cardhead h2{
+      margin:0;
+      font-size:12.5px;
+      letter-spacing:.2px;
+      font-weight:950;
+    }
+    .hint{ color:var(--muted); font-size:11px; line-height:1.25; margin-top:4px; }
+    .cardbody{padding:12px 14px}
+
+    .kpirow{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .kpi{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      padding:10px 10px;
+      background:#fff;
+    }
+    .kpi .k{font-size:10.5px;color:var(--muted)}
+    .kpi .v{margin-top:6px;font-size:15px;font-weight:950}
+    .kpi .v span{font-family:var(--mono);font-weight:950}
+    .kpi .s{margin-top:6px;font-size:10.5px;color:var(--muted);line-height:1.25}
+
+    /* Tables */
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:12px;
+    }
+    thead th{
+      text-align:left;
+      color:#12304a;
+      font-weight:950;
+      font-size:10.5px;
+      letter-spacing:.2px;
+      padding:10px 10px;
+      background: linear-gradient(90deg, var(--blue-2), var(--green-2));
+      border-bottom:1px solid var(--line2);
+    }
+    tbody td{
+      padding:8px 10px;
+      border-bottom:1px solid var(--line);
+      vertical-align:middle;
+    }
+    tbody tr:hover td{background:#fbfdff}
+
+    .cell-mini input, .cell-mini select{
+      padding:8px 8px;
+      border-radius:12px;
+      font-size:12px;
+    }
+
+    .rowtools{display:flex;gap:8px;justify-content:flex-end;align-items:center}
+    .iconbtn{
+      border:1px solid var(--line2);
+      background:#fff;
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:950;
+      color:#244;
+    }
+    .iconbtn:hover{box-shadow: 0 10px 18px rgba(12,33,66,.10)}
+    .iconbtn.danger{border-color: rgba(239,68,68,.25); color:#9b1c1c; background:linear-gradient(180deg,#fff, #fff7f7)}
+    .iconbtn.blue{border-color: rgba(11,94,215,.25); color:#0b3f91; background:linear-gradient(180deg,#fff,#f3f8ff)}
+    .iconbtn.green{border-color: rgba(31,157,102,.25); color:#0b5a3a; background:linear-gradient(180deg,#fff,#f2fff8)}
+
+    /* Badges */
+    .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 8px; border-radius:999px;
+      border:1px solid var(--line2); background:#fff;
+      font-size:10.5px; color:#0b2b55; white-space:nowrap;
+      font-weight:900;
+    }
+    .badge .dot{width:8px;height:8px;border-radius:99px;background:var(--blue)}
+    .badge.ok{background: var(--green-2); border-color: rgba(31,157,102,.28); color:#0b5a3a}
+    .badge.ok .dot{background:var(--green)}
+    .badge.warn{background: var(--warn-2); border-color: rgba(245,158,11,.30); color:#7a4d00}
+    .badge.warn .dot{background:var(--warn)}
+    .badge.danger{background: var(--danger-2); border-color: rgba(239,68,68,.28); color:#8b1220}
+    .badge.danger .dot{background:var(--danger)}
+
+    /* Matrix */
+    .matrix{
+      display:grid;
+      grid-template-columns: 170px repeat(3, minmax(120px, 1fr));
+      border:1px solid var(--line2);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background:#fff;
+    }
+    .mcell{
+      padding:10px 10px;
+      border-right:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      font-size:12px;
+    }
+    .mcell.head{
+      font-weight:950;
+      font-size:10.5px;
+      letter-spacing:.2px;
+      color:#12304a;
+      background: linear-gradient(90deg, var(--blue-2), var(--green-2));
+      border-bottom:1px solid var(--line2);
+    }
+    .mcell.side{
+      font-weight:950;
+      color:#18324a;
+      background:#fbfdff;
+    }
+    .mpill{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line2);
+      font-size:10.5px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+    .mpill.r{background: var(--danger-2); border-color: rgba(239,68,68,.25); color:#8b1220}
+    .mpill.y{background: var(--warn-2); border-color: rgba(245,158,11,.25); color:#7a4d00}
+    .mpill.g{background: var(--green-2); border-color: rgba(31,157,102,.22); color:#0b5a3a}
+
+    /* Suggestions */
+    .suggestions{display:flex;flex-direction:column;gap:10px}
+    .sugg{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:12px 12px;
+      background:#fff;
+      box-shadow: 0 10px 18px rgba(12,33,66,.06);
+    }
+    .sugghead{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .suggt{font-weight:950;font-size:12px;color:#12304a;margin:0}
+    .suggs{font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.35}
+    .suggmeta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center;margin-top:10px}
+    .suggbtns{display:flex;gap:8px;margin-top:10px}
+    .suggbtns .btn{padding:9px 10px;border-radius:14px;font-size:12px;width:100%}
+
+    /* Log */
+    .log{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:10px 12px;
+      max-height: 270px;
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 11px;
+      color:#0f2a3a;
+      line-height:1.45;
+    }
+    .logline{padding:6px 0; border-bottom:1px dashed var(--line)}
+    .logline:last-child{border-bottom:none}
+    .small{font-size:11px;color:var(--muted);line-height:1.35}
+    .foot{
+      margin-top: 10px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:11px;
+    }
+    .foot b{color:#12304a}
+
+    /* Views */
+    .view{display:none;}
+    .view.active{display:block;}
+
+    /* Placeholder pages */
+    .placeholder{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    .phgrid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:12px;
+    }
+    .phcard{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      padding:14px;
+    }
+    .phcard h3{margin:0;font-size:12.5px;font-weight:950;color:#12304a}
+    .phcard p{margin:8px 0 0;color:var(--muted);font-size:11.5px;line-height:1.35}
+
+    @media (max-width: 1120px){
+      .ctx{grid-template-columns: repeat(3, minmax(0, 1fr)); max-width:none; margin-left:0}
+    }
+    @media (max-width: 980px){
+      .app{grid-template-columns: 1fr}
+      .sidebar{position:relative;height:auto}
+      .grid{grid-template-columns: 1fr}
+      .phgrid{grid-template-columns: 1fr}
+      .subnav{position:relative; top:auto}
+    }
+    @media (max-width: 560px){
+      .topbar{flex-direction:column}
+      .actions{width:100%}
+      .btn{width:100%}
+      .matrix{grid-template-columns: 140px repeat(3, minmax(90px, 1fr));}
+    }
+  </style>
 </head>
+
 <body>
-<header>
-  <h1>Catálogo de 20 Automações RPA para o HXtos CY - v1.0</h1>
-  <div class="sub">Blueprint operacional: eventos -&gt; filas -&gt; bots -&gt; callback auditável • 15/01/2026</div>
-</header>
+  <div class="app">
 
-<div class="wrap">
-  <nav>
-    <div class="cat">Compliance e Documentos</div>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-01"><b>DOC-01</b> - Validação NF-e/CT-e + captura de XML/PDF com evidência</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-02"><b>DOC-02</b> - Classificação automática de anexos e vínculo operacional (CE/BL/CNTR)</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-03"><b>DOC-03</b> - Consulta de status aduaneiro em portais legados e sincronização no CY</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-04"><b>DOC-04</b> - Geração automática de dossiê de contêiner (PDF) e distribuição</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-05"><b>DOC-05</b> - Leitura de e-mails operacionais e abertura automática de pendências no CY</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#doc-06"><b>DOC-06</b> - Checklist de compliance por tipo de carga e bloqueio preventivo de etapas</a>
-<div class="cat">Gate e Atendimento</div>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#gate-01"><b>GATE-01</b> - Pré-checagem automática de gate (agendamento, bloqueios e pendências)</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#gate-02"><b>GATE-02</b> - Automação de cadastro/atualização de motorista e veículo em portais externos</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#gate-03"><b>GATE-03</b> - Emissão automática de etiquetas, recibos e comprovantes (print-to-PDF)</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#gate-04"><b>GATE-04</b> - Triagem de exceções de OCR (placa, lacre, numeração) com RPA assistido</a>
-<div class="cat">Integrações e Resiliência</div>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#int-01"><b>INT-01</b> - Reprocesso idempotente de eventos com fila e Dead-Letter (saga/compensação)</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#int-02"><b>INT-02</b> - Conciliação diária CY x ERP legado (export de telas/relatórios)</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#int-03"><b>INT-03</b> - Robô de monitoramento de indisponibilidade (portais/sistemas) com playbook</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#int-04"><b>INT-04</b> - Coleta automática de comprovantes/protocolos e anexo no evento</a>
-<div class="cat">Yard e Planejamento</div>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#yard-01"><b>YARD-01</b> - Atualização automática de restrições de pilhas (IMDG/reefer/OOG) por boletins externos</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#yard-02"><b>YARD-02</b> - Geração automática de Ordens de Transferência (OT) a partir de lista externa</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#yard-03"><b>YARD-03</b> - Auditoria diária de pátio: inconsistências de posição x evidência (câmeras/relatórios)</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#yard-04"><b>YARD-04</b> - Execução automatizada de 'modo degradado' para equipamentos (planilha -&gt; Work Queue)</a>
-<div class="cat">Backoffice e Analytics</div>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#bo-01"><b>BO-01</b> - Fechamento diário automático: geração de relatórios e distribuição para stakeholders</a>
-<a href="file:///C:/Users/HxTos/Downloads/Catalogo_RPA_HXtos_CY_v2_singlefile_navfix%20(1).html#bo-02"><b>BO-02</b> - Robô de cadastro em massa (clientes, contratos, tarifas) em sistemas legados</a>
-  </nav>
-
-  <main>
-    
-    <div class="card">
-      <div class="title">Padrão arquitetural recomendado</div>
-      <ul>
-        <li><b>Evento</b> (CY) -&gt; <b>Fila</b> (orquestrador) -&gt; <b>Bot</b> (RPA) -&gt; <b>Callback</b> (API do CY) + evidências.</li>
-        <li><b>Idempotência</b>, <b>DLQ</b> e <b>SLA</b> são requisitos para escalar sem duplicidade e sem risco operacional.</li>
-        <li>Bots não devem escrever direto no banco do CY: sempre retornam para um endpoint controlado.</li>
-      </ul>
-    </div>
-    
-    
-        <section id="doc-01" class="card">
-          <div class="id">DOC-01</div>
-          <div class="title">Validação NF-e/CT-e + captura de XML/PDF com evidência</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Compliance e Documentos</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: DOC.UPLOADED (NF-e/CT-e) ou DOC.VALIDATION.REQUESTED</div>
-          <div class="k">Caso de uso</div><div class="v">Validar automaticamente documentos fiscais recebidos no CY e anexar evidências (XML/PDF + protocolo) no dossiê do contêiner/viagem.</div>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>HXtos CY</h1>
+          <div class="sub">Edição Light • Padrão Vistoria 7 Pontos</div>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>Bot acessa fonte autorizada (integração via portal/ERP/serviço disponível) para confirmar chave, situação e integridade do documento. Em seguida baixa os artefatos (XML/PDF) e registra protocolo de validação no CY.</p>
-          <h3>Atores</h3>
-          <ul><li>Dispatcher/Backoffice</li><li>CY (Captação)</li><li>RPA Worker (não assistido)</li><li>Orquestrador de eventos/filas</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Documento anexado com chave (44 dígitos) e CNPJ emissor/destinatário quando aplicável.</li><li>Credenciais/rota de consulta configuradas no cofre de segredos do RPA.</li><li>Contêiner/BL/CE já cadastrado (ou pendência criada automaticamente).</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Documento validado com status (OK/Pendente/Cancelado/Inexistente).</li><li>XML/PDF anexados ao dossiê.</li><li>Registro de auditoria (jobId, botVersion, timestamps, evidências).</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY dispara evento e cria job na fila DOC_VALIDATION (prioridade conforme operação).</li><li>RPA abre rotina de consulta, autentica e consulta chave.</li><li>RPA baixa XML/PDF quando permitido e captura evidência (hash + timestamp + print).</li><li>RPA envia callback para API do CY com resultado e anexos.</li><li>CY atualiza dossiê e, se houver falha, cria pendência com instrução de tratamento.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Captação &gt; Upload documental inteligente &gt; Painel de Documentos (accordion)</li><li>Captação &gt; Pendências / Vínculos (CE/BL/CNTR)</li><li>Monitor de Integrações &gt; Jobs de Automação (filas, SLA, retentativas)</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Idempotência por (docKey + tipo + emissor) para evitar duplicidade.</li><li>Retentativas com backoff; após N falhas, enviar para Dead-Letter e abrir pendência.</li><li>Se status for Cancelado/Inexistente, bloquear prosseguimento do fluxo de gate/expedição até revisão.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>docType (NFe/CTe)</li><li>docKey</li><li>cnpjEmissor</li><li>cnpjDestinatario (opcional)</li><li>vinculos (CNTR/BL/CE)</li><li>priority</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>validationStatus</li><li>protocolNumber (quando existir)</li><li>evidences[] (urls/hashes)</li><li>xmlFile</li><li>pdfFile</li><li>jobId</li><li>botVersion</li><li>processedAt</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% documentos validados sem intervenção</li><li>tempo médio de validação (p95)</li><li>% retrabalho por inconsistência documental</li><li>economia estimada de horas (mensal)</li></ul>
-        </section>
-        
+      </div>
 
-        <section id="doc-02" class="card">
-          <div class="id">DOC-02</div>
-          <div class="title">Classificação automática de anexos e vínculo operacional (CE/BL/CNTR)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Compliance e Documentos</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: DOC.UPLOADED (qualquer anexo) ou DOC.LINKING.REQUESTED</div>
-          <div class="k">Caso de uso</div><div class="v">Classificar anexos (tipo de documento) e sugerir/efetivar vínculo com entidades operacionais do CY.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>Combina heurísticas determinísticas (nome/regex/metadados) com um classificador de IA (opcional) para sugerir tipo e vínculo. O RPA executa a parte de navegação/extração em sistemas sem API; o CY mantém a decisão final e auditoria.</p>
-          <h3>Atores</h3>
-          <ul><li>Dispatcher</li><li>CY (Captação)</li><li>RPA Worker</li><li>Copilot/IA (opcional)</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Arquivo anexado (PDF/JPG/PNG/XML).</li><li>Regras de classificação configuradas por cliente/recinto.</li><li>Estratégia de fallback definida (humano revisa quando confiança baixa).</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Documento classificado (ex.: BL, CE, Packing List, Invoice, Laudo, Foto).</li><li>Vínculo criado/sugerido com CNTR/BL/CE.</li><li>Pendência aberta quando ambíguo.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY cria job CLASSIFY_AND_LINK.</li><li>RPA extrai metadados e texto acessível (quando possível) e aplica regras.</li><li>Se habilitado, serviço de IA sugere classificação e entidades relacionadas (com score).</li><li>CY aplica automaticamente quando score &gt;= limiar; caso contrário, envia para revisão.</li><li>Resultado é registrado no dossiê com justificativa.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Captação &gt; Upload documental inteligente (classificação e score)</li><li>Captação &gt; Vínculo operacional (CE/BL/CNTR)</li><li>Painel do Dispatcher &gt; Pendências de Documentos</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Somente auto-vincular quando score e regras de consistência forem atendidos.</li><li>Nunca sobrescrever vínculo manual sem confirmação.</li><li>Manter trilha: regra/feature que motivou a classificação.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>fileId</li><li>filename</li><li>mimeType</li><li>uploader</li><li>context (Gate/Yard/Export/Import)</li><li>vinculosExistentes[]</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>docClass</li><li>confidenceScore</li><li>suggestedLinks[]</li><li>appliedLinks[]</li><li>reviewRequired (bool)</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% anexos auto-classificados</li><li>% auto-vínculos corretos (amostragem)</li><li>redução de tempo de dossiê completo por contêiner</li></ul>
-        </section>
-        
+      <nav class="nav" id="nav">
+        <a href="#dashboard" data-route="dashboard"><span class="ico">D</span>Dashboard</a>
+        <a href="#gateiq" data-route="gateiq"><span class="ico">G</span>GateIQ</a>
+        <a href="#deckingiq" data-route="deckingiq"><span class="ico">K</span>DeckingIQ</a>
+        <a href="#yardiq" data-route="yardiq"><span class="ico">Y</span>YardIQ</a>
+        <a href="#dociq" data-route="dociq"><span class="ico">O</span>DocIQ</a>
+        <a href="#settings" data-route="settings"><span class="ico">S</span>Settings</a>
+      </nav>
 
-        <section id="doc-03" class="card">
-          <div class="id">DOC-03</div>
-          <div class="title">Consulta de status aduaneiro em portais legados e sincronização no CY</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Compliance e Documentos</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: COMPLIANCE.STATUS_REFRESH (por lote/agenda) ou exceção operacional</div>
-          <div class="k">Caso de uso</div><div class="v">Atualizar status de processos/consultas quando a fonte principal é portal/tela sem API ou com instabilidade.</div>
+      <div class="sidefoot" id="sidefoot">
+        <div><b id="sideTitle">YardIQ</b></div>
+        <div style="margin-top:6px;" id="sideDesc">
+          Matriz operacional para imputar dados e gerar sugestões explicáveis.
         </div>
-        
-          <h3>Descrição</h3>
-          <p>Bot realiza consultas em portais legados (ou telas internas) para capturar status e protocolos, retornando ao CY para atualizar o dossiê e liberar etapas operacionais.</p>
-          <h3>Atores</h3>
-          <ul><li>Backoffice</li><li>CY (Compliance)</li><li>RPA Worker</li><li>Orquestrador</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Lista de itens a consultar (por BL/CNTR/CE/DUE).</li><li>Credenciais disponíveis e políticas de acesso aprovadas.</li><li>Janelas de execução definidas (para não impactar operação).</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Status sincronizado no CY com timestamp e evidência.</li><li>Alertas gerados para bloqueios/pendências.</li><li>Fila de reprocesso para itens com erro temporário.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY gera lote (batch) de consultas e publica jobs.</li><li>RPA autentica, consulta item, captura status + protocolo + evidência.</li><li>RPA retorna resultados (success/partial/error) por item.</li><li>CY atualiza status e dispara eventos dependentes (Gate/Yard/Expedição).</li><li>Itens com erro vão para retentativa e, se exceder SLA, viram alerta.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Compliance &gt; Painel de Status (timeline + última atualização)</li><li>Monitor de Integrações &gt; Execuções RPA (batch)</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Separar consultas por cliente/recinto para evitar bloqueio de sessão.</li><li>Respeitar limites de requisições e horários acordados.</li><li>Evidência obrigatória para mudanças de status.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>entityType (BL/CNTR/CE/DUE)</li><li>entityId</li><li>requestedBy</li><li>batchId</li><li>priority</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>currentStatus</li><li>statusCode</li><li>protocol</li><li>evidence</li><li>lastCheckedAt</li><li>jobId</li><li>batchId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% itens atualizados dentro do SLA</li><li>taxa de erro por portal</li><li>redução de ligações/consultas manuais</li></ul>
-        </section>
-        
+        <div class="pill">
+          Regra-base: <b>3 RTGs</b> por <b>1 STS</b>
+        </div>
+        <div style="margin-top:8px;">
+          Engine atual: rules + scoring (pronto para evoluir p/ ML mantendo rastreabilidade).
+        </div>
+      </div>
+    </aside>
 
-        <section id="doc-04" class="card">
-          <div class="id">DOC-04</div>
-          <div class="title">Geração automática de dossiê de contêiner (PDF) e distribuição</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Compliance e Documentos</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: DOSSIER.GENERATE (antes de gate-out/entrega)</div>
-          <div class="k">Caso de uso</div><div class="v">Consolidar evidências e documentos do contêiner em um único dossiê PDF, padronizado por cliente.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>CY compila artefatos; quando algum documento estiver em fonte externa sem API, o RPA busca e adiciona ao pacote. Ao final, distribui por email/portal interno ou repositório.</p>
-          <h3>Atores</h3>
-          <ul><li>Backoffice</li><li>CY</li><li>RPA Worker</li><li>Sistema de arquivos/ECM</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Entidade CNTR com vínculos e checklist mínimo definido.</li><li>Template de dossiê configurado (cliente/recinto).</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>PDF gerado com índice e carimbo de auditoria.</li><li>Distribuição registrada (quem recebeu, quando, onde).</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY verifica checklist; itens faltantes geram jobs de coleta RPA.</li><li>RPA coleta documentos faltantes e devolve ao CY.</li><li>CY monta dossiê e gera PDF com índice.</li><li>CY dispara distribuição (email/ECM) e registra protocolo.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Captação &gt; Dossiê do Contêiner &gt; Gerar/Visualizar</li><li>Admin &gt; Templates de Dossiê</li><li>Monitor de Integrações &gt; Distribuições</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Checklist mínimo por tipo de operação (import/export/empty).</li><li>Dossiê versionado; nunca sobrescrever sem criar nova versão.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>cntrId</li><li>triggerStage (GateOut/Entrega)</li><li>templateId</li><li>recipients[]</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>dossierPdfUrl</li><li>dossierVersion</li><li>distributionLog[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo para dossiê completo</li><li>% dossiês gerados sem intervenção</li><li>redução de não-conformidade documental</li></ul>
-        </section>
-        
+    <main class="main">
 
-        <section id="doc-05" class="card">
-          <div class="id">DOC-05</div>
-          <div class="title">Leitura de e-mails operacionais e abertura automática de pendências no CY</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Compliance e Documentos</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: MAILBOX.POLL (agenda) ou webhook do provedor</div>
-          <div class="k">Caso de uso</div><div class="v">Capturar e-mails com anexos (BL, fotos, autorizações) e criar itens no Upload documental inteligente com classificação e roteamento.</div>
+      <!-- Dashboard -->
+      <section class="view" id="view-dashboard">
+        <div class="topbar">
+          <div class="crumb">
+            <div class="path">HXtos CY / Dashboard</div>
+            <p class="title">Dashboard</p>
+            <p class="desc">Página de visão geral (placeholder navegável). Substitua pelos seus KPIs e cards reais.</p>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="location.hash='#yardiq'">Ir para YardIQ</button>
+            <button class="btn ghost" onclick="alert('Placeholder: conecte ao seu data layer/TOS.')">Ação</button>
+          </div>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>Bot monitora caixas de e-mail dedicadas (por cliente/recinto), extrai anexos, aplica regras e cria pendências no CY quando faltar contexto (CNTR/BL/CE).</p>
-          <h3>Atores</h3>
-          <ul><li>Backoffice</li><li>CY</li><li>RPA Worker</li><li>Caixa de e-mail corporativa</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Caixas de e-mail segregadas por operação e políticas LGPD/segurança definidas.</li><li>Regras de roteamento e parsing configuradas.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Anexos importados para o CY e classificados.</li><li>Pendências abertas para revisão quando necessário.</li><li>Registro de origem (messageId) para rastreabilidade.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>RPA lê novos e-mails, baixa anexos e identifica contexto.</li><li>RPA cria registro de documento no CY e anexa arquivos.</li><li>CY executa DOC-02 (classificar/vincular).</li><li>Quando houver ambiguidade, CY abre pendência para o Dispatcher.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Captação &gt; Upload documental inteligente</li><li>Painel do Dispatcher &gt; Pendências</li><li>Admin &gt; Regras de Roteamento de E-mail</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Não importar anexos duplicados (hash).</li><li>Quarentena para anexos suspeitos/indesejados.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>mailboxId</li><li>messageId</li><li>subject</li><li>sender</li><li>attachments[]</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>createdDocIds[]</li><li>routingResult</li><li>pendingTasks[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% anexos processados automaticamente</li><li>tempo médio do e-mail até aparecer no CY</li><li>taxa de duplicidade evitada</li></ul>
-        </section>
-        
+        <div class="placeholder">
+          <div class="phgrid">
+            <div class="phcard"><h3>Visão Operacional</h3><p>KPIs agregados: ocupação, produtividade, filas internas, janelas críticas.</p></div>
+            <div class="phcard"><h3>Alertas</h3><p>Eventos: risco de spillback, saturação de zona, quebra de equipamento.</p></div>
+            <div class="phcard"><h3>Atalhos</h3><p>Acesso rápido: GateIQ, DeckingIQ, YardIQ, DocIQ.</p></div>
+          </div>
+        </div>
+      </section>
 
-        <section id="doc-06" class="card">
-          <div class="id">DOC-06</div>
-          <div class="title">Checklist de compliance por tipo de carga e bloqueio preventivo de etapas</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Compliance e Documentos</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: OPERATION.STAGE_CHANGE (GateIn, Yard, GateOut)</div>
-          <div class="k">Caso de uso</div><div class="v">Aplicar checklist dinâmico e bloquear avanço quando faltar documento/regra obrigatória.</div>
+      <!-- GateIQ -->
+      <section class="view" id="view-gateiq">
+        <div class="topbar">
+          <div class="crumb">
+            <div class="path">HXtos CY / GateIQ</div>
+            <p class="title">GateIQ</p>
+            <p class="desc">Placeholder navegável para o módulo de gate (regras, exceções, inspeção, liberação).</p>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="location.hash='#yardiq'">Ir para YardIQ</button>
+            <button class="btn ghost" onclick="alert('Placeholder: adicione filas, exceções e workflow.')">Ação</button>
+          </div>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>Ao detectar mudança de estágio, o CY valida checklist. Se item depender de fonte externa sem API, o RPA tenta coletar/confirmar antes de bloquear; caso não consiga, abre exceção controlada.</p>
-          <h3>Atores</h3>
-          <ul><li>Dispatcher</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Matriz de checklist configurada por IMDG/reefer/OOG/cliente.</li><li>Regras de exceção e aprovações definidas.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Etapa liberada com evidência ou bloqueada com justificativa.</li><li>Exceções registradas e auditáveis.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY avalia checklist ao mudar estágio.</li><li>Para itens 'verificáveis', cria jobs de verificação RPA.</li><li>RPA retorna evidências; CY decide liberar/bloquear.</li><li>Quando bloqueado, cria pendência com passo a passo para resolver.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Compliance &gt; Checklists &amp; Regras</li><li>Gate/Yard/Expedição &gt; Banner de Bloqueio/Liberação</li><li>Pendências &gt; Aprovação de Exceção</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Exceção exige trilha (quem, por quê, validade).</li><li>Bloqueio preventivo prioriza segurança e conformidade.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>stage</li><li>cntrId</li><li>cargoProfile</li><li>customerId</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>checklistStatus</li><li>blockingReasons[]</li><li>exceptions[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>redução de liberações indevidas</li><li>% bloqueios resolvidos em 1h</li><li>incidentes evitados (proxy)</li></ul>
-        </section>
-        
+        <div class="placeholder">
+          <div class="phgrid">
+            <div class="phcard"><h3>Fila & Work Queue</h3><p>Entradas/saídas, agendamentos, picos, validações e bloqueios.</p></div>
+            <div class="phcard"><h3>Exceções</h3><p>Criação, triagem, inspeção, liberação e rastreabilidade.</p></div>
+            <div class="phcard"><h3>OCR / Camera</h3><p>Integração e eventos (captura, divergência, override, auditoria).</p></div>
+          </div>
+        </div>
+      </section>
 
-        <section id="gate-01" class="card">
-          <div class="id">GATE-01</div>
-          <div class="title">Pré-checagem automática de gate (agendamento, bloqueios e pendências)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Gate e Atendimento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: GATE.PRECHECK.REQUESTED (T-2h do slot) ou ao criar agendamento</div>
-          <div class="k">Caso de uso</div><div class="v">Executar pré-checagem e avisar transportadora antes do caminhão chegar.</div>
+      <!-- DeckingIQ -->
+      <section class="view" id="view-deckingiq">
+        <div class="topbar">
+          <div class="crumb">
+            <div class="path">HXtos CY / DeckingIQ</div>
+            <p class="title">DeckingIQ</p>
+            <p class="desc">Placeholder navegável para sugestões/approvals e geração de tarefas no DispatchIQ.</p>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="location.hash='#yardiq'">Ir para YardIQ</button>
+            <button class="btn ghost" onclick="alert('Placeholder: inserir painel de sugestões e aprovação.')">Ação</button>
+          </div>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA consulta sistemas/portais sem API (cliente, transportadora, ERP legado) para confirmar permissões e pendências; o CY envia notificação com status e instruções.</p>
-          <h3>Atores</h3>
-          <ul><li>Gate clerk/Dispatcher</li><li>CY (Gate)</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Agendamento criado com placa/motorista e vínculo a CNTR/BL.</li><li>Canais de notificação configurados (email/WhatsApp corporativo/portal).</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Status de pré-checagem (OK/pendente/bloqueado).</li><li>Notificação enviada com ação recomendada.</li><li>Registro de auditoria e evidência.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY cria job PRECHECK e define SLA (ex.: 5 min).</li><li>RPA executa consultas necessárias (por cliente) e coleta evidências.</li><li>RPA retorna resultado; CY aplica regras e atualiza agendamento.</li><li>CY envia notificação com QR/Checklist (quando aplicável).</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Gate &gt; Agendamentos &gt; Pré-checagem (status em tempo real)</li><li>Gate &gt; Ocorrências / Bloqueios</li><li>Monitor de Integrações &gt; PRECHECK Jobs</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Se pendência crítica, bloquear check-in e sugerir re-agendamento.</li><li>Pré-checagem reprocessa automaticamente se dados mudarem.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>appointmentId</li><li>truckPlate</li><li>driverId</li><li>cntrId</li><li>customerId</li><li>scheduledAt</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>precheckStatus</li><li>issues[]</li><li>recommendedActions[]</li><li>notifiedAt</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>redução de fila de gate</li><li>% pré-checagens concluídas antes do slot</li><li>taxa de no-show reduzida</li></ul>
-        </section>
-        
+        <div class="placeholder">
+          <div class="phgrid">
+            <div class="phcard"><h3>Sugestões</h3><p>Engine: regras/ML, filtros, score e explainability.</p></div>
+            <div class="phcard"><h3>Aprovação</h3><p>Workflow: aprovar/recusar, motivo, auditoria.</p></div>
+            <div class="phcard"><h3>Dispatch</h3><p>Geração de tarefas e priorização por região/equipamento.</p></div>
+          </div>
+        </div>
+      </section>
 
-        <section id="gate-02" class="card">
-          <div class="id">GATE-02</div>
-          <div class="title">Automação de cadastro/atualização de motorista e veículo em portais externos</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Gate e Atendimento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: PARTY.REGISTRATION.NEEDED ou no onboarding de transportadora</div>
-          <div class="k">Caso de uso</div><div class="v">Cadastrar/atualizar dados quando o portal externo não oferece integração adequada.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>Bot executa o cadastro em portal legado, retorna o protocolo e atualiza o cadastro mestre no CY.</p>
-          <h3>Atores</h3>
-          <ul><li>Backoffice/Gate</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Dados mínimos validados no CY (documentos, CNH, validade).</li><li>Política de acesso e consentimento estabelecida.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Cadastro sincronizado com protocolo.</li><li>Alertas para pendências (ex.: documento vencido).</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY identifica necessidade (novo cadastro/atualização) e cria job.</li><li>RPA acessa portal externo, preenche formulários, anexa documentos.</li><li>RPA captura protocolo/print e retorna ao CY.</li><li>CY atualiza cadastro e libera agendamentos relacionados.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Cadastros &gt; Transportadoras / Motoristas / Veículos</li><li>Gate &gt; Agendamentos (validação de cadastro)</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Não enviar dados sensíveis fora do escopo definido.</li><li>Revalidar automaticamente validade de documentos periodicamente.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>partyType</li><li>partyData</li><li>documents[]</li><li>customerId</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>externalRegistrationStatus</li><li>protocol</li><li>evidence</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo de onboarding de transportadora</li><li>% cadastros automatizados</li><li>redução de recusas no gate por cadastro incompleto</li></ul>
-        </section>
-        
+      <!-- YardIQ -->
+      <section class="view" id="view-yardiq">
 
-        <section id="gate-03" class="card">
-          <div class="id">GATE-03</div>
-          <div class="title">Emissão automática de etiquetas, recibos e comprovantes (print-to-PDF)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Gate e Atendimento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: GATE.CHECKIN.COMPLETED ou GATE.CHECKOUT.COMPLETED</div>
-          <div class="k">Caso de uso</div><div class="v">Gerar comprovantes padronizados e anexar ao histórico do atendimento.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>Quando a impressora/sistema de etiqueta é legado, o RPA automatiza a emissão e salva PDF no dossiê, reduzindo erro humano e garantindo evidência.</p>
-          <h3>Atores</h3>
-          <ul><li>Gate clerk</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Layout de etiqueta/recibo padronizado por cliente.</li><li>Drivers/ambiente de impressão configurados no worker.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>PDF/arquivo gerado e anexado ao atendimento.</li><li>Número de recibo registrado.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY finaliza check-in/out e solicita emissão.</li><li>RPA abre aplicativo legado, preenche dados e emite etiqueta/recibo.</li><li>RPA salva como PDF e envia ao CY.</li><li>CY associa ao atendimento e ao CNTR/appointment.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Gate &gt; Atendimento &gt; Comprovantes</li><li>Gate &gt; Histórico do Caminhão</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Se falhar a emissão, permitir reprocesso por um clique no CY.</li><li>Gerar numeração única por recinto e data.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>serviceType</li><li>appointmentId</li><li>cntrId</li><li>truckData</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>receiptNumber</li><li>pdfUrl</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% emissões automáticas sem erro</li><li>tempo médio por atendimento</li><li>redução de divergência de recibos</li></ul>
-        </section>
-        
+        <div class="topbar">
+          <div class="crumb">
+            <div class="path">HXtos CY / YardIQ / Controle</div>
+            <p class="title">AI Yard Control Matrix</p>
+            <p class="desc">
+              Impute condições operacionais (STS/RTG/Zonas) e gere recomendações com impacto e explicação — alinhado à estratégia 3:1 e anticongestionamento por regiões.
+            </p>
+          </div>
 
-        <section id="gate-04" class="card">
-          <div class="id">GATE-04</div>
-          <div class="title">Triagem de exceções de OCR (placa, lacre, numeração) com RPA assistido</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Gate e Atendimento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: OCR.CONFIDENCE.LOW (câmera/gate kiosk)</div>
-          <div class="k">Caso de uso</div><div class="v">Resolver rapidamente leituras com baixa confiança sem travar a fila.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>Quando OCR falha, o CY abre uma tarefa assistida para o operador; o RPA preenche automaticamente campos e abre telas certas, reduzindo cliques e tempo.</p>
-          <h3>Atores</h3>
-          <ul><li>Gate clerk</li><li>CY</li><li>RPA Assistido</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Kiosk/câmera integrado e regra de confiança definida.</li><li>Perfil de operador com permissão para corrigir.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Campos corrigidos e auditorados.</li><li>Fila de gate mantém fluidez.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY identifica baixa confiança e abre tarefa de correção.</li><li>RPA assistido abre tela do atendimento, carrega imagens e pré-preenche sugestões.</li><li>Operador valida/ajusta e confirma.</li><li>CY registra correção e retroalimenta métricas.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Gate &gt; Exceções OCR &gt; Console de Correção</li><li>Gate &gt; Atendimento</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Sempre salvar evidência da imagem usada na correção.</li><li>Correções repetidas por transportadora viram alerta de qualidade.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>appointmentId</li><li>ocrField</li><li>confidence</li><li>imageUrl</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>correctedValue</li><li>operatorId</li><li>evidence</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo médio de correção</li><li>% exceções por turno</li><li>impacto na fila (veículos/hora)</li></ul>
-        </section>
-        
+          <div class="ctx">
+            <div class="field">
+              <label>Terminal / Site</label>
+              <input id="ctxTerminal" value="Terminal X / Site A" />
+            </div>
+            <div class="field">
+              <label>Serviço / Janela</label>
+              <input id="ctxService" value="SERV-NE-021" />
+            </div>
+            <div class="field">
+              <label>Turno</label>
+              <select id="ctxShift">
+                <option>1º Turno</option>
+                <option selected>2º Turno</option>
+                <option>3º Turno</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Hora de referência</label>
+              <input id="ctxTime" type="time" value="14:30" />
+            </div>
+            <div class="field">
+              <label>STSs ativos</label>
+              <input id="ctxSTSActive" type="number" min="0" step="1" value="2" />
+            </div>
+            <div class="field">
+              <label>Modo</label>
+              <select id="ctxMode">
+                <option selected>Operação</option>
+                <option>Simulação</option>
+              </select>
+            </div>
+          </div>
 
-        <section id="int-01" class="card">
-          <div class="id">INT-01</div>
-          <div class="title">Reprocesso idempotente de eventos com fila e Dead-Letter (saga/compensação)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Integrações e Resiliência</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: INTEGRATION.FAILURE (erro/transiente) ou comando manual 'Reprocessar'</div>
-          <div class="k">Caso de uso</div><div class="v">Garantir entrega de eventos e consistência mesmo com falhas intermitentes.</div>
+          <div class="actions">
+            <button class="btn primary" id="btnRecalc">Gerar sugestões</button>
+            <button class="btn good" id="btnApplyAll">Aplicar (Top 1)</button>
+            <button class="btn ghost" id="btnReset">Reset (demo)</button>
+          </div>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>Orquestrador cria jobs de reprocesso; quando não há API para consulta de retorno, o RPA busca evidências (protocolo/aceite) e devolve ao CY. Suporta ações compensatórias.</p>
-          <h3>Atores</h3>
-          <ul><li>NOC/Dispatcher</li><li>CY</li><li>Orquestrador</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Chaves de idempotência definidas por tipo de evento.</li><li>Política de retentativa e SLA por integração.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Evento entregue/confirmado ou isolado em DLQ com diagnóstico.</li><li>Ação compensatória aplicada quando necessário.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>Falha gera job de retry com backoff.</li><li>RPA confirma se o destino recebeu (quando aplicável).</li><li>Se recebido, CY fecha incidente; se não, reenfileira ou aplica compensação.</li><li>Após limite, enviar para DLQ e abrir ticket.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Monitor de Integrações &gt; Filas/SLA/DLQ</li><li>Monitor de Integrações &gt; Detalhe do Evento</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Nunca duplicar evento no destino (idempotência obrigatória).</li><li>DLQ exige análise e ação humana antes de reprocesso forçado.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>eventType</li><li>eventId</li><li>idempotencyKey</li><li>payloadRef</li><li>destination</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>deliveryStatus</li><li>attempts</li><li>lastError</li><li>evidence</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>taxa de entrega dentro do SLA</li><li>tamanho de DLQ</li><li>tempo médio de resolução de incidentes</li></ul>
-        </section>
-        
 
-        <section id="int-02" class="card">
-          <div class="id">INT-02</div>
-          <div class="title">Conciliação diária CY x ERP legado (export de telas/relatórios)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Integrações e Resiliência</div>
-          <div class="k">Acionador</div><div class="v">Agenda diária (ex.: 02:00) ou on-demand</div>
-          <div class="k">Caso de uso</div><div class="v">Comparar movimentos/serviços entre CY e ERP sem integração nativa.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA extrai relatórios do ERP (tela/relatório), normaliza e devolve ao CY para conciliar divergências, gerando lista de ações corretivas.</p>
-          <h3>Atores</h3>
-          <ul><li>Backoffice</li><li>CY</li><li>RPA Worker</li><li>ERP legado</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Mapeamento de campos e regras de equivalência configuradas.</li><li>Janelas de execução fora do pico.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Relatório de conciliação e divergências priorizadas.</li><li>Sugestões de correção (quem deve agir).</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>RPA gera e baixa relatório no ERP.</li><li>CY importa e concilia com movimentos do dia (gate/yard).</li><li>CY gera dashboard de divergências e tarefas.</li><li>Operador corrige e marca como resolvido.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Backoffice &gt; Conciliação &gt; Dashboard</li><li>Monitor de Integrações &gt; Execuções de Conciliação</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Regras de matching por CNTR+data+tipo de serviço.</li><li>Divergências críticas bloqueiam faturamento até resolução.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>dateRange</li><li>erpProfile</li><li>matchingRulesetId</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>divergences[]</li><li>summary</li><li>reportFiles[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% divergências por dia</li><li>tempo até resolver divergência</li><li>impacto em faturamento (R$ evitado)</li></ul>
-        </section>
-        
+        <!-- Internal navigation (tabs) -->
+        <div class="subnav" id="yardSubnav">
+          <div class="tabs" id="yardTabs">
+            <a class="tab" href="#yardiq?tab=inputs" data-tab="inputs"><span class="t"></span>Inputs</a>
+            <a class="tab green" href="#yardiq?tab=matrix" data-tab="matrix"><span class="t"></span>Matriz</a>
+            <a class="tab warn" href="#yardiq?tab=suggestions" data-tab="suggestions"><span class="t"></span>Sugestões</a>
+            <a class="tab" href="#yardiq?tab=log" data-tab="log"><span class="t"></span>Log</a>
+          </div>
 
-        <section id="int-03" class="card">
-          <div class="id">INT-03</div>
-          <div class="title">Robô de monitoramento de indisponibilidade (portais/sistemas) com playbook</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Integrações e Resiliência</div>
-          <div class="k">Acionador</div><div class="v">Agenda (a cada 5-10 min) + detecção de erro</div>
-          <div class="k">Caso de uso</div><div class="v">Detectar indisponibilidade de portais/sistemas críticos e acionar modo degradado no CY.</div>
+          <div class="subtools">
+            <button class="btn" id="btnGoInputs">Ir p/ Inputs</button>
+            <button class="btn primary" id="btnGoMatrix">Ir p/ Matriz</button>
+            <button class="btn good" id="btnGoSuggs">Ir p/ Sugestões</button>
+          </div>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA realiza 'health checks' reais (login + ação mínima) e publica status. O CY aciona playbooks (modo manual, filas, mensagens).</p>
-          <h3>Atores</h3>
-          <ul><li>NOC/Dispatcher</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Lista de serviços críticos e ações mínimas por serviço.</li><li>Canais de alerta configurados.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Status do serviço (UP/DOWN/DEGRADED) no CY.</li><li>Alertas e modo degradado acionado.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>RPA executa check e mede tempo de resposta.</li><li>Se DOWN/DEGRADED, CY ativa banner e altera regras (ex.: permitir operação com evidência mínima).</li><li>Quando normaliza, CY encerra modo degradado e dispara reprocessos.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>NOC &gt; Status de Serviços</li><li>Monitor de Integrações &gt; Incidentes</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Evitar falso positivo (2 de 3 checks).</li><li>Modo degradado exige registro de exceções.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>serviceId</li><li>checkScriptId</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>healthStatus</li><li>latencyMs</li><li>evidence</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>MTTR (tempo de recuperação)</li><li>tempo de detecção</li><li>impacto evitado em filas</li></ul>
-        </section>
-        
 
-        <section id="int-04" class="card">
-          <div class="id">INT-04</div>
-          <div class="title">Coleta automática de comprovantes/protocolos e anexo no evento</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Integrações e Resiliência</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: EVENT.SENT (quando destino não retorna recibo via API)</div>
-          <div class="k">Caso de uso</div><div class="v">Garantir evidência de aceite para auditoria e rastreabilidade.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA acessa o destino (portal/tela) para localizar o evento enviado e capturar recibo/protocolo, anexando ao evento no CY.</p>
-          <h3>Atores</h3>
-          <ul><li>NOC/Backoffice</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Evento registrado no CY com correlatorId.</li><li>Destino possui consulta visual/pesquisa.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Recibo/protocolo anexado e evento marcado como confirmado.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY marca evento como 'pendente de comprovação'.</li><li>RPA consulta destino usando correlatorId e captura recibo.</li><li>RPA retorna ao CY; CY atualiza status e arquiva evidência.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Monitor de Integrações &gt; Eventos &gt; Evidências</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Prazo máximo para comprovação (ex.: 30 min).</li><li>Se não localizar, abrir incidente automaticamente.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>eventId</li><li>correlatorId</li><li>destination</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>receipt</li><li>evidence</li><li>confirmedAt</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>% eventos confirmados</li><li>tempo até confirmação</li><li>incidentes por ausência de comprovante</li></ul>
-        </section>
-        
+        <!-- Content -->
+        <div class="grid">
+          <!-- LEFT -->
+          <section style="display:flex; flex-direction:column; gap:14px;">
 
-        <section id="yard-01" class="card">
-          <div class="id">YARD-01</div>
-          <div class="title">Atualização automática de restrições de pilhas (IMDG/reefer/OOG) por boletins externos</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Yard e Planejamento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: YARD.RULES.UPDATE (agenda) ou novo boletim</div>
-          <div class="k">Caso de uso</div><div class="v">Aplicar regras de segurança e capacidade com base em boletins/planilhas externas sem API.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA baixa boletins (PDF/planilha) de fonte definida, extrai parâmetros e atualiza regras no CY mediante aprovação.</p>
-          <h3>Atores</h3>
-          <ul><li>Yard Planner</li><li>CY (Admin/Planejamento)</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Fonte oficial/boletim definido e acessível.</li><li>Modelo de extração e validação aprovado.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Regras atualizadas e versionadas.</li><li>Alerta sobre mudanças relevantes (impacto em slots).</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>RPA baixa boletim e extrai parâmetros-chave.</li><li>CY gera proposta de mudança (diff) para aprovação do Planner.</li><li>Após aprovação, CY publica nova versão de regras e recalcula alertas.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Planejamento &gt; Regras de Pátio (Stack Limits, Clearances, IMDG)</li><li>Planejamento &gt; Simulador de Impacto (antes de publicar)</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Mudanças críticas exigem aprovação dupla.</li><li>Versionamento obrigatório e rollback rápido.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>sourceId</li><li>bulletinRef</li><li>effectiveDate</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>rulesetVersion</li><li>diffSummary</li><li>approvalTaskId</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo para atualizar regras</li><li>incidentes por regra desatualizada (proxy)</li><li>% mudanças aprovadas sem retrabalho</li></ul>
-        </section>
-        
+            <div class="card section" id="sec-inputs">
+              <div class="cardhead">
+                <div>
+                  <h2>Estado do Sistema</h2>
+                  <div class="hint">KPIs sintetizados a partir dos inputs e da regra 3:1.</div>
+                </div>
+                <div class="badges" id="systemBadges"></div>
+              </div>
+              <div class="cardbody">
+                <div class="kpirow">
+                  <div class="kpi">
+                    <div class="k">RTGs operacionais</div>
+                    <div class="v"><span id="kpiRTGOp">0</span></div>
+                    <div class="s">Exclui RTGs “Quebrado”.</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">RTGs necessários</div>
+                    <div class="v"><span id="kpiRTGNeed">0</span></div>
+                    <div class="s">= STSs ativos × 3.</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Risco de spillback</div>
+                    <div class="v"><span id="kpiRisk">—</span></div>
+                    <div class="s">Pressão no Hot Yard (estimado).</div>
+                  </div>
+                </div>
+                <div class="foot">
+                  <div><b>Nota:</b> engine explicável (rules + scoring), pronto para ML mantendo rastreabilidade.</div>
+                  <div class="small">Dica: use a navegação interna acima.</div>
+                </div>
+              </div>
+            </div>
 
-        <section id="yard-02" class="card">
-          <div class="id">YARD-02</div>
-          <div class="title">Geração automática de Ordens de Transferência (OT) a partir de lista externa</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Yard e Planejamento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: OT.IMPORT.REQUESTED (upload de planilha) ou integração falha</div>
-          <div class="k">Caso de uso</div><div class="v">Criar OTs no CY quando a origem é planilha/arquivo ou sistema legado.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA normaliza arquivo e lança no CY com validações (posição origem/destino, restrições, janela).</p>
-          <h3>Atores</h3>
-          <ul><li>Dispatcher</li><li>Yard Planner</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Arquivo padrão de importação definido.</li><li>Mapa de pátio sincronizado no CY.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>OTs criadas e enfileiradas para execução.</li><li>Erros retornados com linha/coluna para correção.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>Usuário anexa arquivo e solicita importação.</li><li>RPA valida formato, normaliza e cria OTs via API do CY.</li><li>CY aplica regras e publica Work Instructions para execução.</li><li>Erros geram relatório e pendência.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Yard &gt; Ordem de Transferência &gt; Importar</li><li>Equipment Control &gt; Work Queue (instruções geradas)</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Não criar OT para posições bloqueadas.</li><li>Agrupar OTs por bloco para otimizar deslocamentos.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>fileId</li><li>mappingTemplateId</li><li>requestedBy</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>createdOtIds[]</li><li>errors[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>OTs criadas por minuto</li><li>% OTs com erro</li><li>redução de digitação manual</li></ul>
-        </section>
-        
+            <!-- STS -->
+            <div class="card section" id="sec-sts">
+              <div class="cardhead">
+                <div>
+                  <h2>Inputs — STS</h2>
+                  <div class="hint">MPH planejado x real e status.</div>
+                </div>
+                <div class="rowtools">
+                  <button class="iconbtn blue" id="addSTS">+ STS</button>
+                </div>
+              </div>
+              <div class="cardbody" style="padding:0">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:120px">STS</th>
+                      <th style="width:170px">MPH planejado</th>
+                      <th style="width:170px">MPH real</th>
+                      <th>Status</th>
+                      <th style="width:90px; text-align:right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stsBody"></tbody>
+                </table>
+              </div>
+            </div>
 
-        <section id="yard-03" class="card">
-          <div class="id">YARD-03</div>
-          <div class="title">Auditoria diária de pátio: inconsistências de posição x evidência (câmeras/relatórios)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Yard e Planejamento</div>
-          <div class="k">Acionador</div><div class="v">Agenda diária + evento CY: YARD.AUDIT.RUN</div>
-          <div class="k">Caso de uso</div><div class="v">Detectar divergências entre registro de posição e evidência externa quando não há integração direta.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA coleta relatórios/capturas de sistemas externos (ex.: planilhas de ronda, relatórios de equipamento) e o CY compara com inventário, gerando lista de investigação.</p>
-          <h3>Atores</h3>
-          <ul><li>Yard Supervisor</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Fonte externa padronizada.</li><li>Janela de execução definida.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Lista de divergências com prioridade e evidências.</li><li>Tarefas para inventário/correção.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>RPA baixa relatórios/capturas e envia ao CY.</li><li>CY executa conciliação de inventário e marca divergências.</li><li>CY gera tarefas e sugere áreas de maior risco.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Yard &gt; Inventário &gt; Auditoria</li><li>Dashboard &gt; Qualidade de Dados do Pátio</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Divergência crítica bloqueia alocações automáticas no slot até validação.</li><li>Registrar quem encerrou cada divergência.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>auditDate</li><li>sources[]</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>discrepancies[]</li><li>tasks[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>acurácia de inventário (%)</li><li>divergências por 1.000 movimentos</li><li>tempo de encerramento de divergência</li></ul>
-        </section>
-        
+            <!-- ZONES -->
+            <div class="card section" id="sec-zones">
+              <div class="cardhead">
+                <div>
+                  <h2>Inputs — Zonas do Pátio</h2>
+                  <div class="hint">Capacidade / ocupação para stress por região.</div>
+                </div>
+                <div class="small">Hot / Intermediária / Fria (anticongestionamento + contingência)</div>
+              </div>
+              <div class="cardbody" style="padding:0">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Zona</th>
+                      <th style="width:180px">Capacidade (%)</th>
+                      <th style="width:180px">Ocupação (%)</th>
+                      <th style="width:170px">Stress</th>
+                    </tr>
+                  </thead>
+                  <tbody id="zonesBody"></tbody>
+                </table>
+              </div>
+            </div>
 
-        <section id="yard-04" class="card">
-          <div class="id">YARD-04</div>
-          <div class="title">Execução automatizada de 'modo degradado' para equipamentos (planilha -&gt; Work Queue)</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Yard e Planejamento</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: EQUIPMENT.OUTAGE (ou falta de integração com EDI/Machine)</div>
-          <div class="k">Caso de uso</div><div class="v">Manter operação fluindo quando o canal de instrução do equipamento falha.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA converte instruções em formato aceito (ou lança em console legado) e registra confirmações no CY até o restabelecimento.</p>
-          <h3>Atores</h3>
-          <ul><li>Dispatcher</li><li>Equipment Operator</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Procedimento de contingência aprovado.</li><li>Formato de importação/lançamento definido.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Work Instructions executáveis disponíveis.</li><li>Registro consistente de confirmações/tempos.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>CY detecta indisponibilidade e ativa modo degradado.</li><li>RPA publica instruções em canal alternativo e coleta confirmações.</li><li>CY sincroniza de volta quando normaliza.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Equipment Control &gt; Work Queue (modo degradado)</li><li>NOC &gt; Incidentes de Equipamento</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Limitar automações para evitar risco operacional.</li><li>Registrar cada confirmação com evidência mínima.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>equipmentId</li><li>instructions[]</li><li>fallbackChannel</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>acknowledgements[]</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo sem parada operacional</li><li>% instruções confirmadas no SLA</li><li>incidentes durante contingência</li></ul>
-        </section>
-        
+            <!-- RTG -->
+            <div class="card section" id="sec-rtgs">
+              <div class="cardhead">
+                <div>
+                  <h2>Inputs — RTGs</h2>
+                  <div class="hint">Região atual, utilização e status.</div>
+                </div>
+                <div class="rowtools">
+                  <button class="iconbtn green" id="addRTG">+ RTG</button>
+                </div>
+              </div>
+              <div class="cardbody" style="padding:0">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:120px">RTG</th>
+                      <th style="width:180px">Região atual</th>
+                      <th style="width:180px">Utilização (%)</th>
+                      <th>Status</th>
+                      <th style="width:90px; text-align:right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rtgBody"></tbody>
+                </table>
+              </div>
+            </div>
 
-        <section id="bo-01" class="card">
-          <div class="id">BO-01</div>
-          <div class="title">Fechamento diário automático: geração de relatórios e distribuição para stakeholders</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Backoffice e Analytics</div>
-          <div class="k">Acionador</div><div class="v">Agenda diária (fim de turno) + comando manual</div>
-          <div class="k">Caso de uso</div><div class="v">Padronizar fechamento operacional e reduzir esforço de consolidação.</div>
-        </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA coleta relatórios de sistemas legados e o CY monta pacote (PDF/Excel) com KPIs, enviando a listas predefinidas.</p>
-          <h3>Atores</h3>
-          <ul><li>Supervisor</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Templates e destinatários definidos.</li><li>Fonte de dados legada acessível.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Pacote diário distribuído e arquivado.</li><li>Registro de envio e leitura (quando disponível).</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>RPA coleta relatórios externos.</li><li>CY compõe pacote e aplica branding.</li><li>CY distribui e registra evidência.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Dashboard &gt; Fechamento de Turno</li><li>Monitor de Integrações &gt; Distribuições</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Enviar somente dados permitidos por governança.</li><li>Se falhar envio, reprocessar automaticamente.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>shiftId</li><li>date</li><li>recipients[]</li><li>templates[]</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>packageUrls[]</li><li>distributionLog</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo para fechamento</li><li>% fechamentos automáticos</li><li>redução de erros de consolidação</li></ul>
-        </section>
-        
+            <!-- MATRIX -->
+            <div class="card section" id="sec-matrix">
+              <div class="cardhead">
+                <div>
+                  <h2>Zone × RTG — Control Matrix</h2>
+                  <div class="hint">Recomendação por zona (calculada). 🟢 recomendado • 🟡 possível • 🔴 evitar</div>
+                </div>
+                <div class="small">Base: regra 3:1, stress de zona, utilização RTG, falhas e buffer</div>
+              </div>
+              <div class="cardbody">
+                <div id="matrix" class="matrix"></div>
+              </div>
+            </div>
 
-        <section id="bo-02" class="card">
-          <div class="id">BO-02</div>
-          <div class="title">Robô de cadastro em massa (clientes, contratos, tarifas) em sistemas legados</div>
-          
-        <div class="meta">
-          <div class="k">Categoria</div><div class="v">Backoffice e Analytics</div>
-          <div class="k">Acionador</div><div class="v">Evento CY: MASTERDATA.BULKLOAD.REQUESTED</div>
-          <div class="k">Caso de uso</div><div class="v">Acelerar onboarding de novos clientes/contratos quando o legado só aceita input manual.</div>
+          </section>
+
+          <!-- RIGHT -->
+          <section style="display:flex; flex-direction:column; gap:14px;">
+
+            <div class="card section" id="sec-suggestions">
+              <div class="cardhead">
+                <div>
+                  <h2>Sugestões do Engine</h2>
+                  <div class="hint">Ações recomendadas + impacto + explicação.</div>
+                </div>
+                <div class="badges" id="suggBadges"></div>
+              </div>
+              <div class="cardbody">
+                <div class="suggestions" id="suggestions"></div>
+              </div>
+            </div>
+
+            <div class="card section" id="sec-log">
+              <div class="cardhead">
+                <div>
+                  <h2>Explainability & Decision Log</h2>
+                  <div class="hint">Rastreabilidade da decisão (operação/simulação).</div>
+                </div>
+                <div class="small">Aplicar sugestão registra a decisão</div>
+              </div>
+              <div class="cardbody">
+                <div class="log" id="log"></div>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                  <button class="btn" id="btnExportLog">Exportar Log (TXT)</button>
+                  <button class="btn" id="btnClearLog">Limpar Log</button>
+                </div>
+                <div class="small" style="margin-top:10px;">
+                  *Engine atual = <b>rules + scoring</b>. Evolução para ML mantém os mesmos “hooks” de explicação.
+                </div>
+              </div>
+            </div>
+
+          </section>
         </div>
-        
-          <h3>Descrição</h3>
-          <p>RPA executa carga em massa guiada por planilha validada e retorna logs e inconsistências para ajuste rápido.</p>
-          <h3>Atores</h3>
-          <ul><li>Admin/Backoffice</li><li>CY</li><li>RPA Worker</li></ul>
-          <h3>Pré-condições</h3>
-          <ul><li>Planilha validada e aprovada.</li><li>Ambiente de homologação disponível para teste.</li></ul>
-          <h3>Pós-condições</h3>
-          <ul><li>Cadastros concluídos com log por linha.</li><li>Pendências geradas para itens rejeitados.</li></ul>
-          <h3>Fluxo principal</h3>
-          <ol><li>Usuário carrega planilha e inicia carga.</li><li>RPA executa lançamentos no legado e captura respostas.</li><li>CY exibe resultado (sucesso/erro por item) e permite reprocesso parcial.</li></ol>
-          <h3>Telas do sistema</h3>
-          <ul><li>Admin &gt; Master Data &gt; Carga em Massa</li><li>Monitor de Integrações &gt; Execuções RPA</li></ul>
-          <h3>Regras de Negócio</h3>
-          <ul><li>Executar primeiro em homologação; promover para produção por aprovação.</li><li>Logs completos para auditoria.</li></ul>
-          <h3>Especificação de Campos</h3>
-          
-        <table class="fields">
-          <tbody><tr><td>Entrada (mínimo)</td><td><ul><li>bulkFileId</li><li>entityType</li><li>rulesetId</li></ul></td></tr>
-          <tr><td>Saída (callback)</td><td><ul><li>successCount</li><li>errorRows[]</li><li>logUrl</li><li>jobId</li></ul></td></tr>
-        </tbody></table>
-        
-          <h3>KPIs / ROI (sugestão)</h3>
-          <ul><li>tempo para onboarding</li><li>% registros aceitos na primeira carga</li><li>redução de digitação manual</li></ul>
-        </section>
-        
-    <div class="footer">Gerado para HXtos CY • Conteúdo para desenho e treinamento operacional.</div>
-  </main>
-</div>
+      </section>
+
+      <!-- DocIQ -->
+      <section class="view" id="view-dociq">
+        <div class="topbar">
+          <div class="crumb">
+            <div class="path">HXtos CY / DocIQ</div>
+            <p class="title">DocIQ</p>
+            <p class="desc">Placeholder navegável para upload/validação/bloqueios/aprovação.</p>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="location.hash='#yardiq'">Ir para YardIQ</button>
+            <button class="btn ghost" onclick="alert('Placeholder: inserir painel de documentos + validação.')">Ação</button>
+          </div>
+        </div>
+        <div class="placeholder">
+          <div class="phgrid">
+            <div class="phcard"><h3>Upload</h3><p>NF-e, CE/BL, anexos operacionais com vínculo ao contêiner.</p></div>
+            <div class="phcard"><h3>Validação</h3><p>Regras, bloqueios, divergência e trilha de aprovação.</p></div>
+            <div class="phcard"><h3>Auditoria</h3><p>Log, justificativas e exportações.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="view" id="view-settings">
+        <div class="topbar">
+          <div class="crumb">
+            <div class="path">HXtos CY / Settings</div>
+            <p class="title">Settings</p>
+            <p class="desc">Placeholder navegável: parâmetros do engine, limiares e perfis.</p>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="location.hash='#yardiq'">Ir para YardIQ</button>
+            <button class="btn ghost" onclick="alert('Placeholder: aqui entram thresholds e pesos.')">Ação</button>
+          </div>
+        </div>
+        <div class="placeholder">
+          <div class="phgrid">
+            <div class="phcard"><h3>Thresholds</h3><p>Stress de zona, risco spillback, limites de alocação.</p></div>
+            <div class="phcard"><h3>Pesos</h3><p>Zone weights, mismatch penalty, health factor.</p></div>
+            <div class="phcard"><h3>Perfis</h3><p>Operador, Supervisor, Planejamento, Auditoria.</p></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
 
 <script>
-(() => {
-  const header = document.querySelector('header');
-  const main = document.querySelector('main');
-  const nav = document.querySelector('nav');
+  // -----------------------------
+  // Router (hash navigation) + query parsing
+  // -----------------------------
+  const ROUTES = {
+    dashboard: { title:"Dashboard", desc:"Visão geral (placeholder navegável)." },
+    gateiq:    { title:"GateIQ", desc:"Fluxos de gate (placeholder)." },
+    deckingiq: { title:"DeckingIQ", desc:"Sugestões e aprovação (placeholder)." },
+    yardiq:    { title:"YardIQ", desc:"Matriz operacional com engine de sugestões (tela completa)." },
+    dociq:     { title:"DocIQ", desc:"Upload/validação/aprovação (placeholder)." },
+    settings:  { title:"Settings", desc:"Parâmetros do engine (placeholder)." }
+  };
 
-  const headerOffset = () => (header ? header.getBoundingClientRect().height : 0) + 12;
-
-  function isScrollable(el){
-    if(!el) return false;
-    const cs = getComputedStyle(el);
-    return (cs.overflowY === 'auto' || cs.overflowY === 'scroll') && (el.scrollHeight - el.clientHeight) > 2;
+  function parseHash(){
+    // Supports:
+    // #yardiq
+    // #yardiq?tab=matrix
+    const raw = (location.hash || "#yardiq").slice(1);
+    const [path, qs] = raw.split("?");
+    const params = {};
+    if(qs){
+      qs.split("&").forEach(p=>{
+        const [k,v] = p.split("=");
+        if(k) params[decodeURIComponent(k)] = decodeURIComponent(v||"");
+      });
+    }
+    return { route: ROUTES[path] ? path : "yardiq", params };
   }
 
-  function scrollToHash(hash, behavior='smooth'){
-    if(!hash) return;
-    const id = decodeURIComponent(hash.replace(/^#/, ''));
-    const target = document.getElementById(id);
-    if(!target) return;
+  function setHash(route, params={}){
+    const q = Object.keys(params).length
+      ? "?" + Object.entries(params).map(([k,v])=>`${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&")
+      : "";
+    location.hash = `#${route}${q}`;
+  }
 
-    const off = headerOffset();
+  function setActiveRoute(route){
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+    const view = document.getElementById(`view-${route}`);
+    if(view) view.classList.add("active");
 
-    if(isScrollable(main)){
-      // Offset within main scroll container
-      const top = target.offsetTop - off;
-      main.scrollTo({ top: Math.max(0, top), behavior });
-    } else {
-      // Default document scroll
-      const rect = target.getBoundingClientRect();
-      const top = window.scrollY + rect.top - off;
-      window.scrollTo({ top: Math.max(0, top), behavior });
+    document.querySelectorAll(".nav a").forEach(a=>{
+      a.classList.toggle("active", a.dataset.route === route);
+    });
+
+    const s = ROUTES[route];
+    document.getElementById("sideTitle").textContent = s.title;
+    document.getElementById("sideDesc").textContent = s.desc;
+
+    if(route === "yardiq"){
+      setTimeout(()=> {
+        if(typeof renderAll === "function") renderAll(false);
+        syncYardTabsFromHash();
+      }, 0);
     }
   }
 
-  // Intercept in-page nav clicks to ensure consistent behavior across hosting environments
-  nav?.addEventListener('click', (e) => {
-    const a = e.target.closest('a[href^="#"]');
-    if(!a) return;
-    e.preventDefault();
-    const hash = a.getAttribute('href');
-    history.pushState(null, '', hash);
-    scrollToHash(hash, 'smooth');
+  window.addEventListener("hashchange", ()=>{
+    const {route} = parseHash();
+    setActiveRoute(route);
   });
 
-  window.addEventListener('hashchange', () => scrollToHash(location.hash, 'auto'));
+  // -----------------------------
+  // YardIQ internal navigation
+  // -----------------------------
+  const TAB_TO_SECTION = {
+    inputs: "sec-inputs",
+    matrix: "sec-matrix",
+    suggestions: "sec-suggestions",
+    log: "sec-log"
+  };
 
-  // Initial jump (if page is opened already with #hash)
-  if(location.hash){
-    setTimeout(() => scrollToHash(location.hash, 'auto'), 50);
+  function activateYardTab(tab){
+    // highlight tabs
+    document.querySelectorAll("#yardTabs .tab").forEach(t=>{
+      t.classList.toggle("active", t.dataset.tab === tab);
+    });
   }
-})();
+
+  function scrollToSectionByTab(tab){
+    const id = TAB_TO_SECTION[tab] || "sec-inputs";
+    const el = document.getElementById(id);
+    if(el){
+      el.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+  }
+
+  function syncYardTabsFromHash(){
+    const {route, params} = parseHash();
+    if(route !== "yardiq") return;
+    const tab = (params.tab || "inputs").toLowerCase();
+    activateYardTab(tab);
+    // only auto-scroll when tab explicitly set
+    if(params.tab) scrollToSectionByTab(tab);
+  }
+
+  // IntersectionObserver to auto-update active tab while scrolling inside YardIQ
+  let yardObserver = null;
+  function initYardObserver(){
+    if(yardObserver) return;
+    const targets = Object.values(TAB_TO_SECTION).map(id=>document.getElementById(id)).filter(Boolean);
+    if(!targets.length) return;
+
+    yardObserver = new IntersectionObserver((entries)=>{
+      // pick the most visible section
+      const visible = entries
+        .filter(e=>e.isIntersecting)
+        .sort((a,b)=> b.intersectionRatio - a.intersectionRatio)[0];
+      if(!visible) return;
+
+      const id = visible.target.id;
+      const tab = Object.keys(TAB_TO_SECTION).find(k=>TAB_TO_SECTION[k]===id) || "inputs";
+      activateYardTab(tab);
+
+      // update hash without scrolling jump (replaceState-like)
+      const {route, params} = parseHash();
+      if(route==="yardiq"){
+        const current = (params.tab||"").toLowerCase();
+        if(current !== tab){
+          const q = `#yardiq?tab=${encodeURIComponent(tab)}`;
+          history.replaceState(null, "", q);
+        }
+      }
+    }, { threshold: [0.25, 0.40, 0.55] });
+
+    targets.forEach(t=>yardObserver.observe(t));
+  }
+
+  function wireYardInternalControls(){
+    const b1 = document.getElementById("btnGoInputs");
+    const b2 = document.getElementById("btnGoMatrix");
+    const b3 = document.getElementById("btnGoSuggs");
+
+    if(b1) b1.onclick = ()=> setHash("yardiq",{tab:"inputs"});
+    if(b2) b2.onclick = ()=> setHash("yardiq",{tab:"matrix"});
+    if(b3) b3.onclick = ()=> setHash("yardiq",{tab:"suggestions"});
+
+    // tabs already have href; enhance for smooth scroll + state
+    document.querySelectorAll("#yardTabs .tab").forEach(a=>{
+      a.addEventListener("click",(ev)=>{
+        ev.preventDefault();
+        const tab = a.dataset.tab;
+        setHash("yardiq",{tab});
+      });
+    });
+  }
+
+  // -----------------------------
+  // YardIQ engine (IA explicável: rules + scoring)
+  // -----------------------------
+  const ZONES = ["Hot Yard", "Intermediária", "Fria"];
+  const STATUS_RTG = ["Operacional", "Lento", "Quebrado"];
+  const STATUS_STS = ["Normal", "Pico", "Restrição"];
+
+  const state = {
+    sts: [
+      { id:"STS-01", mphPlan: 28, mphReal: 30, status:"Pico" },
+      { id:"STS-02", mphPlan: 26, mphReal: 25, status:"Normal" }
+    ],
+    zones: [
+      { name:"Hot Yard", capacity: 100, occupancy: 84 },
+      { name:"Intermediária", capacity: 100, occupancy: 68 },
+      { name:"Fria", capacity: 100, occupancy: 42 }
+    ],
+    rtgs: [
+      { id:"RTG-01", zone:"Hot Yard", util: 78, status:"Operacional" },
+      { id:"RTG-02", zone:"Hot Yard", util: 82, status:"Operacional" },
+      { id:"RTG-03", zone:"Intermediária", util: 64, status:"Operacional" },
+      { id:"RTG-04", zone:"Intermediária", util: 58, status:"Operacional" },
+      { id:"RTG-05", zone:"Fria", util: 35, status:"Operacional" },
+      { id:"RTG-06", zone:"Fria", util: 0, status:"Lento" }
+    ],
+    log: []
+  };
+
+  const $ = (id)=>document.getElementById(id);
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+  function zoneStress(occ){
+    if (occ >= 85) return { level:"Crítico", tag:"danger" };
+    if (occ >= 70) return { level:"Atenção", tag:"warn" };
+    return { level:"OK", tag:"ok" };
+  }
+  function rtgHealth(status){
+    if(status==="Quebrado") return 0;
+    if(status==="Lento") return 0.65;
+    return 1.0;
+  }
+  function stsPressureFactor(status){
+    if(status==="Pico") return 1.15;
+    if(status==="Restrição") return 0.80;
+    return 1.0;
+  }
+
+  function escapeHTML(str){
+    return String(str).replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+    }[s]));
+  }
+
+  function addLog(line){
+    const ts = new Date();
+    const time = ts.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+    state.log.unshift(`[${time}] ${line}`);
+    renderLog();
+  }
+
+  function badge(tag, label){
+    const cls = tag==="ok" ? "badge ok" : tag==="warn" ? "badge warn" : "badge danger";
+    return `<span class="${cls}"><span class="dot"></span>${label}</span>`;
+  }
+  function mpill(tag, text){
+    const cls = tag==="g" ? "g" : tag==="y" ? "y" : "r";
+    return `<span class="mpill ${cls}">${text}</span>`;
+  }
+
+  function renderSTS(){
+    const body = $("stsBody"); if(!body) return;
+    body.innerHTML = "";
+    state.sts.forEach((row, idx)=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="cell-mini"><input value="${row.id}" data-k="id" data-t="sts" data-i="${idx}" /></td>
+        <td class="cell-mini"><input type="number" min="0" step="1" value="${row.mphPlan}" data-k="mphPlan" data-t="sts" data-i="${idx}" /></td>
+        <td class="cell-mini"><input type="number" min="0" step="1" value="${row.mphReal}" data-k="mphReal" data-t="sts" data-i="${idx}" /></td>
+        <td class="cell-mini">
+          <select data-k="status" data-t="sts" data-i="${idx}">
+            ${STATUS_STS.map(s=>`<option ${s===row.status?"selected":""}>${s}</option>`).join("")}
+          </select>
+        </td>
+        <td style="text-align:right">
+          <button class="iconbtn danger" title="Remover" data-del="sts" data-i="${idx}">–</button>
+        </td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+
+  function renderZones(){
+    const body = $("zonesBody"); if(!body) return;
+    body.innerHTML = "";
+    state.zones.forEach((z, idx)=>{
+      const st = zoneStress(z.occupancy);
+      const tag = st.tag;
+      const badgeTxt = tag==="ok" ? "OK" : tag==="warn" ? "Atenção" : "Crítico";
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><b>${z.name}</b></td>
+        <td class="cell-mini">
+          <input type="number" min="0" max="100" step="1" value="${z.capacity}"
+            data-k="capacity" data-t="zones" data-i="${idx}" />
+        </td>
+        <td class="cell-mini">
+          <input type="number" min="0" max="100" step="1" value="${z.occupancy}"
+            data-k="occupancy" data-t="zones" data-i="${idx}" />
+        </td>
+        <td>${badge(tag, `${badgeTxt} • ${z.occupancy}%`)}</td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+
+  function renderRTGs(){
+    const body = $("rtgBody"); if(!body) return;
+    body.innerHTML = "";
+    state.rtgs.forEach((r, idx)=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="cell-mini"><input value="${r.id}" data-k="id" data-t="rtgs" data-i="${idx}" /></td>
+        <td class="cell-mini">
+          <select data-k="zone" data-t="rtgs" data-i="${idx}">
+            ${ZONES.map(z=>`<option ${z===r.zone?"selected":""}>${z}</option>`).join("")}
+          </select>
+        </td>
+        <td class="cell-mini"><input type="number" min="0" max="100" step="1" value="${r.util}" data-k="util" data-t="rtgs" data-i="${idx}" /></td>
+        <td class="cell-mini">
+          <select data-k="status" data-t="rtgs" data-i="${idx}">
+            ${STATUS_RTG.map(s=>`<option ${s===r.status?"selected":""}>${s}</option>`).join("")}
+          </select>
+        </td>
+        <td style="text-align:right">
+          <button class="iconbtn danger" title="Remover" data-del="rtgs" data-i="${idx}">–</button>
+        </td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+
+  function renderMatrix(reco){
+    const m = $("matrix"); if(!m) return;
+    m.innerHTML = "";
+    m.insertAdjacentHTML("beforeend", `<div class="mcell head">RTG ↓ / Zona →</div>`);
+    ZONES.forEach(z=>m.insertAdjacentHTML("beforeend", `<div class="mcell head">${z}</div>`));
+    state.rtgs.forEach(r=>{
+      m.insertAdjacentHTML("beforeend", `<div class="mcell side">${r.id}</div>`);
+      ZONES.forEach(z=>{
+        const tag = (reco[r.id] && reco[r.id][z]) ? reco[r.id][z] : "r";
+        const text = tag==="g" ? "🟢 Recomendado" : tag==="y" ? "🟡 Possível" : "🔴 Evitar";
+        m.insertAdjacentHTML("beforeend", `<div class="mcell">${mpill(tag, text)}</div>`);
+      });
+    });
+  }
+
+  function renderBadges(system){
+    const sb = $("systemBadges"), sgb = $("suggBadges");
+    if(sb) sb.innerHTML = [
+      badge(system.capacityTag, `Capacidade: ${system.capacityLabel}`),
+      badge(system.rtgTag, `RTGs: ${system.rtgLabel}`),
+      badge(system.riskTag, `Risco: ${system.riskLabel}`)
+    ].join("");
+
+    if(sgb) sgb.innerHTML = [
+      badge(system.riskTag, `Spillback: ${system.riskLabel}`),
+      badge(system.capacityTag, `Hot Yard: ${system.hotOcc}%`)
+    ].join("");
+  }
+
+  function renderKPIs(system){
+    const a=$("kpiRTGOp"), b=$("kpiRTGNeed"), c=$("kpiRisk");
+    if(a) a.textContent = system.rtgOperational;
+    if(b) b.textContent = system.rtgNeed;
+    if(c) c.textContent = system.riskLabel;
+  }
+
+  function renderSuggestions(list){
+    const el = $("suggestions"); if(!el) return;
+    el.innerHTML = "";
+    if(!list.length){
+      el.innerHTML = `<div class="small">Nenhuma sugestão no momento. Ajuste inputs ou clique em <b>Gerar sugestões</b>.</div>`;
+      return;
+    }
+    list.forEach((s, idx)=>{
+      const card = document.createElement("div");
+      card.className = "sugg";
+      card.innerHTML = `
+        <div class="sugghead">
+          <div>
+            <p class="suggt">${s.title}</p>
+            <p class="suggs">${s.body}</p>
+          </div>
+          <div style="text-align:right">${badge(s.tag, `${s.confidence}`)}</div>
+        </div>
+        <div class="suggmeta">
+          ${badge("ok", `Impacto: ${s.impact}`)}
+          ${badge("warn", `Zona: ${s.zoneFocus}`)}
+          ${badge("ok", `Motivos: ${s.reasons.length}`)}
+        </div>
+        <div class="small" style="margin-top:10px">
+          <b>Explainability:</b><br/>
+          ${s.reasons.map(r=>`• ${r}`).join("<br/>")}
+        </div>
+        <div class="suggbtns">
+          <button class="btn good" data-apply="${idx}">Aplicar</button>
+          <button class="btn primary" data-sim="${idx}">Simular</button>
+          <button class="btn" data-ignore="${idx}">Ignorar</button>
+        </div>
+      `;
+      el.appendChild(card);
+    });
+  }
+
+  function renderLog(){
+    const el = $("log"); if(!el) return;
+    if(!state.log.length){
+      el.innerHTML = `<div class="logline" style="color:var(--muted)">Sem eventos registrados.</div>`;
+      return;
+    }
+    el.innerHTML = state.log.map(l=>`<div class="logline">${escapeHTML(l)}</div>`).join("");
+  }
+
+  function computeSystem(){
+    const stsActive = Number(($("ctxSTSActive")?.value)||0);
+    const rtgNeed = stsActive * 3;
+    const rtgOperational = state.rtgs.filter(r=>r.status!=="Quebrado").length;
+
+    const hot = state.zones.find(z=>z.name==="Hot Yard");
+    const inter = state.zones.find(z=>z.name==="Intermediária");
+    const cold = state.zones.find(z=>z.name==="Fria");
+
+    const hotStress = zoneStress(hot.occupancy);
+    const interStress = zoneStress(inter.occupancy);
+
+    const pressure = state.sts.reduce((acc, s)=>{
+      const ratio = (s.mphReal>0 && s.mphPlan>0) ? (s.mphReal / s.mphPlan) : 1.0;
+      return acc + ratio * stsPressureFactor(s.status);
+    }, 0) / Math.max(1, state.sts.length);
+
+    const shortage = Math.max(0, rtgNeed - rtgOperational);
+    const shortageFactor = shortage / Math.max(1, rtgNeed);
+    const hotOccFactor = clamp(hot.occupancy/100, 0, 1);
+    const riskScore = clamp(0.45*shortageFactor + 0.40*hotOccFactor + 0.15*clamp((pressure-1)*1.2, 0, 1), 0, 1);
+
+    let riskLabel = "Baixo", riskTag = "ok";
+    if(riskScore >= 0.66){ riskLabel="Alto"; riskTag="danger"; }
+    else if(riskScore >= 0.40){ riskLabel="Médio"; riskTag="warn"; }
+
+    let capacityLabel="OK", capacityTag="ok";
+    if(hotStress.tag==="danger" || interStress.tag==="danger"){ capacityLabel="Crítico"; capacityTag="danger"; }
+    else if(hotStress.tag==="warn" || interStress.tag==="warn"){ capacityLabel="Atenção"; capacityTag="warn"; }
+
+    let rtgLabel = (rtgOperational>=rtgNeed) ? "Coberto" : `Falta ${rtgNeed-rtgOperational}`;
+    let rtgTag = (rtgOperational>=rtgNeed) ? "ok" : (rtgOperational>=rtgNeed-1 ? "warn" : "danger");
+
+    return {
+      stsActive, rtgNeed, rtgOperational,
+      hotOcc: hot.occupancy,
+      interOcc: inter.occupancy,
+      coldOcc: cold.occupancy,
+      pressure,
+      shortage,
+      riskScore, riskLabel, riskTag,
+      capacityLabel, capacityTag,
+      rtgLabel, rtgTag
+    };
+  }
+
+  function computeMatrix(system){
+    const zoneWeights = {"Hot Yard":1.15, "Intermediária":1.00, "Fria":0.85};
+    const zonePenalty = {};
+    state.zones.forEach(z=>{
+      const st = zoneStress(z.occupancy);
+      zonePenalty[z.name] = st.tag==="danger" ? 0.30 : st.tag==="warn" ? 0.18 : 0.05;
+    });
+
+    const reco = {};
+    state.rtgs.forEach(r=>{
+      reco[r.id] = {};
+      ZONES.forEach(z=>{
+        const health = rtgHealth(r.status);
+        const avail = (1 - clamp(r.util/100, 0, 1));
+        const base = avail * health * zoneWeights[z] * (1 - zonePenalty[z]);
+
+        const mismatch = (r.zone===z) ? 0 : (r.zone==="Fria" && z==="Hot Yard") ? 0.10 :
+                         (r.zone==="Hot Yard" && z==="Fria") ? 0.10 : 0.06;
+
+        const hotOver = (z==="Hot Yard" && system.hotOcc>=85) ? 0.10 : 0.0;
+        const score = base - mismatch - hotOver;
+
+        let tag="r";
+        if(r.status==="Quebrado") tag="r";
+        else if(score >= 0.58) tag="g";
+        else if(score >= 0.40) tag="y";
+        else tag="r";
+
+        if(z==="Hot Yard" && system.hotOcc>=92) tag="r";
+        reco[r.id][z] = tag;
+      });
+    });
+    return reco;
+  }
+
+  function buildSuggestions(system){
+    const sugg = [];
+
+    if(system.shortage > 0){
+      const candidates = state.rtgs
+        .filter(r=>r.status!=="Quebrado")
+        .sort((a,b)=> (a.util - b.util));
+
+      sugg.push({
+        tag: system.shortage>=2 ? "danger" : "warn",
+        confidence: system.shortage>=2 ? "Confiança: Alta" : "Confiança: Média",
+        zoneFocus: "Hot Yard / Intermediária",
+        impact: `Protege STS (${system.shortage} RTG(s) em falta)`,
+        title: `Cobertura 3:1 insuficiente — acionar contingência`,
+        body: `RTGs operacionais (${system.rtgOperational}) abaixo do necessário (${system.rtgNeed}). Recomenda-se ativar RTG(s) de contingência e reduzir tarefas não críticas (reshuffles).`,
+        reasons: [
+          `Regra 3:1: STSs ativos = ${system.stsActive} → RTGs necessários = ${system.rtgNeed}.`,
+          `RTGs operacionais (exclui quebrados) = ${system.rtgOperational}.`,
+          `Risco de spillback estimado: ${system.riskLabel}.`
+        ],
+        apply: { type:"policy", action:"prioritize_hot", pick: candidates.slice(0,2).map(r=>r.id) }
+      });
+    }
+
+    if(system.hotOcc >= 85){
+      const target = (system.interOcc <= 75) ? "Intermediária" : "Fria";
+      const tag = (system.hotOcc>=92) ? "danger" : "warn";
+      const conf = (system.hotOcc>=92) ? "Confiança: Alta" : "Confiança: Média";
+
+      sugg.push({
+        tag, confidence: conf,
+        zoneFocus: target,
+        impact: `Reduz pressão no Hot Yard`,
+        title: `Hot Yard sob stress — redirecionar drops temporariamente`,
+        body: `Hot Yard com ${system.hotOcc}% de ocupação. Redirecionar novos drops para ${target} preserva buffer de cais e reduz filas internas.`,
+        reasons: [
+          `Hot Yard ≥ 85% aumenta risco de spillback para o cais.`,
+          `${target} oferece margem (ocupação: ${target==="Intermediária"?system.interOcc:system.coldOcc}%).`,
+          `Estratégia anticongestionamento exige rota alternativa ativa.`
+        ],
+        apply: { type:"policy", action:"redirect", to: target }
+      });
+    }
+
+    if(system.riskScore >= 0.40){
+      const movable = state.rtgs
+        .filter(r=>r.status!=="Quebrado")
+        .filter(r=>r.zone!=="Hot Yard")
+        .sort((a,b)=> (a.util - b.util));
+
+      if(movable.length){
+        const pick = movable[0];
+        sugg.push({
+          tag: system.riskScore>=0.66 ? "danger" : "warn",
+          confidence: system.riskScore>=0.66 ? "Confiança: Alta" : "Confiança: Média",
+          zoneFocus: "Hot Yard",
+          impact: `Aumenta elasticidade no interface cais–pátio`,
+          title: `Rebalanceamento — deslocar ${pick.id} para Hot Yard`,
+          body: `Com risco ${system.riskLabel} e RTG ${pick.id} com baixa utilização (${pick.util}%), recomenda-se deslocamento para Hot Yard como secundário para absorver pico.`,
+          reasons: [
+            `Risco agregado: shortage (${system.shortage}) + Hot Yard (${system.hotOcc}%) + pressão STS.`,
+            `${pick.id} tem baixa utilização e está disponível (${pick.status}).`,
+            `Intermediária/Fria devem suportar contingência do Hot Yard quando necessário.`
+          ],
+          apply: { type:"move_rtg", rtgId: pick.id, toZone:"Hot Yard" }
+        });
+      }
+    }
+
+    if(system.interOcc >= 80){
+      sugg.push({
+        tag: system.interOcc>=90 ? "danger" : "warn",
+        confidence: system.interOcc>=90 ? "Confiança: Alta" : "Confiança: Média",
+        zoneFocus: "Intermediária",
+        impact: `Libera capacidade para fluxo crítico`,
+        title: `Intermediária congestionando — congelar tarefas não críticas`,
+        body: `Intermediária com ${system.interOcc}% de ocupação. Congelar reshuffles e realocações não críticas reduz conflito de prioridades e estabiliza o fluxo.`,
+        reasons: [
+          `Zona intermediária é o “pulmão”. Saturação reduz resiliência.`,
+          `Tarefas não críticas competem por RTG e vias internas.`,
+          `Contingência depende de margem na Intermediária.`
+        ],
+        apply: { type:"policy", action:"freeze_noncritical", zone:"Intermediária" }
+      });
+    }
+
+    if(!sugg.length){
+      sugg.push({
+        tag:"ok",
+        confidence:"Confiança: Alta",
+        zoneFocus:"—",
+        impact:"Operação estável",
+        title:"Condições estáveis — manter estratégia atual",
+        body:"Cobertura 3:1 atendida e zonas abaixo do limiar de stress. Recomenda-se manter a alocação e monitorar variações de 15–30 min.",
+        reasons:[
+          `RTGs operacionais ≥ RTGs necessários (${system.rtgOperational} ≥ ${system.rtgNeed}).`,
+          `Hot Yard abaixo de 85% (atual: ${system.hotOcc}%).`,
+          `Risco agregado: ${system.riskLabel}.`
+        ],
+        apply: { type:"noop" }
+      });
+    }
+
+    return sugg.slice(0, 3);
+  }
+
+  function applySuggestion(s){
+    const mode = $("ctxMode")?.value || "Operação";
+    const prefix = (mode==="Simulação") ? "SIMULAÇÃO" : "APLICADO";
+    if(!s || !s.apply) return;
+
+    if(s.apply.type==="move_rtg"){
+      const r = state.rtgs.find(x=>x.id===s.apply.rtgId);
+      if(r){
+        const from = r.zone;
+        r.zone = s.apply.toZone;
+        addLog(`${prefix}: mover ${r.id} de ${from} → ${r.zone} | Motivo: ${s.title}`);
+      }
+    } else if(s.apply.type==="policy"){
+      addLog(`${prefix}: política '${s.apply.action}' | Foco: ${s.zoneFocus} | Motivo: ${s.title}`);
+    } else if(s.apply.type==="noop"){
+      addLog(`${prefix}: manter estratégia | ${s.title}`);
+    }
+    renderAll(true);
+  }
+
+  function ignoreSuggestion(s){
+    const mode = $("ctxMode")?.value || "Operação";
+    const prefix = (mode==="Simulação") ? "SIMULAÇÃO" : "REGISTRO";
+    addLog(`${prefix}: ignorada sugestão | ${s.title}`);
+  }
+  function simulateSuggestion(s){
+    const mode = $("ctxMode")?.value || "Operação";
+    addLog(`${mode==="Simulação" ? "SIMULAÇÃO" : "SIMULAÇÃO (operação)"}: avaliar '${s.title}'`);
+  }
+
+  function renderAll(fromUser=false){
+    if(!document.getElementById("view-yardiq")) return;
+
+    renderSTS();
+    renderZones();
+    renderRTGs();
+
+    const system = computeSystem();
+    const reco = computeMatrix(system);
+    const suggestions = buildSuggestions(system);
+
+    renderBadges(system);
+    renderKPIs(system);
+    renderMatrix(reco);
+    renderSuggestions(suggestions);
+
+    window.__latest = {system, reco, suggestions};
+
+    if(fromUser){
+      addLog(`Recalcular: STSs=${system.stsActive}, RTGs op=${system.rtgOperational}, RTGs need=${system.rtgNeed}, Hot=${system.hotOcc}%, Risco=${system.riskLabel}`);
+    }
+  }
+
+  // YardIQ events (delegation)
+  document.addEventListener("input", (e)=>{
+    const {route} = parseHash();
+    if(route !== "yardiq") return;
+
+    const t = e.target;
+    const k = t.getAttribute("data-k");
+    const type = t.getAttribute("data-t");
+    const i = t.getAttribute("data-i");
+    if(!k || !type || i===null) return;
+
+    const idx = Number(i);
+    let v = t.value;
+    if(["mphPlan","mphReal","capacity","occupancy","util"].includes(k)) v = Number(v||0);
+
+    if(type==="sts") state.sts[idx][k] = v;
+    else if(type==="zones") state.zones[idx][k] = v;
+    else if(type==="rtgs") state.rtgs[idx][k] = v;
+
+    renderAll(false);
+  });
+
+  document.addEventListener("click", (e)=>{
+    const {route} = parseHash();
+    if(route !== "yardiq") return;
+
+    const del = e.target.getAttribute("data-del");
+    const di = e.target.getAttribute("data-i");
+    if(del && di!==null){
+      const idx = Number(di);
+      if(del==="sts") state.sts.splice(idx,1);
+      if(del==="rtgs") state.rtgs.splice(idx,1);
+      addLog(`Remoção: ${del.toUpperCase()} linha #${idx+1}`);
+      renderAll(true);
+      return;
+    }
+
+    const applyIdx = e.target.getAttribute("data-apply");
+    if(applyIdx!==null){
+      const s = window.__latest?.suggestions?.[Number(applyIdx)];
+      applySuggestion(s);
+      return;
+    }
+    const simIdx = e.target.getAttribute("data-sim");
+    if(simIdx!==null){
+      const s = window.__latest?.suggestions?.[Number(simIdx)];
+      simulateSuggestion(s);
+      return;
+    }
+    const ignIdx = e.target.getAttribute("data-ignore");
+    if(ignIdx!==null){
+      const s = window.__latest?.suggestions?.[Number(ignIdx)];
+      ignoreSuggestion(s);
+      return;
+    }
+  });
+
+  function wireYardButtons(){
+    const br = $("btnRecalc"), ba = $("btnApplyAll"), bs = $("btnReset");
+    const aR = $("addRTG"), aS = $("addSTS");
+    const cl = $("btnClearLog"), ex = $("btnExportLog");
+
+    if(br) br.onclick = ()=>renderAll(true);
+    if(ba) ba.onclick = ()=>{
+      const top = window.__latest?.suggestions?.[0];
+      if(top) applySuggestion(top);
+    };
+    if(aR) aR.onclick = ()=>{
+      const n = state.rtgs.length + 1;
+      state.rtgs.push({ id:`RTG-${String(n).padStart(2,"0")}`, zone:"Fria", util: 20, status:"Operacional" });
+      addLog("Adicionar: RTG (default em Fria como contingência)");
+      renderAll(true);
+      // keep tab in inputs
+      setHash("yardiq",{tab:"inputs"});
+    };
+    if(aS) aS.onclick = ()=>{
+      const n = state.sts.length + 1;
+      state.sts.push({ id:`STS-${String(n).padStart(2,"0")}`, mphPlan: 26, mphReal: 26, status:"Normal" });
+      addLog("Adicionar: STS");
+      renderAll(true);
+      setHash("yardiq",{tab:"inputs"});
+    };
+    if(bs) bs.onclick = ()=>{
+      state.sts = [
+        { id:"STS-01", mphPlan: 28, mphReal: 30, status:"Pico" },
+        { id:"STS-02", mphPlan: 26, mphReal: 25, status:"Normal" }
+      ];
+      state.zones = [
+        { name:"Hot Yard", capacity: 100, occupancy: 84 },
+        { name:"Intermediária", capacity: 100, occupancy: 68 },
+        { name:"Fria", capacity: 100, occupancy: 42 }
+      ];
+      state.rtgs = [
+        { id:"RTG-01", zone:"Hot Yard", util: 78, status:"Operacional" },
+        { id:"RTG-02", zone:"Hot Yard", util: 82, status:"Operacional" },
+        { id:"RTG-03", zone:"Intermediária", util: 64, status:"Operacional" },
+        { id:"RTG-04", zone:"Intermediária", util: 58, status:"Operacional" },
+        { id:"RTG-05", zone:"Fria", util: 35, status:"Operacional" },
+        { id:"RTG-06", zone:"Fria", util: 0, status:"Lento" }
+      ];
+      addLog("Reset: estado demo restaurado");
+      renderAll(true);
+      setHash("yardiq",{tab:"inputs"});
+    };
+    if(cl) cl.onclick = ()=>{ state.log=[]; renderLog(); setHash("yardiq",{tab:"log"}); };
+    if(ex) ex.onclick = ()=>{
+      const text = state.log.slice().reverse().join("\n");
+      const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "yardiq-ai-yard-control-log.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    };
+  }
+
+  // Boot
+  window.addEventListener("DOMContentLoaded", ()=>{
+    if(!location.hash) location.hash = "#yardiq?tab=inputs";
+    const {route} = parseHash();
+    setActiveRoute(route);
+
+    addLog("Inicialização: app carregado (router + subnav ativo).");
+
+    setTimeout(()=> {
+      wireYardButtons();
+      wireYardInternalControls();
+      initYardObserver();
+      if(parseHash().route==="yardiq"){
+        renderAll(false);
+        syncYardTabsFromHash();
+      }
+    }, 0);
+  });
+
+  window.addEventListener("hashchange", ()=>{
+    const {route} = parseHash();
+    setActiveRoute(route);
+    setTimeout(()=> {
+      wireYardButtons();
+      wireYardInternalControls();
+      initYardObserver();
+      if(route==="yardiq"){
+        renderAll(false);
+        syncYardTabsFromHash();
+      }
+    }, 0);
+  });
 </script>
-
-
-</body></html>
+</body>
+</html>
