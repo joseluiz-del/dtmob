@@ -1,1244 +1,997 @@
 <!DOCTYPE html>
-<!-- saved from url=(0070)file:///C:/Users/HxTos/Downloads/CYIA_Edition_SingleFile_Light_v3.html -->
+<!-- saved from url=(0071)file:///C:/Users/HxTos/Desktop/Port%20Automation/HXtos%20CY/Damage.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HXtos CY • CYIA Edition (Single-file Light)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CY | Damage (Modelo VSC)</title>
   <style>
-    /*
-      CYIA Edition — Single-file Light
-      Objetivo: protótipo navegável com fluxos completos (GateIQ → Exceção → Inspeção → Liberação;
-      DeckingIQ → Sugestão → Aprovação → Geração de tarefa; DocIQ → Upload → Validação → Bloqueios → Aprovação)
-
-      OBS: Para “fidelidade” visual total ao CY, substitua os tokens abaixo (cores, raios, tipografia) pelos extraídos do PDF.
-    */
-
-    :root{
-      --bg:#f6f7fb;
-      --panel:#ffffff;
-      --panel2:#fbfcff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --line:#e5e7eb;
-      --shadow: 0 10px 24px rgba(15,23,42,.08);
-      --shadow2: 0 6px 14px rgba(15,23,42,.06);
-      --primary:#1d4ed8;
-      --primary2:#2563eb;
-      --primary-ink:#ffffff;
-      --good:#16a34a;
-      --warn:#f59e0b;
-      --bad:#dc2626;
-      --radius:14px;
-      --radius2:18px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      --g: 12px; /* grid gap */
+:root{
+      --bg:#e9ecef; --card:#fff; --text:#1f2a37; --muted:#6b7280;
+      --line:#d9dde3; --teal:#00a6c8; --teal2:#028eaa;
+      --shadow:0 10px 22px rgba(16,24,40,.12);
+      --r12:12px; --r10:10px;
+      --focus:rgba(0,166,200,.28);
     }
-
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      background:linear-gradient(180deg, #f3f4f6 0%, var(--bg) 70%);
-      color:var(--text);
+    body{margin:0;font-family:Montserrat,Segoe UI,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    /* Top */
+    .topbar{
+      height:64px; position:sticky; top:0; z-index:5;
+      background:linear-gradient(90deg,var(--teal2),var(--teal));
+      display:flex; align-items:center; padding:0 16px; color:#fff;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
     }
-    a{color:inherit; text-decoration:none}
-
-    /* Layout */
-    .app{display:grid; grid-template-columns: 270px 1fr; min-height:100vh}
-    .side{
-      border-right:1px solid var(--line);
-      background:linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-      padding:16px 14px;
-      position:sticky; top:0; height:100vh;
-    }
-    .brand{
-      display:flex; gap:10px; align-items:center;
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius:var(--radius2);
-      background:var(--panel);
-      box-shadow:var(--shadow2);
-    }
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background:linear-gradient(135deg, var(--primary) 0%, #60a5fa 60%, #93c5fd 100%);
-    }
-    .brand h1{margin:0; font-size:14px; letter-spacing:.2px}
-    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
-
-    .nav{margin-top:14px; display:flex; flex-direction:column; gap:8px}
-    .nav a{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background:var(--panel);
-      box-shadow: 0 1px 0 rgba(15,23,42,.02);
+    .iconbtn{
+      width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.12); display:grid; place-items:center; cursor:pointer;
       transition:.15s ease;
     }
-    .nav a:hover{transform:translateY(-1px); box-shadow:var(--shadow2)}
-    .nav a.active{border-color:rgba(29,78,216,.35); outline:3px solid rgba(37,99,235,.10)}
-    .badge{
-      font-size:11px; color:var(--muted);
-      padding:2px 8px; border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--panel2);
+    .iconbtn:hover{transform:translateY(-1px);background:rgba(255,255,255,.18)}
+    .brand{flex:1;text-align:center;font-weight:900;letter-spacing:.10em;font-size:20px;user-select:none}
+    .wrap{max-width:1400px;margin:0 auto;padding:14px}
+    /* Card */
+    .card{background:var(--card);border-radius:var(--r12);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.05);overflow:hidden}
+    .cardHeader{padding:16px 18px 10px;border-bottom:1px solid rgba(0,0,0,.06)}
+    .title{margin:0;font-size:26px;font-weight:900;color:var(--teal2)}
+    /* Tabs */
+    .tabs{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    .tab{
+      border:1px solid rgba(0,0,0,.10);background:#f7fbfc;color:#0e5564;
+      padding:10px 12px;border-radius:999px;cursor:pointer;font-weight:800;font-size:13px;
+      display:flex;align-items:center;gap:8px;transition:.15s ease;user-select:none;
     }
-
-    .main{padding:18px 18px 36px}
-    .top{
-      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
-      margin-bottom:14px;
+    .tab:hover{transform:translateY(-1px)}
+    .tab.active{background:rgba(0,166,200,.16);border-color:rgba(0,166,200,.35);color:#004c5c}
+    .pill{width:10px;height:10px;border-radius:999px;background:var(--teal2);box-shadow:0 0 0 4px rgba(0,166,200,.16)}
+    .content{padding:14px 16px 16px}
+    .twoCol{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+    @media (max-width:1060px){.twoCol{grid-template-columns:1fr}}
+    .panel{
+      border:1px solid rgba(0,0,0,.08);border-radius:var(--r10);padding:14px;background:#fff;
     }
-    .title h2{margin:0; font-size:18px}
-    .title p{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-
-    .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+    .sub{margin:0 0 10px;font-weight:900;color:#0e5564;font-size:16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:520px){.grid2{grid-template-columns:1fr}}
+    .field{display:flex;flex-direction:column;gap:7px}
+    .label{font-size:12px;color:var(--muted);font-weight:800}
+    input,select{
+      border:1px solid rgba(0,0,0,.14);border-radius:8px;padding:10px 12px;outline:none;
+      background:#f2f2f2;color:#2b2b2b;font-size:13px;transition:.15s ease;
+    }
+    input:focus,select:focus{border-color:rgba(0,166,200,.55);box-shadow:0 0 0 4px var(--focus);background:#fff}
+    .btnrow{display:flex;gap:12px;justify-content:flex-end;align-items:center;margin-top:10px;flex-wrap:wrap}
     .btn{
-      border:1px solid var(--line);
-      background:var(--panel);
-      color:var(--text);
-      padding:9px 12px;
-      border-radius:12px;
-      cursor:pointer;
-      box-shadow: 0 2px 0 rgba(15,23,42,.03);
+      border:none;padding:10px 14px;border-radius:10px;font-weight:900;cursor:pointer;
+      transition:.15s ease;font-size:13px;min-width:150px;display:inline-flex;gap:10px;align-items:center;justify-content:center;
+    }
+    .btn.light{background:#bfefff;color:#0a6477}
+    .btn.primary{background:var(--teal2);color:#fff}
+    .btn.ghost{background:#f6f7f9;border:1px solid rgba(0,0,0,.10);color:#1c4450}
+    .btn:hover{transform:translateY(-1px);filter:brightness(.98)}
+    .divider{height:1px;background:rgba(0,0,0,.10);margin:12px 0}
+    .hint{margin:0;color:var(--muted);font-weight:700;font-size:12px;line-height:1.35}
+    /* Compass (direção empilhamento) */
+    .configGrid{display:grid;grid-template-columns:230px 1fr 1fr;gap:12px;align-items:start}
+    @media (max-width:920px){.configGrid{grid-template-columns:1fr}}
+    .compassWrap{display:flex;flex-direction:column;gap:10px}
+    .compassLabel{font-weight:900;color:#0e5564;font-size:13px}
+    .compass{
+      width:190px;height:190px;border-radius:999px;border:2px solid rgba(0,0,0,.12);position:relative;
+      background:radial-gradient(circle at 30% 30%,#fff,#f1f6f8);box-shadow:0 10px 18px rgba(0,0,0,.10);
+    }
+    .ring{position:absolute;inset:14px;border-radius:999px;border:1px solid rgba(0,0,0,.14)}
+    .cross{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+    .cross::before,.cross::after{content:"";position:absolute;background:rgba(0,166,200,.65);border-radius:999px}
+    .cross::before{width:2px;height:150px}.cross::after{height:2px;width:150px}
+    .dirbtn{
+      position:absolute;width:34px;height:34px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,.12);
+      display:grid;place-items:center;font-weight:900;font-size:11px;color:#0e5564;cursor:pointer;transition:.12s ease;
+    }
+    .dirbtn:hover{transform:translateY(-1px)}
+    .dirbtn.active{background:var(--teal2);color:#fff;box-shadow:0 8px 14px rgba(0,166,200,.25)}
+    .N{top:-10px;left:50%;transform:translateX(-50%)} .NE{top:16px;right:16px}
+    .E{top:50%;right:-10px;transform:translateY(-50%)} .SE{bottom:16px;right:16px}
+    .S{bottom:-10px;left:50%;transform:translateX(-50%)} .SO{bottom:16px;left:16px}
+    .O{top:50%;left:-10px;transform:translateY(-50%)} .NO{top:16px;left:16px}
+    .needle{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+    .needle svg{width:96px;height:96px;opacity:.92;transform-origin:50% 50%}
+    /* Toggle (Row/Tier) */
+    .toggleRow{display:flex;align-items:center;gap:10px;margin-top:4px}
+    .toggle{
+      width:52px;height:28px;border-radius:999px;background:#dde3ea;border:1px solid rgba(0,0,0,.12);
+      position:relative;cursor:pointer;transition:.15s ease;
+    }
+    .toggle::after{
+      content:"";width:22px;height:22px;border-radius:999px;position:absolute;top:2px;left:2px;background:#fff;
+      box-shadow:0 4px 10px rgba(0,0,0,.12);transition:.15s ease;
+    }
+    .toggle.on{background:rgba(0,166,200,.28);border-color:rgba(0,166,200,.35)}
+    .toggle.on::after{left:28px;background:#eaffff}
+    .tag{font-size:12px;font-weight:900;color:#0e5564}
+    /* Visualização (grid) */
+    .vizPanel{border-left:1px solid rgba(0,0,0,.12);padding-left:18px}
+    @media (max-width:1060px){.vizPanel{border-left:none;padding-left:0;border-top:1px solid rgba(0,0,0,.12);padding-top:16px}}
+    .vizHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+    .vizTitle{margin:0;font-size:14px;font-weight:900;color:#0e5564}
+    .walls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:12px;font-weight:800}
+    .ck{
+      display:flex;gap:6px;align-items:center;background:#f6f7f9;border:1px solid rgba(0,0,0,.10);
+      padding:6px 8px;border-radius:999px;cursor:pointer;user-select:none
+    }
+    .ck input{margin:0;width:16px;height:16px}
+    .yardWrap{display:grid;grid-template-columns:40px 1fr;gap:8px;align-items:start;margin-top:8px}
+    .yAxis{display:flex;flex-direction:column;gap:14px;padding-top:8px;align-items:flex-end;font-weight:900;color:#232a31}
+    .yard{
+      border-radius:12px;padding:10px 10px 6px;background:#fff;border:1px solid rgba(0,0,0,.10);
+      display:inline-block;position:relative;
+    }
+    .yardGrid{display:grid;gap:10px;justify-content:start;align-content:start}
+    .slot{
+      width:40px;height:40px;background:#dcdcdc;border-radius:3px;border:1px solid rgba(0,0,0,.06);
+      cursor:pointer;transition:.12s ease;position:relative;
+    }
+    .slot:hover{transform:translateY(-1px);filter:brightness(.98)}
+    .slot.occ{background:rgba(0,166,200,.28)}
+    .slot.occ::after{content:"";position:absolute;inset:10px;border-radius:2px;border:2px solid rgba(2,142,170,.75)}
+    .xAxis{display:grid;gap:10px;margin-left:40px;margin-top:8px;font-weight:900;color:#232a31}
+    .xAxis span{display:block;width:40px;text-align:center}
+    .yardWallsTop,.yardWallsBottom{position:absolute;left:10px;right:10px;height:10px;display:flex;justify-content:center;align-items:center;pointer-events:none}
+    .yardWallsTop{top:-2px}.yardWallsBottom{bottom:-2px}
+    .yardWallsLeft,.yardWallsRight{position:absolute;top:10px;bottom:10px;width:10px;display:flex;justify-content:center;align-items:center;pointer-events:none}
+    .yardWallsLeft{left:-2px}.yardWallsRight{right:-2px}
+    .wallLine{background:#cfd6dd;border-radius:999px}
+    /* Table */
+    .tableCard{margin-top:14px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:var(--r12);box-shadow:var(--shadow);overflow:hidden}
+    .tableHead{padding:16px 16px 10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .tableTitle{margin:0;font-size:24px;font-weight:900;color:var(--teal2)}
+    .exportBtn{
+      border:none;background:var(--teal2);color:#fff;border-radius:12px;padding:12px 16px;font-weight:900;
+      cursor:pointer;display:inline-flex;align-items:center;gap:10px;min-width:260px;justify-content:center;
       transition:.15s ease;
-      display:inline-flex; gap:8px; align-items:center;
-      font-weight:600; font-size:13px;
     }
-    .btn:hover{transform:translateY(-1px); box-shadow:var(--shadow2)}
-    .btn.primary{
-      background:linear-gradient(180deg, var(--primary2), var(--primary));
-      border-color:rgba(29,78,216,.2);
-      color:var(--primary-ink);
+    .exportBtn:hover{filter:brightness(.98);transform:translateY(-1px)}
+    .searchbar{padding:10px 16px 0}
+    .search{
+      width:100%;border-radius:8px;background:#efefef;border:1px solid rgba(0,0,0,.12);
+      padding:11px 12px 11px 38px;outline:none;font-weight:800;
+      background-image:radial-gradient(circle at 14px 50%,rgba(0,0,0,.35) 2px,transparent 3px);
+      background-repeat:no-repeat;background-size:20px 20px;background-position:10px 50%;
     }
-    .btn.ghost{background:transparent}
-
-    /* Grid / Cards */
-    .grid{display:grid; gap:var(--g)}
-    .grid.cols-12{grid-template-columns:repeat(12, minmax(0,1fr))}
-    .span-12{grid-column:span 12}
-    .span-8{grid-column:span 8}
-    .span-6{grid-column:span 6}
-    .span-4{grid-column:span 4}
-
-    .card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:var(--radius2);
-      box-shadow:var(--shadow2);
-      overflow:hidden;
-    }
-    .card .hd{
-      padding:12px 14px;
-      border-bottom:1px solid var(--line);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      background:linear-gradient(180deg, #ffffff, #fbfcff);
-    }
-    .card .hd h3{margin:0; font-size:13px}
-    .card .bd{padding:14px}
-
-    .pill{
-      display:inline-flex; align-items:center; gap:6px;
-      font-size:12px; color:var(--muted);
-      padding:3px 10px; border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-    }
-    .dot{width:8px; height:8px; border-radius:999px; background:var(--muted)}
-    .dot.good{background:var(--good)}
-    .dot.warn{background:var(--warn)}
-    .dot.bad{background:var(--bad)}
-
-    /* Forms */
-    label{display:block; font-size:12px; color:var(--muted); margin-bottom:6px}
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    .input, select, textarea{
-      width:100%;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--text);
-      outline:none;
-      font-size:13px;
-    }
-    textarea{min-height:92px; resize:vertical}
-    .help{margin-top:6px; font-size:12px; color:var(--muted); line-height:1.35}
-
-    /* Tables */
-    .table{
-      width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid var(--line);
-      border-radius:14px;
-      overflow:hidden;
-    }
-    .table th, .table td{
-      padding:10px 10px;
-      font-size:12.5px;
-      border-bottom:1px solid var(--line);
-      vertical-align:top;
-    }
-    .table th{background:#f8fafc; color:var(--muted); font-weight:700; text-align:left}
-    .table tr:last-child td{border-bottom:none}
-    .k{font-family:var(--mono); font-size:12px}
-
-    /* Stepper */
-    .stepper{display:flex; gap:10px; flex-wrap:wrap}
-    .step{
-      display:flex; align-items:center; gap:8px;
-      padding:7px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:var(--panel2);
-      color:var(--muted);
-      font-size:12px;
-      font-weight:700;
-    }
-    .step.active{border-color:rgba(29,78,216,.25); background:rgba(37,99,235,.08); color:#1e3a8a}
-    .step.done{border-color:rgba(22,163,74,.25); background:rgba(22,163,74,.08); color:#065f46}
-
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:12px 10px;border-bottom:1px solid rgba(0,0,0,.10);text-align:left;white-space:nowrap}
+    th{color:var(--teal2);font-weight:900;font-size:12px}
+    td{color:#2a2a2a;font-weight:800}
+    .actions{display:flex;gap:8px;align-items:center}
+    .smallBtn{border:none;background:var(--teal2);color:#fff;border-radius:7px;padding:8px 10px;font-weight:900;cursor:pointer;font-size:11px}
+    .smallBtn.icon{width:34px;padding:8px 0}
+    .smallBtn.secondary{background:#1aa2bb}.smallBtn.danger{background:#0f7e95}
+    .foot{padding:12px 16px;color:var(--muted);font-weight:800;font-size:12px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
     /* Toast */
     .toast{
-      position:fixed; right:16px; bottom:16px;
-      width:min(420px, calc(100vw - 32px));
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:16px;
-      box-shadow:var(--shadow);
+      position:fixed;bottom:16px;right:16px;background:#0e5564;color:#fff;padding:12px 14px;border-radius:12px;
+      box-shadow:0 14px 28px rgba(0,0,0,.20);opacity:0;transform:translateY(10px);transition:.18s ease;
+      max-width:420px;z-index:20;font-weight:900;font-size:13px
+    }
+    .toast.show{opacity:1;transform:translateY(0)}
+  
+    /* Required + validation */
+    :root{
+      --danger:#c1121f;
+      --dangerBg: rgba(193,18,31,.10);
+      --ok:#1f7a1f;
+      --amber:#a85d00;
+    }
+    .req{color:var(--danger);font-weight:900}
+    .error input,.error select{
+      border-color: var(--danger)!important;
+      background: var(--dangerBg)!important;
+      box-shadow: 0 0 0 4px rgba(193,18,31,.14)!important;
+    }
+    .errmsg{display:none;color:var(--danger);font-weight:900;font-size:12px;line-height:1.2}
+    .error .errmsg{display:block}
+
+    /* Gate Decision + chips */
+    .statusBox{
+      border:1px dashed rgba(0,0,0,.18);
+      border-radius:12px;
       padding:12px;
-      display:none;
-      z-index:60;
+      background:#fbfdfe;
+      display:flex;flex-direction:column;gap:8px;
     }
-    .toast.show{display:block}
-    .toast .t{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
-    .toast .t b{font-size:13px}
-    .toast .t button{border:0; background:transparent; cursor:pointer; font-size:16px; color:var(--muted)}
-    .toast p{margin:8px 0 0; color:var(--muted); font-size:12.5px; line-height:1.35}
+    .statusLine{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:900;font-size:13px}
+    .badge{
+      padding:6px 10px;border-radius:999px;font-weight:900;font-size:12px;
+      border:1px solid rgba(0,0,0,.10);
+      background:#f6f7f9;color:#1c4450;
+    }
+    .badge.ok{background:rgba(31,122,31,.10);border-color:rgba(31,122,31,.22);color:var(--ok)}
+    .badge.warn{background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.18);color:var(--danger)}
+    .badge.amber{background:rgba(168,93,0,.10);border-color:rgba(168,93,0,.20);color:var(--amber)}
+    .chipRow{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:999px;
+      background:#f6f7f9;border:1px solid rgba(0,0,0,.10);
+      font-weight:900;font-size:12px;color:#0e5564;
+      cursor:pointer;user-select:none;transition:.12s ease;
+    }
+    .chip:hover{transform:translateY(-1px)}
+    .chip .dot{width:10px;height:10px;border-radius:999px;background:var(--teal2);box-shadow:0 0 0 4px rgba(0,166,200,.16)}
+    .chip.off{opacity:.55}
+    .chip.off .dot{background:#7b8794;box-shadow:none}
 
-    /* Copilot Drawer */
-    .drawer{
-      position:fixed; inset:0;
-      background:rgba(15,23,42,.28);
-      display:none; justify-content:flex-end;
-      z-index:70;
+
+    /* -----------------------------
+       DAMAGE ADAPTATION (MODEL UI)
+       ----------------------------- */
+
+    /* The original Damage prototype used a sidebar. We hide any leftover layout helpers. */
+    .app,.sidebar{display:none !important;}
+
+    /* Page switcher (kept from Damage JS) */
+    .page{display:none;}
+    .page.active{display:block;}
+
+    /* Inner header (from Damage) */
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
     }
-    .drawer.open{display:flex}
-    .drawer .panel{
-      width:min(520px, 96vw);
-      height:100%;
-      background:var(--panel);
-      border-left:1px solid var(--line);
-      box-shadow:var(--shadow);
-      display:flex; flex-direction:column;
+    #pageTitle{margin:0;font-size:18px;font-weight:900;color:var(--teal2)}
+    #pageSub{margin-top:4px;color:var(--muted);font-weight:800;font-size:12px;line-height:1.35}
+
+    /* Two-column content used in Damage pages */
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    @media (max-width:1060px){.grid{grid-template-columns:1fr}}
+
+    /* Reuse "card" styling for nested cards, but soften the shadow */
+    .content .card{
+      box-shadow: 0 8px 18px rgba(16,24,40,.10);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:12px;
+      overflow:hidden;
     }
-    .drawer .ph{
-      padding:14px;
-      border-bottom:1px solid var(--line);
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    .content .card h2{
+      margin:0;
+      padding:14px 16px 10px;
+      font-size:14px;
+      font-weight:900;
+      color:#0e5564;
+      border-bottom:1px solid rgba(0,0,0,.06);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
-    .drawer .ph h3{margin:0; font-size:14px}
-    .drawer .ph p{margin:6px 0 0; color:var(--muted); font-size:12.5px; line-height:1.35}
-    .chat{padding:14px; overflow:auto; flex:1; display:flex; flex-direction:column; gap:10px}
-    .msg{
-      max-width:92%;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:14px;
+    .content .body{padding:14px 16px 16px}
+
+    /* Lists used in Damage (left panel) */
+    .list{
       background:#fff;
-      font-size:13px; line-height:1.35;
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:12px;
+      overflow:hidden;
     }
-    .msg.me{align-self:flex-end; border-color:rgba(29,78,216,.25); background:rgba(37,99,235,.06)}
-    .msg.ai{align-self:flex-start; background:#f8fafc}
-    .bar{padding:12px; border-top:1px solid var(--line); display:flex; gap:10px}
-    .bar input{flex:1}
+    .list .item{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 12px;
+      border-top:1px solid rgba(0,0,0,.08);
+      cursor:pointer;
+      transition:.12s ease;
+    }
+    .list .item:first-child{border-top:none}
+    .list .item:hover{background:rgba(0,166,200,.10); transform:translateY(-1px)}
 
-    /* Responsive */
-    @media (max-width: 980px){
-      .app{grid-template-columns:1fr}
-      .side{position:relative; height:auto}
-      .row{grid-template-columns:1fr}
-      .span-8,.span-6,.span-4{grid-column:span 12}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    /* Tag pills (used by Damage JS) */
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#f6f7f9;
+      border:1px solid rgba(0,0,0,.10);
+      font-weight:900;
+      font-size:12px;
+      color:#0e5564;
+      white-space:nowrap;
+      user-select:none;
     }
-  </style>
+    .tag .dot{
+      width:10px;height:10px;border-radius:999px;
+      background:var(--teal2);
+      box-shadow:0 0 0 4px rgba(0,166,200,.16);
+    }
+    .tag.ok{background:rgba(31,122,31,.10);border-color:rgba(31,122,31,.18);color:var(--ok)}
+    .tag.ok .dot{background:var(--ok);box-shadow:0 0 0 4px rgba(31,122,31,.14)}
+    .tag.warn{background:rgba(168,93,0,.10);border-color:rgba(168,93,0,.18);color:var(--amber)}
+    .tag.warn .dot{background:var(--amber);box-shadow:0 0 0 4px rgba(168,93,0,.14)}
+    .tag.bad{background:rgba(193,18,31,.10);border-color:rgba(193,18,31,.18);color:var(--danger)}
+    .tag.bad .dot{background:var(--danger);box-shadow:0 0 0 4px rgba(193,18,31,.14)}
+    .tag.info{background:rgba(0,166,200,.14);border-color:rgba(0,166,200,.24);color:#004c5c}
+    .tag.info .dot{background:var(--teal2);box-shadow:0 0 0 4px rgba(0,166,200,.16)}
+
+    /* Buttons from Damage should look like the model buttons */
+    .btn{
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.15s ease;
+      font-size:13px;
+      min-width:150px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(.98)}
+    .btn.primary{background:var(--teal2);color:#fff}
+    /* If a button has no variant, treat as ghost */
+    .btn:not(.primary):not(.light):not(.ghost){background:#f6f7f9;border:1px solid rgba(0,0,0,.10);color:#1c4450}
+
+  
+/* =========================================================
+   MOBILE OPTIMIZATIONS (<= 720px)
+   ========================================================= */
+@media (max-width: 720px){
+  body{overflow:auto;}
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    padding:10px 12px;
+  }
+  .wrap{padding:12px !important;}
+  .card{border-radius:16px !important;}
+  .cardHeader{padding:12px 12px 10px !important; gap:10px !important;}
+  .title{font-size:18px !important; line-height:1.1 !important;}
+
+  /* Tabs: horizontal scroll */
+  .tabs{
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    display:flex !important;
+    gap:8px !important;
+    padding-bottom:2px;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{white-space:nowrap; flex:0 0 auto; padding:9px 12px !important; border-radius:999px !important;}
+
+  .content{padding:12px !important;}
+
+  /* Damage layouts: stack */
+  .grid{grid-template-columns:1fr !important; gap:12px !important;}
+  .row{grid-template-columns:1fr !important; gap:10px !important;}
+
+  /* Cards */
+  .content .card h2{padding:12px 12px 10px !important; font-size:14px !important;}
+  .content .body{padding:12px !important;}
+
+  /* Forms */
+  input, select, textarea{padding:11px 12px !important; border-radius:12px !important; font-size:14px !important;}
+  label{font-size:12px !important;}
+
+  /* Buttons */
+  .actions{gap:10px !important;}
+  .btn{width:100%; min-width:unset !important; padding:12px 14px !important; border-radius:12px !important; font-size:14px !important;}
+
+  /* List items */
+  .list .item{grid-template-columns:1fr !important; gap:8px !important;}
+}
+
+/* Extra small phones */
+@media (max-width: 420px){
+  .brand{min-width:44px}
+  .iconbtn{width:44px;height:44px}
+  .title{font-size:17px !important;}
+}
+
+
+    /* 4-column row for CNTR + Size + Unit Type + Operation/Origin */
+    .row.row4{grid-template-columns: 1.2fr .7fr .9fr 1.2fr;}
+    @media (max-width: 720px){ .row.row4{grid-template-columns:1fr !important;} }
+
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <aside class="side">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1>HXtos CY • CYIA Edition</h1>
-          <p>Single-file light • fluxos completos</p>
-        </div>
-      </div>
-      <nav class="nav" style="margin-top:14px">
-        <a href="file:///C:/Users/HxTos/Downloads/CYIA_Edition_SingleFile_Light_v3.html#" data-page="gate" class="active" onclick="navTo(&#39;gate&#39;);return false;"><span>GateIQ</span><span class="badge">OCR • exceção</span></a>
-        <a href="file:///C:/Users/HxTos/Downloads/CYIA_Edition_SingleFile_Light_v3.html#" data-page="deck" onclick="navTo(&#39;deck&#39;);return false;" class=""><span>DeckingIQ</span><span class="badge">sugestão • aprovação</span></a>
-        <a href="file:///C:/Users/HxTos/Downloads/CYIA_Edition_SingleFile_Light_v3.html#" data-page="doc" onclick="navTo(&#39;doc&#39;);return false;" class=""><span>DocIQ</span><span class="badge">upload • validação</span></a>
-        <a href="file:///C:/Users/HxTos/Downloads/CYIA_Edition_SingleFile_Light_v3.html#" data-page="disp" onclick="navTo(&#39;disp&#39;);return false;" class=""><span>DispatchIQ</span><span class="badge">tarefas geradas</span></a>
-      </nav>
-
-      <div style="margin-top:14px" class="card">
-        <div class="hd"><h3>Modo de operação</h3><span class="pill"><span class="dot good"></span>Assistido</span></div>
-        <div class="bd">
-          <div class="help">
-            • IA sempre <b>explica</b> (motivos + regras + evidências).<br>
-            • Toda decisão vira <b>audit log</b>.<br>
-            • Autopilot fica <b>limitado</b> a cenários seguros.
-          </div>
-          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Copilot</button>
-            <button class="btn primary" onclick="showToast(&#39;Registro de auditoria&#39;,&#39;Simulação: decisão registrada com usuário, timestamp, motivo e evidências.&#39;);">✅ Registrar</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="help" style="margin-top:12px">
-        Dica: use o Copilot e pergunte “<b>por que</b> esta decisão?” ou “<b>qual o próximo passo</b> do fluxo?”.
-      </div>
-    </aside>
-
-    <main class="main">
-      <div class="top">
-        <div class="title">
-          <h2 id="pageTitle">GateIQ — OCR → Exceção → Inspeção → Liberação</h2>
-          <p id="pageSub">Fluxo completo de gate com score de risco, criação de exceção e liberação auditável sem travar a fila principal.</p>
-        </div>
-        <div class="actions">
-          <button class="btn ghost" onclick="resetAll()">↺ Reset demo</button>
-          <button class="btn" onclick="showToast(&#39;Atalho&#39;,&#39;Use a navegação lateral para alternar módulos. O estado do fluxo fica preservado.&#39;);">ℹ️ Ajuda</button>
-          <button class="btn primary" onclick="toggleCopilot()">🧠 Copilot</button>
-        </div>
-      </div>
-
-      <!-- PAGES -->
-      <section id="page_gate" style="">
-        <div class="grid cols-12">
-          <div class="card span-12">
-            <div class="hd">
-              <h3>Fluxo GateIQ</h3>
-              <div class="stepper" id="gateSteps"><div class="step done"><span class="k">1</span> Leitura OCR</div><div class="step active"><span class="k">2</span> Criar exceção</div><div class="step"><span class="k">3</span> Inspeção</div><div class="step"><span class="k">4</span> Liberação</div></div>
-            </div>
-            <div class="bd" id="gateStage">
-          <div class="row">
-            <div>
-              <label>Tipo de exceção</label>
-              <select class="input" id="excType">
-                <option>Divergência de peso</option>
-                <option>Inconsistência documental</option>
-                <option>OCR incerto</option>
-                <option>Risco operacional</option>
-              </select>
-              <div class="help">A exceção isola o caso sem travar a fila principal do gate.</div>
-            </div>
-            <div>
-              <label>Canal</label>
-              <select class="input" id="excLane">
-                <option>Inspeção rápida</option>
-                <option>Inspeção completa</option>
-                <option>Retenção (hold)</option>
-              </select>
-              <div class="help">Governança: toda retenção exige justificativa e auditoria.</div>
-            </div>
-          </div>
-          <div style="margin-top:12px">
-            <label>Justificativa (obrigatória)</label>
-            <textarea class="input" id="excWhy">Divergência de peso + histórico recente da transportadora. Encaminhar para inspeção rápida para confirmar pesagem e integridade.</textarea>
-            <div class="help">O Copilot pode sugerir justificativa padronizada, mas a aprovação é humana.</div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir ao Copilot</button>
-            <button class="btn primary" onclick="createException()">✅ Criar exceção</button>
-          </div>
-        </div>
-          </div>
-
-          <div class="card span-8">
-            <div class="hd"><h3>Fila dinâmica (demo)</h3><span class="pill"><span class="dot good"></span>Fluxo rápido</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>#</th><th>Veículo</th><th>Contêiner</th><th>Operação</th><th>Risk</th><th>Recomendação</th></tr></thead>
-                <tbody id="gateQueue"><tr><td>1</td><td>QWE-9A10</td><td>TGHU4455661</td><td>Retirada (vazio)</td><td><span class="pill"><span class="dot good"></span>18</span></td><td>Fluxo rápido</td></tr><tr><td>2</td><td>HJK-3B77</td><td>CMAU9988776</td><td>Recepção (cheio)</td><td><span class="pill"><span class="dot good"></span>24</span></td><td>Fluxo rápido</td></tr><tr><td>3</td><td>BRA-2E19</td><td>MSCU1234567</td><td>Recepção (cheio)</td><td><span class="pill"><span class="dot bad"></span>71</span></td><td>Inspeção rápida</td></tr><tr><td>4</td><td>RTY-6C11</td><td>OOLU7711223</td><td>Retirada</td><td><span class="pill"><span class="dot warn"></span>56</span></td><td>Validar doc</td></tr></tbody>
-              </table>
-              <div class="help">No produto real: priorização considera risco, janela de agendamento, capacidade e histórico.</div>
-            </div>
-          </div>
-
-          <div class="card span-4">
-            <div class="hd"><h3>Audit Log</h3><span class="pill"><span class="dot warn"></span>Demo</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>Evento</th><th>Quando</th></tr></thead>
-                <tbody id="auditLog"><tr><td>Decking: ranking gerado</td><td class="k">12:58</td></tr><tr><td>Gate: iniciar exceção</td><td class="k">12:58</td></tr><tr><td>Sessão iniciada</td><td class="k">09:06</td></tr></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="page_deck" style="display: none;">
-        <div class="grid cols-12">
-          <div class="card span-12">
-            <div class="hd">
-              <h3>Fluxo DeckingIQ</h3>
-              <div class="stepper" id="deckSteps"><div class="step done"><span class="k">1</span> Gerar sugestões</div><div class="step active"><span class="k">2</span> Aprovar slot</div><div class="step"><span class="k">3</span> Gerar tarefa</div></div>
-            </div>
-            <div class="bd" id="deckStage">
-          <div class="row">
-            <div>
-              <label>Slot escolhido</label>
-              <input class="input" value="—" disabled="">
-              <div class="help">Aprovação humana obrigatória para gerar tarefa no Dispatch.</div>
-            </div>
-            <div>
-              <label>Justificativa (auto + edição)</label>
-              <textarea class="input" id="deckWhy">Slot com menor custo total (rehandles + interferência), respeitando corredor operacional. Predição indica retirada em ~2 dias, então priorizar acessibilidade.</textarea>
-              <div class="help">Esta justificativa acompanha a tarefa e o audit log.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir ao Copilot</button>
-            <button class="btn primary" onclick="approveDeck()">✅ Aprovar e gerar tarefa</button>
-          </div>
-        </div>
-          </div>
-
-          <div class="card span-8">
-            <div class="hd"><h3>Ranking de slots (explicável)</h3><span class="pill"><span class="dot good"></span>Regras + ML</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>Rank</th><th>Slot</th><th>Custo (estim.)</th><th>Risco</th><th>Motivos (top)</th><th></th></tr></thead>
-                <tbody id="deckRank"><tr>
-          <td>1</td>
-          <td class="k">E02-14-03</td>
-          <td>0.82</td>
-          <td><span class="pill"><span class="dot good"></span>baixo</span></td>
-          <td>Interferência baixa • Rehandles -1.4</td>
-          <td><button class="btn" onclick="pickSlot(&#39;E02-14-03&#39;)">Selecionar</button></td>
-        </tr><tr>
-          <td>2</td>
-          <td class="k">E02-12-02</td>
-          <td>0.89</td>
-          <td><span class="pill"><span class="dot good"></span>baixo</span></td>
-          <td>Acesso curto • Balanceia E02</td>
-          <td><button class="btn" onclick="pickSlot(&#39;E02-12-02&#39;)">Selecionar</button></td>
-        </tr><tr>
-          <td>3</td>
-          <td class="k">D01-09-01</td>
-          <td>0.94</td>
-          <td><span class="pill"><span class="dot warn"></span>médio</span></td>
-          <td>Ocupação menor • rota ok</td>
-          <td><button class="btn" onclick="pickSlot(&#39;D01-09-01&#39;)">Selecionar</button></td>
-        </tr></tbody>
-              </table>
-              <div class="help">Aprovar um slot gera automaticamente uma tarefa no DispatchIQ (com justificativa e evidências).</div>
-            </div>
-          </div>
-
-          <div class="card span-4">
-            <div class="hd"><h3>Resumo do objetivo</h3><span class="pill"><span class="dot good"></span>Otimização</span></div>
-            <div class="bd">
-              <label>Objetivo operacional</label>
-              <select class="input" id="deckObjective" onchange="recalcDeck()">
-                <option value="reh">Minimizar rehandles</option>
-                <option value="bal">Balancear ocupação</option>
-                <option value="dist">Reduzir distância</option>
-                <option value="safe">Segurança / segregação</option>
-              </select>
-              <div class="help">O ranqueamento ajusta pesos por objetivo — sempre respeitando restrições de conformidade antes de otimizar.</div>
-              <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
-                <button class="btn" onclick="recalcDeck()">🔁 Recalcular</button>
-                <button class="btn primary" onclick="gotoDispatch()">➡ Ver tarefas</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="page_doc" style="display: none;">
-        <div class="grid cols-12">
-          <div class="card span-12">
-            <div class="hd">
-              <h3>Fluxo DocIQ</h3>
-              <div class="stepper" id="docSteps"><div class="step active"><span class="k">1</span> Upload</div><div class="step"><span class="k">2</span> Validação</div><div class="step"><span class="k">3</span> Bloqueios</div><div class="step"><span class="k">4</span> Aprovação</div></div>
-            </div>
-            <div class="bd" id="docStage">
-          <div class="row">
-            <div>
-              <label>Arquivo (simulado)</label>
-              <input class="input" value="DANFE_2026-01-15.pdf">
-              <div class="help">DocIQ extrai: chave, emitente, itens, peso e metadados.</div>
-            </div>
-            <div>
-              <label>Classificação</label>
-              <input class="input" value="NF-e (Exportação) • Conf.: 0.91">
-              <div class="help">Classificação combina padrões + contexto do processo.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir ao Copilot</button>
-            <button class="btn primary" onclick="nextDoc()">➡ Próximo: validar</button>
-          </div>
-        </div>
-          </div>
-
-          <div class="card span-6">
-            <div class="hd"><h3>Validação e deduplicação</h3><span class="pill"><span class="dot warn"></span>Bloqueios possíveis</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>Regra</th><th>Status</th><th>Evidência</th></tr></thead>
-                <tbody id="docChecks"><tr><td>Chave NF (DV)</td><td><span class="pill"><span class="dot good"></span>OK</span></td><td>Extração OCR / parser</td></tr><tr><td>Duplicidade</td><td><span class="pill"><span class="dot good"></span>OK</span></td><td>Hash do conteúdo + chave</td></tr><tr><td>Vínculo CNTR</td><td><span class="pill"><span class="dot good"></span>OK</span></td><td>Booking + itens + cliente</td></tr><tr><td>Campos obrigatórios</td><td><span class="pill"><span class="dot good"></span>OK</span></td><td>Tipo/doc/data/emitente</td></tr></tbody>
-              </table>
-              <div class="help">Se houver bloqueio, o fluxo exige correção ou justificativa antes da aprovação.</div>
-            </div>
-          </div>
-
-          <div class="card span-6">
-            <div class="hd"><h3>Vínculo operacional (sugestão)</h3><span class="pill"><span class="dot good"></span>CNTR • BL • CE</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>Entidade</th><th>Sugestão</th><th>Conf.</th><th>Motivo</th></tr></thead>
-                <tbody id="docLinks"><tr><td>Contêiner</td><td class="k">MSCU1234567</td><td><span class="pill"><span class="dot good"></span>0.88</span></td><td>Chave NF + booking</td></tr><tr><td>CE</td><td class="k">CE-2026-000184</td><td><span class="pill"><span class="dot warn"></span>0.71</span></td><td>Janela e cliente batem</td></tr><tr><td>BL</td><td class="k">HBL-AX92-771</td><td><span class="pill"><span class="dot good"></span>0.82</span></td><td>Itens e consignatário</td></tr></tbody>
-              </table>
-              <div class="help">Ao aprovar vínculos, o CY libera o próximo passo do processo e atualiza o Event Log.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="page_disp" style="display: none;">
-        <div class="grid cols-12">
-          <div class="card span-12">
-            <div class="hd"><h3>DispatchIQ — tarefas geradas pelos fluxos</h3><span class="pill"><span class="dot good"></span>Execução</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>ID</th><th>Tarefa</th><th>Origem</th><th>Prioridade</th><th>SLA</th><th>Justificativa</th><th>Status</th><th></th></tr></thead>
-                <tbody id="dispatchTable"><tr><td colspan="8" style="color:var(--muted)">Nenhuma tarefa ainda. Gere uma tarefa em DeckingIQ ou finalize Gate/Doc.</td></tr></tbody>
-              </table>
-              <div class="help">No produto real: atribuição considera distância, disponibilidade de equipamento, interferência e janelas.</div>
-              <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
-                <button class="btn" onclick="autoAssign()">🎯 Sugerir recurso</button>
-                <button class="btn primary" onclick="showToast(&#39;Execução&#39;,&#39;Simulação: tarefas atualizadas e registradas no log.&#39;)">✅ Confirmar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
+  <div class="topbar">
+    <button class="iconbtn" title="Menu" aria-label="Menu" onclick="toast &amp;&amp; toast(&#39;Menu (demo). Use as abas para navegar.&#39;);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M4 6h16M4 12h16M4 18h12" stroke="white" stroke-width="2.4" stroke-linecap="round"></path>
+      </svg>
+    </button>
+    <div class="brand">CY</div>
+    <div style="display:flex;gap:10px">
+      <button class="iconbtn" title="Dica" aria-label="Dica" onclick="toast &amp;&amp; toast(&#39;Dica: Inspeção → Avarias → Relatórios. Interface no padrão VSC.&#39;);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 18h.01M10 10a2 2 0 1 1 3 1.7c-.7.5-1 1-1 2.3v.5" stroke="white" stroke-width="2.4" stroke-linecap="round"></path>
+          <path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10Z" stroke="white" stroke-width="2.2"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast">
-    <div class="t">
-      <b id="toastT">DeckingIQ</b>
-      <button onclick="hideToast()">✕</button>
-    </div>
-    <p id="toastP">Ranking de slots atualizado (demo). Selecione um slot para aprovar.</p>
-  </div>
+  <div class="wrap">
+    <div class="card">
+      <div class="cardHeader">
+        <h1 class="title">Damage</h1>
 
-  <!-- Copilot -->
-  <div class="drawer" id="copilot" onclick="if(event.target.id===&#39;copilot&#39;) toggleCopilot()">
-    <div class="panel">
-      <div class="ph">
+        <div class="tabs" id="nav" role="tablist" aria-label="Damage Tabs">
+          <a class="tab active" data-page="inspect" role="tab" aria-selected="true"><span class="pill" id="pillInspect">1</span> Inspeção</a>
+          <a class="tab" data-page="avarias" role="tab" aria-selected="false"><span class="pill" id="pillAvarias">1</span> Avarias</a>
+</div>
+
+      </div>
+
+      <div class="content">
+<div class="top">
         <div>
-          <h3>CYIA Copilot</h3>
-          <p>Responde com <b>justificativa</b>, <b>regras aplicadas</b>, <b>evidências</b> e <b>confiança</b>. (Simulação)</p>
+          <h1 id="pageTitle">CY | Inspect</h1>
+          <div class="sub" id="pageSub">Registrar inspeção e gerar avaria.</div>
         </div>
-        <button class="btn" onclick="toggleCopilot()">✕</button>
+        
       </div>
-      <div class="chat" id="chat">
-        <div class="msg ai">Olá! Eu já entendi o contexto do módulo atual. O que você quer decidir?</div>
-        <div class="msg ai">Exemplos: “por que está em risco alto?”, “qual o próximo passo do fluxo?”, “gere tarefa no Dispatch com justificativa”.</div>
-      </div>
-      <div class="bar">
-        <input class="input" id="chatInput" placeholder="Digite sua pergunta…" onkeydown="if(event.key===&#39;Enter&#39;) sendChat()">
-        <button class="btn primary" onclick="sendChat()">Enviar</button>
-      </div>
+
+      <!-- INSPECT -->
+      <section class="page active" id="page-inspect">
+        <div class="grid">
+          <section class="card">
+            <h2>
+              <span>Registro de Inspeção</span>
+              <span class="tag info"><span class="dot"></span><span class="mono">INSP</span></span>
+            </h2>
+            <div class="body">
+              <div class="row row4">
+                <div>
+                  <label>CNTR</label>
+                  <input id="i_cntr" placeholder="ABCD1234567">
+                </div>
+                <div>
+                  <label>Dimensão</label>
+                  <select id="i_size">
+                    <option value="">—</option>
+                    <option value="20">20’</option>
+                    <option value="40">40’</option>
+                    <option value="40HC">40’HC</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Unidade</label>
+                  <select id="i_unitType">
+                    <option value="">—</option>
+                    <option value="dry">Dry</option>
+                    <option value="reefer">Reefer</option>
+                    <option value="opentop">Open Top</option>
+                    <option value="flatrack">Flat Rack</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Tipo</label>
+                  <select id="i_tipo"><option>GATE IN</option>
+                    <option>GATE OUT</option>
+                    <option>PÁTIO</option>
+                    <option>TRANSFERÊNCIA</option></select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label>Vínculo (BL/CE/OS)</label>
+                  <input id="i_vinc" placeholder="CE 2026/000123 | BL: ...">
+                </div>
+                <div>
+                  <label>Responsável</label>
+                  <input id="i_resp" placeholder="Inspetor 01">
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label>Severidade</label>
+                  <select id="i_sev">
+                    <option>BAIXA</option>
+                    <option>MÉDIA</option>
+                    <option>ALTA</option>
+                    <option>CRÍTICA</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Status</label>
+                  <select id="i_status">
+                    <option>RASCUNHO</option>
+                    <option>EM ANÁLISE</option>
+                    <option>ENCERRADA</option>
+                  </select>
+                </div>
+              </div>
+
+              <label>Descrição / Observações</label>
+              <textarea id="i_desc" placeholder="Resumo: área, tipo de dano, risco e decisão operacional."></textarea>
+
+              <div class="actions">
+                <button class="btn primary" id="i_save">💾 Salvar inspeção</button>
+                <button class="btn" id="i_gen">🛠️ Gerar avaria</button>
+                <button class="btn" id="i_new">➕ Nova</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>
+              <span>Inspeções Recentes</span>
+              <span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>clique para ver</span>
+            </h2>
+            <div class="body">
+              <div class="row">
+                <div>
+                  <label>Filtro CNTR</label>
+                  <input id="i_fcntr" placeholder="ABCD...">
+                </div>
+                <div>
+                  <label>Filtro Status</label>
+                  <select id="i_fstatus">
+                    <option value="">Todos</option>
+                    <option>RASCUNHO</option>
+                    <option>EM ANÁLISE</option>
+                    <option>ENCERRADA</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="actions" style="margin-top:10px;">
+                <button class="btn" id="i_apply">🔎 Aplicar</button>
+                <button class="btn" id="i_clear">🧹 Limpar</button>
+              </div>
+
+              <div style="margin-top:12px;" class="list" id="i_list">
+        <div class="item" data-id="INSP-20260105-162832">
+          <div>
+            <div><b>MSCU3452345</b> <span class="mono" style="opacity:.70">• INSP-20260105-162832</span></div>
+            <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+              <span class="tag ok"><span class="dot"></span>BAIXA</span> <span class="tag info"><span class="dot"></span>ENCERRADA</span>
+              <span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>GATE IN</span>
+            </div>
+          </div>
+          <div class="mono" style="opacity:.60">05/01/2026 16:28</div>
+        </div></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- AVARIAS -->
+      <section class="page" id="page-avarias">
+        <div class="grid">
+          <section class="card">
+            <h2>
+              <span>Registro de Avaria</span>
+              <span class="tag warn"><span class="dot"></span><span class="mono">AVA</span></span>
+            </h2>
+            <div class="body">
+              <div class="row row4">
+                <div>
+                  <label>CNTR</label>
+                  <input id="a_cntr" placeholder="ABCD1234567">
+                </div>
+                <div>
+                  <label>Dimensão</label>
+                  <select id="a_size">
+                    <option value="">—</option>
+                    <option value="20">20’</option>
+                    <option value="40">40’</option>
+                    <option value="40HC">40’HC</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Unidade</label>
+                  <select id="a_unitType">
+                    <option value="">—</option>
+                    <option value="dry">Dry</option>
+                    <option value="reefer">Reefer</option>
+                    <option value="opentop">Open Top</option>
+                    <option value="flatrack">Flat Rack</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Origem</label>
+                  <select id="a_origem"><option>VISTORIA</option>
+                    <option>GATE</option>
+                    <option>PÁTIO</option>
+                    <option>EQUIPAMENTO</option>
+                    <option>TERCEIRO</option></select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label>Severidade</label>
+                  <select id="a_sev">
+                    <option>BAIXA</option>
+                    <option>MÉDIA</option>
+                    <option>ALTA</option>
+                    <option>CRÍTICA</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Status</label>
+                  <select id="a_status">
+                    <option>ABERTA</option>
+                    <option>EM ANÁLISE</option>
+                    <option>EM REPARO</option>
+                    <option>ENCERRADA</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label>Área</label>
+                  <select id="a_area">
+                    <option>PORTAS</option>
+                    <option>LATERAL ESQ</option>
+                    <option>LATERAL DIR</option>
+                    <option>FRENTE</option>
+                    <option>TETO</option>
+                    <option>PISO</option>
+                    <option>CANTONEIRAS</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Tipo</label>
+                  <select id="a_tipo">
+                    <option>AMASSADO</option>
+                    <option>CORTE / PERFURAÇÃO</option>
+                    <option>FERRUGEM</option>
+                    <option>TRINCA</option>
+                    <option>DESALINHAMENTO</option>
+                    <option>OUTRA</option>
+                  </select>
+                </div>
+              </div>
+
+              <label>Descrição / Decisão</label>
+              <textarea id="a_desc" placeholder="Descreva a avaria e decisão: hold, repair, liberação etc."></textarea>
+
+              <label>Fotos / Evidências</label>
+              <div class="uploadBox">
+                <div>
+                  <div style="font-weight:900;">📷 Anexar fotos</div>
+                  <small>Demo: salva apenas o nome do arquivo.</small>
+                </div>
+                <input id="a_files" type="file" multiple="" accept="image/*">
+              </div>
+              <div class="chips" id="a_chips"><span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>sem fotos</span></div>
+
+              <div class="actions">
+                <button class="btn primary" id="a_save">💾 Salvar avaria</button>
+                <button class="btn" id="a_new">➕ Nova</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>
+              <span>Avarias Recentes</span>
+              <span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>clique para ver</span>
+            </h2>
+            <div class="body">
+              <div class="row">
+                <div>
+                  <label>Filtro CNTR</label>
+                  <input id="a_fcntr" placeholder="ABCD...">
+                </div>
+                <div>
+                  <label>Filtro Status</label>
+                  <select id="a_fstatus">
+                    <option value="">Todos</option>
+                    <option>ABERTA</option>
+                    <option>EM ANÁLISE</option>
+                    <option>EM REPARO</option>
+                    <option>ENCERRADA</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label>Filtro Severidade</label>
+                  <select id="a_fsev">
+                    <option value="">Todas</option>
+                    <option>BAIXA</option>
+                    <option>MÉDIA</option>
+                    <option>ALTA</option>
+                    <option>CRÍTICA</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Filtro Origem</label>
+                  <select id="a_forigem">
+                    <option value="">Todas</option>
+                    <option>VISTORIA</option>
+                    <option>GATE</option>
+                    <option>PÁTIO</option>
+                    <option>EQUIPAMENTO</option>
+                    <option>TERCEIRO</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="actions" style="margin-top:10px;">
+                <button class="btn" id="a_apply">🔎 Aplicar</button>
+                <button class="btn" id="a_clear">🧹 Limpar</button>
+              </div>
+
+              <div style="margin-top:12px;" class="list" id="a_list">
+        <div class="item" data-id="AVA-20260106-224806">
+          <div>
+            <div><b>HMMU7896543</b> <span class="mono" style="opacity:.70">• AVA-20260106-224806</span></div>
+            <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+              <span class="tag ok"><span class="dot"></span>BAIXA</span> <span class="tag info"><span class="dot"></span>EM ANÁLISE</span>
+              <span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>LATERAL ESQ</span>
+              <span class="tag"><span class="dot" style="background:rgba(37,99,235,.85)"></span>PÁTIO</span>
+              <span class="tag"><span class="dot" style="background:rgba(16,185,129,.85)"></span>📷 0 foto(s)</span>
+            </div>
+          </div>
+          <div class="mono" style="opacity:.60">06/01/2026 22:48</div>
+        </div></div>
+            </div>
+          </section>
+        </div>
+      </section>
+</div>
     </div>
+
+    <!-- Toast container (kept compatible if Damage JS uses it) -->
+    <div id="toast" class="toast" role="status" aria-live="polite">OK</div>
   </div>
 
   <script>
-    /* ------------------ STATE ------------------ */
-    const state = {
-      page: 'gate',
-      audit: [],
-      gate: { step: 0, risk: 71, cntr: 'MSCU1234567', plate: 'BRA-2E19', wScale: 31840, wDecl: 29900, exceptionId: null },
-      deck: { step: 0, selected: null, objective:'reh' },
-      doc: { step: 0, blockers: ['Chave NF com DV inválido'], approved:false },
-      dispatch: []
+const KEY="CY_INSPECT_AVARIAS_WHITE_UI_v1";
+    const $=(q)=>document.querySelector(q);
+    const $$=(q)=>Array.from(document.querySelectorAll(q));
+    let S=load();
+
+    function load(){
+      try{
+        const raw=localStorage.getItem(KEY);
+        return raw ? Object.assign({inspections:[],damages:[]}, JSON.parse(raw)) : {inspections:[],damages:[]};
+      }catch(e){ return {inspections:[],damages:[]}; }
+    }
+    function persist(){
+      localStorage.setItem(KEY, JSON.stringify(S));
+      const pi=document.getElementById("pillInspect");
+      const pa=document.getElementById("pillAvarias");
+      if(pi) pi.textContent=S.inspections.length;
+      if(pa) pa.textContent=S.damages.length;
+    }
+    function uid(prefix){
+      const d=new Date(); const p=n=>String(n).padStart(2,"0");
+      return `${prefix}-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+    }
+    function fmt(iso){
+      const d=new Date(iso); const p=n=>String(n).padStart(2,"0");
+      return `${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`;
+    }
+    function tagSev(sev){
+      const cls=sev==="BAIXA"?"ok":(sev==="MÉDIA"?"warn":"bad");
+      return `<span class="tag ${cls}"><span class="dot"></span>${sev}</span>`;
+    }
+    function tagStatus(status){return `<span class="tag info"><span class="dot"></span>${status}</span>`;}
+
+    function setPage(page){
+
+      if(!page){ return; }
+      
+
+    // Navigation (delegated) - garante clique no texto e no ícone/pill
+    (function(){
+      const nav=document.getElementById("nav");
+      if(!nav) return;
+      nav.addEventListener("click",(e)=>{
+        const a=e.target.closest('a[data-page]');
+        if(!a) return;
+        e.preventDefault();
+        setPage(a.getAttribute("data-page"));
+      });
+    })();
+
+const target=document.getElementById("page-"+page);
+      if(!target){ console.warn("Página não encontrada:", page); return; }
+
+      $$(".page").forEach(p=>p.classList.remove("active"));
+      target.classList.add("active");
+
+      // Tabs
+      const nav=document.getElementById("nav");
+      if(nav){
+        nav.querySelectorAll('a[data-page]').forEach(a=>{
+          a.classList.toggle("active", a.getAttribute("data-page")===page);
+          a.setAttribute("aria-selected", a.getAttribute("data-page")===page ? "true" : "false");
+        });
+      }
+const meta={
+        inspect:["CY | Inspect","Registrar inspeção e gerar avaria."],
+        avarias:["CY | Avarias","Registrar avaria com fotos/evidências e consultar lista."],
     };
-
-    const nowHHMM = () => {
-      const d=new Date();
-      return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      $("#pageTitle").textContent=meta[page][0];
+      $("#pageSub").textContent=meta[page][1];
+      if(page==="inspect") renderInspect();
+      if(page==="avarias") renderAvarias();
     }
-
-    function logAudit(evt){
-      state.audit.unshift({evt, t: nowHHMM()});
-      renderAudit();
+// Inspect
+    function resetInspect(){
+      $("#i_cntr").value=""; $("#i_size").value=""; $("#i_unitType").value=""; $("#i_tipo").value="GATE IN"; $("#i_vinc").value="";
+      $("#i_resp").value=""; $("#i_sev").value="BAIXA"; $("#i_status").value="RASCUNHO"; $("#i_desc").value="";
     }
-
-    function showToast(title, msg){
-      document.getElementById('toastT').textContent=title;
-      document.getElementById('toastP').textContent=msg;
-      const t=document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'), 5200);
-    }
-    function hideToast(){ document.getElementById('toast').classList.remove('show'); }
-
-    function toggleCopilot(){
-      document.getElementById('copilot').classList.toggle('open');
-    }
-
-    /* ------------------ NAV ------------------ */
-    function navTo(page){
-      state.page=page;
-      document.querySelectorAll('.nav a').forEach(a=>{
-        a.classList.toggle('active', a.dataset.page===page);
+    function saveInspect(){
+      const cntr=$("#i_cntr").value.trim().toUpperCase();
+      if(!cntr){ alert("Informe o CNTR."); return; }
+      S.inspections.unshift({
+        id:uid("INSP"), cntr, size:$("#i_size").value, unitType:$("#i_unitType").value, tipo:$("#i_tipo").value, vinc:$("#i_vinc").value.trim(),
+        resp:$("#i_resp").value.trim(), sev:$("#i_sev").value, status:$("#i_status").value,
+        desc:$("#i_desc").value.trim(), createdAt:new Date().toISOString()
       });
-      document.getElementById('page_gate').style.display = page==='gate' ? '' : 'none';
-      document.getElementById('page_deck').style.display = page==='deck' ? '' : 'none';
-      document.getElementById('page_doc').style.display  = page==='doc'  ? '' : 'none';
-      document.getElementById('page_disp').style.display = page==='disp' ? '' : 'none';
-
-      const titles={
-        gate: ['GateIQ — OCR → Exceção → Inspeção → Liberação','Fluxo completo de gate com score de risco, criação de exceção e liberação auditável sem travar a fila principal.'],
-        deck: ['DeckingIQ — Sugestão → Aprovação → Geração de tarefa','Smart Decking 2.0 (regras + ML + otimização) com explicação do porquê e criação automática de tarefa.'],
-        doc:  ['DocIQ — Upload → Validação → Bloqueios → Aprovação','Upload e extração inteligente com validações, deduplicação e workflow de aprovação.'],
-        disp: ['DispatchIQ — Execução das tarefas geradas','Fila unificada de tarefas geradas pelos módulos, com sugestão de recurso e SLA.']
-      };
-      document.getElementById('pageTitle').textContent=titles[page][0];
-      document.getElementById('pageSub').textContent=titles[page][1];
-
-      // render page-specific
-      render();
+      persist(); renderInspect(); resetInspect(); alert("Inspeção salva (demo).");
     }
+    function renderInspect(){
+      const fcntr=$("#i_fcntr").value.trim().toUpperCase();
+      const fstatus=$("#i_fstatus").value;
 
-    /* ------------------ RENDER HELPERS ------------------ */
-    function renderStepper(elId, steps, activeIdx){
-      const el=document.getElementById(elId);
-      el.innerHTML='';
-      steps.forEach((s,i)=>{
-        const d=document.createElement('div');
-        d.className='step' + (i<activeIdx ? ' done' : '') + (i===activeIdx ? ' active' : '');
-        d.innerHTML = `<span class="k">${i+1}</span> ${s}`;
-        el.appendChild(d);
-      });
-    }
+      const list=S.inspections
+        .filter(x=>!fcntr||x.cntr.includes(fcntr))
+        .filter(x=>!fstatus||x.status===fstatus)
+        .sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
 
-    function renderAudit(){
-      const tb=document.getElementById('auditLog');
-      tb.innerHTML = state.audit.slice(0,10).map(x=>`<tr><td>${x.evt}</td><td class="k">${x.t}</td></tr>`).join('') || `<tr><td colspan="2" style="color:var(--muted)">Sem eventos ainda</td></tr>`;
-    }
-
-    /* ------------------ GATE FLOW ------------------ */
-    const gateSteps = ['Leitura OCR', 'Criar exceção', 'Inspeção', 'Liberação'];
-
-    function renderGate(){
-      renderStepper('gateSteps', gateSteps, state.gate.step);
-
-      // queue
-      const q=document.getElementById('gateQueue');
-      const rows=[
-        {n:1, v:'QWE-9A10', c:'TGHU4455661', op:'Retirada (vazio)', risk:18, rec:'Fluxo rápido'},
-        {n:2, v:'HJK-3B77', c:'CMAU9988776', op:'Recepção (cheio)', risk:24, rec:'Fluxo rápido'},
-        {n:3, v:state.gate.plate, c:state.gate.cntr, op:'Recepção (cheio)', risk:state.gate.risk, rec: state.gate.risk>=60 ? 'Inspeção rápida' : 'Fluxo rápido'},
-        {n:4, v:'RTY-6C11', c:'OOLU7711223', op:'Retirada', risk:56, rec:'Validar doc'}
-      ];
-      q.innerHTML = rows.map(r=>{
-        const cls = r.risk>=70 ? 'bad' : r.risk>=50 ? 'warn' : 'good';
-        return `<tr><td>${r.n}</td><td>${r.v}</td><td>${r.c}</td><td>${r.op}</td><td><span class="pill"><span class="dot ${cls}"></span>${r.risk}</span></td><td>${r.rec}</td></tr>`;
-      }).join('');
-
-      const stage=document.getElementById('gateStage');
-
-      if(state.gate.step===0){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Contêiner (OCR)</label>
-              <input class="input" value="${state.gate.cntr}"/>
-              <div class="help">Confiança OCR: <b>0.94</b> • Correções sugeridas: 0</div>
-            </div>
-            <div>
-              <label>Placa (OCR)</label>
-              <input class="input" value="${state.gate.plate}"/>
-              <div class="help">Confiança OCR: <b>0.88</b> • Ambiguidade possível: E/3</div>
-            </div>
-          </div>
-          <div class="row" style="margin-top:12px">
-            <div>
-              <label>Peso balança (kg)</label>
-              <input class="input" value="${state.gate.wScale}"/>
-              <div class="help">Janela do agendamento: <span class="k">13:00–13:30</span></div>
-            </div>
-            <div>
-              <label>Peso declarado (kg)</label>
-              <input class="input" value="${state.gate.wDecl}"/>
-              <div class="help">Diferença: <b>${(state.gate.wScale-state.gate.wDecl).toLocaleString('pt-BR')} kg</b></div>
-            </div>
-          </div>
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center">
-            <span class="pill"><span class="dot warn"></span>Risk Score: ${state.gate.risk} (alto)</span>
-            <span class="pill"><span class="dot good"></span>Docs presentes</span>
-            <span class="pill"><span class="dot warn"></span>Revisão recomendada</span>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="showToast('Explicação do risco','Peso divergente + histórico + ambiguidade OCR. Sugerido: criar exceção e encaminhar para inspeção rápida.');">🧾 Por quê?</button>
-            <button class="btn primary" onclick="nextGate()">➡ Próximo: criar exceção</button>
-          </div>
-        `;
-      }
-
-      if(state.gate.step===1){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Tipo de exceção</label>
-              <select class="input" id="excType">
-                <option>Divergência de peso</option>
-                <option>Inconsistência documental</option>
-                <option>OCR incerto</option>
-                <option>Risco operacional</option>
-              </select>
-              <div class="help">A exceção isola o caso sem travar a fila principal do gate.</div>
-            </div>
-            <div>
-              <label>Canal</label>
-              <select class="input" id="excLane">
-                <option>Inspeção rápida</option>
-                <option>Inspeção completa</option>
-                <option>Retenção (hold)</option>
-              </select>
-              <div class="help">Governança: toda retenção exige justificativa e auditoria.</div>
-            </div>
-          </div>
-          <div style="margin-top:12px">
-            <label>Justificativa (obrigatória)</label>
-            <textarea class="input" id="excWhy">Divergência de peso + histórico recente da transportadora. Encaminhar para inspeção rápida para confirmar pesagem e integridade.</textarea>
-            <div class="help">O Copilot pode sugerir justificativa padronizada, mas a aprovação é humana.</div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir ao Copilot</button>
-            <button class="btn primary" onclick="createException()">✅ Criar exceção</button>
-          </div>
-        `;
-      }
-
-      if(state.gate.step===2){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>ID da exceção</label>
-              <input class="input" value="${state.gate.exceptionId || '—'}" disabled />
-              <div class="help">Status: <b>Em inspeção</b></div>
-            </div>
-            <div>
-              <label>Checklist de inspeção</label>
-              <select class="input" id="inspList">
-                <option>Repesagem + foto do contêiner</option>
-                <option>Conferência documental + foto</option>
-                <option>Inspeção completa (lacres/estrutura)</option>
-              </select>
-              <div class="help">Selecionado conforme tipo de exceção e score de risco.</div>
-            </div>
-          </div>
-          <div style="margin-top:12px" class="card" style="box-shadow:none">
-            <div class="hd"><h3>Evidências</h3><span class="pill"><span class="dot warn"></span>Coleta</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>Evidência</th><th>Resultado</th><th>Obs.</th></tr></thead>
-                <tbody>
-                  <tr><td>Repesagem</td><td><span class="pill"><span class="dot warn"></span>pendente</span></td><td>Validar diferença</td></tr>
-                  <tr><td>OCR (placa)</td><td><span class="pill"><span class="dot good"></span>ok</span></td><td>Confirmado pelo agente</td></tr>
-                  <tr><td>Docs</td><td><span class="pill"><span class="dot good"></span>ok</span></td><td>Chave e vínculo coerentes</td></tr>
-                </tbody>
-              </table>
-              <div class="help">A inspeção atualiza o Event Log e libera/retém a operação com justificativa.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="showToast('Simulação','Repesagem realizada. Diferença justificada por tara e tolerância.');">📸 Registrar evidência</button>
-            <button class="btn primary" onclick="nextGate()">➡ Próximo: liberar</button>
-          </div>
-        `;
-      }
-
-      if(state.gate.step===3){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Decisão final</label>
-              <select class="input" id="gateDecision">
-                <option>Liberação</option>
-                <option>Retenção (hold)</option>
-                <option>Escalar para inspeção completa</option>
-              </select>
-              <div class="help">Recomendação do GateIQ: <b>Liberação com registro</b></div>
-            </div>
-            <div>
-              <label>Registro / Observação</label>
-              <textarea class="input" id="gateNote">Inspeção rápida concluída. Evidências anexadas. Operação liberada.</textarea>
-              <div class="help">O texto entra no audit log + trilha de evidências.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="navTo('disp')">➡ Ver Dispatch</button>
-            <button class="btn primary" onclick="finalGate()">✅ Confirmar liberação</button>
-          </div>
-        `;
-      }
-    }
-
-    function nextGate(){
-      state.gate.step = Math.min(3, state.gate.step+1);
-      if(state.gate.step===1) logAudit('Gate: iniciar exceção');
-      if(state.gate.step===2) logAudit('Gate: enviado para inspeção');
-      renderGate();
-    }
-
-    function createException(){
-      const t=document.getElementById('excType').value;
-      const lane=document.getElementById('excLane').value;
-      const why=document.getElementById('excWhy').value.trim();
-      if(!why){ showToast('Obrigatório','Informe a justificativa para criar a exceção.'); return; }
-      state.gate.exceptionId = 'EXC-' + Math.floor(100000+Math.random()*900000);
-      logAudit(`Exceção criada (${t})`);
-      showToast('Exceção criada',`ID ${state.gate.exceptionId} • Canal: ${lane}`);
-      state.gate.step=2;
-      renderGate();
-    }
-
-    function finalGate(){
-      const dec=document.getElementById('gateDecision').value;
-      logAudit(`Gate: ${dec}`);
-      showToast('Gate',`Decisão final: ${dec}. Auditoria registrada.`);
-      // Optional: generate a dispatch task if inspection created movement
-      if(dec==='Liberação'){
-        state.dispatch.unshift({
-          id: 'T-' + Math.floor(10000+Math.random()*90000),
-          task: `Gate release • ${state.gate.cntr}`,
-          origin: 'GateIQ',
-          prio: 'Média',
-          sla: '6h',
-          why: 'Liberação após inspeção rápida (evidências anexadas)',
-          status: 'Pendente'
-        });
-        renderDispatch();
-      }
-    }
-
-    /* ------------------ DECK FLOW ------------------ */
-    const deckSteps = ['Gerar sugestões', 'Aprovar slot', 'Gerar tarefa'];
-
-    function renderDeck(){
-      renderStepper('deckSteps', deckSteps, state.deck.step);
-      // stage
-      const stage=document.getElementById('deckStage');
-      if(state.deck.step===0){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Contêiner</label>
-              <input class="input" value="MSCU1234567"/>
-              <div class="help">Tipo: <b>Vazio</b> • Predição retirada: <b>2.1 dias</b> (conf.: 0.72)</div>
-            </div>
-            <div>
-              <label>Restrições críticas</label>
-              <select class="input">
-                <option>Stack height / peso</option>
-                <option>Corredor operacional</option>
-                <option>Zona de risco IMDG</option>
-                <option>Reefer power</option>
-              </select>
-              <div class="help">As restrições são aplicadas <b>antes</b> da otimização.</div>
-            </div>
-          </div>
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <span class="pill"><span class="dot good"></span>Conformidade OK</span>
-            <span class="pill"><span class="dot warn"></span>Ocupação quadra E02: 87%</span>
-            <span class="pill"><span class="dot good"></span>Rehandles estim.: -1.4</span>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="showToast('Explicação','O ranking prioriza menor interferência + janela prevista, mantendo corredor operacional e balanceando ocupação.');">🧾 Por quê?</button>
-            <button class="btn primary" onclick="genDeck()">🔎 Gerar ranking</button>
-          </div>
-        `;
-      }
-      if(state.deck.step===1){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Slot escolhido</label>
-              <input class="input" value="${state.deck.selected || '—'}" disabled/>
-              <div class="help">Aprovação humana obrigatória para gerar tarefa no Dispatch.</div>
-            </div>
-            <div>
-              <label>Justificativa (auto + edição)</label>
-              <textarea class="input" id="deckWhy">Slot com menor custo total (rehandles + interferência), respeitando corredor operacional. Predição indica retirada em ~2 dias, então priorizar acessibilidade.</textarea>
-              <div class="help">Esta justificativa acompanha a tarefa e o audit log.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir ao Copilot</button>
-            <button class="btn primary" onclick="approveDeck()">✅ Aprovar e gerar tarefa</button>
-          </div>
-        `;
-      }
-      if(state.deck.step===2){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Resultado</label>
-              <input class="input" value="Tarefa criada no DispatchIQ" disabled/>
-              <div class="help">A fila de tarefas foi atualizada e a decisão foi auditada.</div>
-            </div>
-            <div>
-              <label>Próximo passo</label>
-              <select class="input">
-                <option>Executar agora</option>
-                <option>Agendar após pico</option>
-                <option>Recalcular decking (mudança de ocupação)</option>
-              </select>
-              <div class="help">O DispatchIQ sugere recurso com base em proximidade e disponibilidade.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="gotoDispatch()">➡ Ir para Dispatch</button>
-            <button class="btn primary" onclick="showToast('Audit','Simulação: decisão de decking registrada com evidências e confiança.');">✅ Registrar</button>
-          </div>
-        `;
-      }
-    }
-
-    function genDeck(){
-      state.deck.step=1;
-      state.deck.selected=null;
-      logAudit('Decking: ranking gerado');
-      recalcDeck(true);
-      showToast('DeckingIQ','Ranking de slots atualizado (demo). Selecione um slot para aprovar.');
-      renderDeck();
-    }
-
-    function recalcDeck(skipToast=false){
-      const obj=document.getElementById('deckObjective');
-      if(obj) state.deck.objective=obj.value;
-
-      // Demo ranking changes per objective
-      const base=[
-        {slot:'E02-14-03', cost: 0.82, risk: 'baixo', why:'Interferência baixa • Rehandles -1.4'},
-        {slot:'E02-12-02', cost: 0.89, risk: 'baixo', why:'Acesso curto • Balanceia E02'},
-        {slot:'D01-09-01', cost: 0.94, risk: 'médio', why:'Ocupação menor • rota ok'}
-      ];
-      if(state.deck.objective==='bal') base[2].cost=0.86;
-      if(state.deck.objective==='dist') base[1].cost=0.84;
-      if(state.deck.objective==='safe') base[0].risk='médio';
-
-      document.getElementById('deckRank').innerHTML = base.map((r,i)=>{
-        const riskDot = r.risk==='baixo' ? 'good' : r.risk==='médio' ? 'warn' : 'bad';
-        return `<tr>
-          <td>${i+1}</td>
-          <td class="k">${r.slot}</td>
-          <td>${r.cost.toFixed(2)}</td>
-          <td><span class="pill"><span class="dot ${riskDot}"></span>${r.risk}</span></td>
-          <td>${r.why}</td>
-          <td><button class="btn" onclick="pickSlot('${r.slot}')">Selecionar</button></td>
-        </tr>`;
-      }).join('');
-
-      if(!skipToast) showToast('DeckingIQ', 'Ranking recalculado (demo).');
-    }
-
-    function pickSlot(slot){
-      state.deck.selected=slot;
-      logAudit(`Decking: slot selecionado (${slot})`);
-      showToast('Seleção',`Slot ${slot} selecionado. Agora aprove para gerar tarefa.`);
-      renderDeck();
-    }
-
-    function approveDeck(){
-      if(!state.deck.selected){ showToast('Selecione um slot','Escolha um slot no ranking antes de aprovar.'); return; }
-      const why=document.getElementById('deckWhy').value.trim() || 'Aprovado.';
-      const tid = 'T-' + Math.floor(10000+Math.random()*90000);
-      state.dispatch.unshift({
-        id: tid,
-        task: `Movimentar ${state.gate.cntr} → ${state.deck.selected}`,
-        origin: 'DeckingIQ',
-        prio: 'Alta',
-        sla: '3h',
-        why,
-        status: 'Pendente'
-      });
-      logAudit(`Decking: aprovado e tarefa gerada (${tid})`);
-      showToast('Tarefa gerada',`Criada ${tid} no DispatchIQ.`);
-      state.deck.step=2;
-      renderDispatch();
-      renderDeck();
-    }
-
-    function gotoDispatch(){ navTo('disp'); }
-
-    /* ------------------ DOC FLOW ------------------ */
-    const docSteps = ['Upload', 'Validação', 'Bloqueios', 'Aprovação'];
-
-    function renderDoc(){
-      renderStepper('docSteps', docSteps, state.doc.step);
-
-      // checks + links
-      const checks=[
-        {rule:'Chave NF (DV)', ok: state.doc.step>=2 ? false : true, ev:'Extração OCR / parser'},
-        {rule:'Duplicidade', ok: true, ev:'Hash do conteúdo + chave'},
-        {rule:'Vínculo CNTR', ok: true, ev:'Booking + itens + cliente'},
-        {rule:'Campos obrigatórios', ok: true, ev:'Tipo/doc/data/emitente'}
-      ];
-      document.getElementById('docChecks').innerHTML = checks.map(c=>{
-        const cls=c.ok ? 'good' : 'bad';
-        const txt=c.ok ? 'OK' : 'Falha';
-        return `<tr><td>${c.rule}</td><td><span class="pill"><span class="dot ${cls}"></span>${txt}</span></td><td>${c.ev}</td></tr>`;
-      }).join('');
-
-      const links=[
-        {e:'Contêiner', s: state.gate.cntr, c:0.88, m:'Chave NF + booking'},
-        {e:'CE', s:'CE-2026-000184', c:0.71, m:'Janela e cliente batem'},
-        {e:'BL', s:'HBL-AX92-771', c:0.82, m:'Itens e consignatário'}
-      ];
-      document.getElementById('docLinks').innerHTML = links.map(l=>{
-        const cls=l.c>=0.8?'good':l.c>=0.7?'warn':'bad';
-        return `<tr><td>${l.e}</td><td class="k">${l.s}</td><td><span class="pill"><span class="dot ${cls}"></span>${l.c.toFixed(2)}</span></td><td>${l.m}</td></tr>`;
-      }).join('');
-
-      const stage=document.getElementById('docStage');
-      if(state.doc.step===0){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Arquivo (simulado)</label>
-              <input class="input" value="DANFE_2026-01-15.pdf"/>
-              <div class="help">DocIQ extrai: chave, emitente, itens, peso e metadados.</div>
-            </div>
-            <div>
-              <label>Classificação</label>
-              <input class="input" value="NF-e (Exportação) • Conf.: 0.91"/>
-              <div class="help">Classificação combina padrões + contexto do processo.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir ao Copilot</button>
-            <button class="btn primary" onclick="nextDoc()">➡ Próximo: validar</button>
-          </div>
-        `;
-      }
-      if(state.doc.step===1){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Resultado da validação</label>
-              <input class="input" value="Validação executada" disabled/>
-              <div class="help">Foram detectadas possíveis inconsistências (ver quadro de validação).</div>
-            </div>
-            <div>
-              <label>Ação recomendada</label>
-              <select class="input">
-                <option>Prosseguir para bloqueios</option>
-                <option>Reprocessar OCR</option>
-                <option>Solicitar reenvio</option>
-              </select>
-              <div class="help">O fluxo exige tratar bloqueios antes da aprovação final.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="showToast('Validação','Simulação: regras aplicadas e evidências registradas.');">🧾 Ver evidências</button>
-            <button class="btn primary" onclick="nextDoc()">➡ Próximo: bloqueios</button>
-          </div>
-        `;
-        logAudit('DocIQ: validação executada');
-      }
-      if(state.doc.step===2){
-        stage.innerHTML = `
-          <div class="card" style="box-shadow:none">
-            <div class="hd"><h3>Bloqueios</h3><span class="pill"><span class="dot bad"></span>Requer ação</span></div>
-            <div class="bd">
-              <table class="table">
-                <thead><tr><th>Tipo</th><th>Descrição</th><th>Impacto</th><th>Ação</th></tr></thead>
-                <tbody>
-                  <tr>
-                    <td>Chave NF</td>
-                    <td>${state.doc.blockers[0]}</td>
-                    <td><span class="pill"><span class="dot bad"></span>Bloqueia</span></td>
-                    <td><button class="btn" onclick="fixBlocker()">Corrigir</button></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="help">Correção pode ser: reprocessar OCR, editar DV, ou solicitar reenvio (com justificativa).</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="toggleCopilot()">🧠 Pedir sugestão</button>
-            <button class="btn primary" onclick="nextDoc()">➡ Próximo: aprovar</button>
-          </div>
-        `;
-        logAudit('DocIQ: bloqueio identificado');
-      }
-      if(state.doc.step===3){
-        stage.innerHTML = `
-          <div class="row">
-            <div>
-              <label>Aprovação de vínculos</label>
-              <select class="input" id="docApprove">
-                <option>Aprovar (libera processo)</option>
-                <option>Rejeitar (solicitar reenvio)</option>
-                <option>Segurar para revisão</option>
-              </select>
-              <div class="help">Recomendação: <b>Aprovar</b> após correção do bloqueio.</div>
-            </div>
-            <div>
-              <label>Justificativa / Observação</label>
-              <textarea class="input" id="docNote">Bloqueio tratado. Vínculos CNTR/BL/CE conferidos. Aprovar para liberar sequência operacional.</textarea>
-              <div class="help">Tudo entra no audit log e no histórico do processo.</div>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="navTo('disp')">➡ Ver Dispatch</button>
-            <button class="btn primary" onclick="finalDoc()">✅ Confirmar aprovação</button>
-          </div>
-        `;
-      }
-    }
-
-    function nextDoc(){
-      state.doc.step = Math.min(3, state.doc.step+1);
-      renderDoc();
-    }
-
-    function fixBlocker(){
-      showToast('Correção (demo)','Simulação: DV corrigido via reprocessamento. Bloqueio removido.');
-      state.doc.blockers=[];
-      logAudit('DocIQ: bloqueio corrigido');
-    }
-
-    function finalDoc(){
-      const dec=document.getElementById('docApprove').value;
-      const note=document.getElementById('docNote').value.trim();
-      logAudit(`DocIQ: ${dec}`);
-      showToast('DocIQ',`Decisão: ${dec}. Auditoria registrada.`);
-      // Optional: create a task when doc release triggers movement
-      if(dec.startsWith('Aprovar')){
-        state.dispatch.unshift({
-          id: 'T-' + Math.floor(10000+Math.random()*90000),
-          task: `Liberação documental • ${state.gate.cntr}`,
-          origin: 'DocIQ',
-          prio: 'Média',
-          sla: '8h',
-          why: note || 'Aprovado com evidências.',
-          status: 'Pendente'
-        });
-        renderDispatch();
-      }
-    }
-
-    /* ------------------ DISPATCH ------------------ */
-    function renderDispatch(){
-      const tb=document.getElementById('dispatchTable');
-      if(!tb) return;
-      if(state.dispatch.length===0){
-        tb.innerHTML = `<tr><td colspan="8" style="color:var(--muted)">Nenhuma tarefa ainda. Gere uma tarefa em DeckingIQ ou finalize Gate/Doc.</td></tr>`;
+      const el=$("#i_list");
+      if(!list.length){
+        el.innerHTML=`<div class="item" style="cursor:default"><div style="color:rgba(71,85,105,.95)">Nenhum registro.</div><div class="mono">—</div></div>`;
         return;
       }
-      tb.innerHTML = state.dispatch.map(t=>{
-        const pr = t.prio==='Alta' ? 'bad' : t.prio==='Média' ? 'warn' : 'good';
-        return `<tr>
-          <td class="k">${t.id}</td>
-          <td>${t.task}</td>
-          <td>${t.origin}</td>
-          <td><span class="pill"><span class="dot ${pr}"></span>${t.prio}</span></td>
-          <td class="k">${t.sla}</td>
-          <td>${t.why}</td>
-          <td>${t.status}</td>
-          <td><button class="btn" onclick="completeTask('${t.id}')">Concluir</button></td>
-        </tr>`;
-      }).join('');
+      el.innerHTML=list.map(x=>`
+        <div class="item" data-id="${x.id}">
+          <div>
+            <div><b>${x.cntr}</b> <span class="mono" style="opacity:.70">• ${x.id}</span></div>
+            <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+              ${tagSev(x.sev)} ${tagStatus(x.status)}
+              <span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>${x.tipo}</span>
+            </div>
+          </div>
+          <div class="mono" style="opacity:.60">${fmt(x.createdAt)}</div>
+        </div>`).join("");
+
+      el.querySelectorAll(".item[data-id]").forEach(r=>r.addEventListener("click",()=>{
+        const x=S.inspections.find(z=>z.id===r.getAttribute("data-id"));
+        alert(
+          `Inspeção ${x.id}\nCNTR: ${x.cntr}\nDimensão: ${x.size || "—"}\nUnidade: ${x.unitType || "—"}\nTipo: ${x.tipo}\nStatus: ${x.status}\nSeveridade: ${x.sev}\n` +
+          `Vínculo: ${x.vinc || "—"}\nResp: ${x.resp || "—"}\n\nDescrição:\n${x.desc || "—"}`
+        );
+      }));
     }
-
-    function completeTask(id){
-      const t=state.dispatch.find(x=>x.id===id);
-      if(!t) return;
-      t.status='Concluída';
-      logAudit(`Dispatch: concluída (${id})`);
-      showToast('DispatchIQ',`Tarefa ${id} concluída.`);
-      renderDispatch();
+    function genAvariaFromInspect(){
+      const cntr=$("#i_cntr").value.trim().toUpperCase();
+      if(!cntr){ alert("Informe o CNTR antes de gerar avaria."); return; }
+      setPage("avarias");
+      $("#a_cntr").value=cntr;
+      $("#a_size").value=$("#i_size").value;
+      $("#a_unitType").value=$("#i_unitType").value;
+      $("#a_origem").value="VISTORIA";
+      $("#a_sev").value=$("#i_sev").value;
+      $("#a_status").value="ABERTA";
+      $("#a_area").value="PORTAS";
+      $("#a_tipo").value=(($("#i_sev").value==="CRÍTICA"||$("#i_sev").value==="ALTA") ? "DESALINHAMENTO" : "AMASSADO");
+      $("#a_desc").value=`Gerado a partir de Inspect. Observações: ${($("#i_desc").value||"—")}`;
+      avDraftPhotos=[]; renderChips();
     }
+    $("#i_save").addEventListener("click", saveInspect);
+    $("#i_gen").addEventListener("click", genAvariaFromInspect);
+    $("#i_new").addEventListener("click", resetInspect);
+    $("#i_apply").addEventListener("click", renderInspect);
+    $("#i_clear").addEventListener("click", ()=>{ $("#i_fcntr").value=""; $("#i_fstatus").value=""; renderInspect(); });
 
-    function autoAssign(){
-      if(state.dispatch.length===0){ showToast('Sem tarefas','Gere tarefas pelos fluxos antes de sugerir recurso.'); return; }
-      showToast('Sugestão de recurso','RTG-03 (Operador A. Santos) • Proximidade 180m • Disponível agora.');
-      logAudit('Dispatch: sugestão de recurso');
-    }
-
-    /* ------------------ CHAT (SIMULADO) ------------------ */
-    function sendChat(){
-      const input=document.getElementById('chatInput');
-      const text=input.value.trim();
-      if(!text) return;
-      const chat=document.getElementById('chat');
-      const me=document.createElement('div');
-      me.className='msg me';
-      me.textContent=text;
-      chat.appendChild(me);
-      input.value='';
-      chat.scrollTop=chat.scrollHeight;
-
-      setTimeout(()=>{
-        const ai=document.createElement('div');
-        ai.className='msg ai';
-        ai.innerHTML = copilotAnswer(text);
-        chat.appendChild(ai);
-        chat.scrollTop=chat.scrollHeight;
-      }, 420);
-    }
-
-    function copilotAnswer(q){
-      const l=q.toLowerCase();
-      if(l.includes('por que') && state.page==='gate'){
-        return `Motivos do <b>risk score ${state.gate.risk}</b>: (1) divergência de peso, (2) ambiguidade OCR, (3) histórico da transportadora. Ação recomendada: <b>criar exceção</b> e encaminhar para <b>inspeção rápida</b>, preservando o fluxo principal.`;
+    // Avarias (with photos)
+    let avDraftPhotos=[];
+    function renderChips(){
+      const el=$("#a_chips"); el.innerHTML="";
+      if(!avDraftPhotos.length){
+        el.innerHTML=`<span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>sem fotos</span>`;
+        return;
       }
-      if(l.includes('próximo') || l.includes('proximo')){
-        if(state.page==='gate') return `Próximo passo do GateIQ: <b>${gateSteps[Math.min(state.gate.step+1, gateSteps.length-1)]}</b>. Eu posso sugerir a justificativa padrão e os campos obrigatórios.`;
-        if(state.page==='deck') return `Próximo passo do DeckingIQ: selecionar um slot no ranking e <b>aprovar</b> para gerar a tarefa no DispatchIQ com justificativa e evidências.`;
-        if(state.page==='doc') return `Próximo passo do DocIQ: tratar <b>bloqueios</b> (se houver) e então <b>aprovar vínculos</b> para liberar o processo.`;
+      avDraftPhotos.forEach(name=>{
+        const chip=document.createElement("span");
+        chip.className="chip";
+        chip.innerHTML=`📷 ${name} <span class="x">✕</span>`;
+        chip.title="Clique para remover";
+        chip.addEventListener("click",()=>{ avDraftPhotos=avDraftPhotos.filter(n=>n!==name); renderChips(); });
+        el.appendChild(chip);
+      });
+    }
+    $("#a_files").addEventListener("change",(e)=>{
+      Array.from(e.target.files||[]).forEach(f=>{ if(!avDraftPhotos.includes(f.name)) avDraftPhotos.push(f.name); });
+      e.target.value=""; renderChips();
+    });
+
+    function resetAvaria(){
+      $("#a_cntr").value=""; $("#a_size").value=""; $("#a_unitType").value=""; $("#a_origem").value="VISTORIA"; $("#a_sev").value="MÉDIA"; $("#a_status").value="ABERTA";
+      $("#a_area").value="PORTAS"; $("#a_tipo").value="AMASSADO"; $("#a_desc").value="";
+      avDraftPhotos=[]; renderChips();
+    }
+    function saveAvaria(){
+      const cntr=$("#a_cntr").value.trim().toUpperCase();
+      if(!cntr){ alert("Informe o CNTR."); return; }
+      S.damages.unshift({
+        id:uid("AVA"), cntr, size:$("#a_size").value, unitType:$("#a_unitType").value,
+        origem:$("#a_origem").value, sev:$("#a_sev").value, status:$("#a_status").value,
+        area:$("#a_area").value, tipo:$("#a_tipo").value, desc:$("#a_desc").value.trim(),
+        photos:avDraftPhotos.slice(), createdAt:new Date().toISOString()
+      });
+      persist(); renderAvarias(); resetAvaria(); alert("Avaria salva (demo).");
+    }
+    function renderAvarias(){
+      const fcntr=$("#a_fcntr").value.trim().toUpperCase();
+      const fstatus=$("#a_fstatus").value;
+      const fsev=$("#a_fsev").value;
+      const forigem=$("#a_forigem").value;
+
+      const list=S.damages
+        .filter(x=>!fcntr||x.cntr.includes(fcntr))
+        .filter(x=>!fstatus||x.status===fstatus)
+        .filter(x=>!fsev||x.sev===fsev)
+        .filter(x=>!forigem||x.origem===forigem)
+        .sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+      const el=$("#a_list");
+      if(!list.length){
+        el.innerHTML=`<div class="item" style="cursor:default"><div style="color:rgba(71,85,105,.95)">Nenhum registro.</div><div class="mono">—</div></div>`;
+        return;
       }
-      if(l.includes('gerar') && l.includes('tarefa')){
-        return `Para gerar tarefa: no DeckingIQ, selecione um slot e clique em <b>Aprovar e gerar tarefa</b>. Eu registrarei: objetivo, restrições aplicadas e motivos top 5.`;
-      }
-      return `Entendi. Vou responder com: <b>decisão recomendada</b>, <b>regras aplicadas</b>, <b>evidências</b> e <b>confiança</b> — e vou sugerir o próximo passo do fluxo.`;
+
+      el.innerHTML=list.map(x=>`
+        <div class="item" data-id="${x.id}">
+          <div>
+            <div><b>${x.cntr}</b> <span class="mono" style="opacity:.70">• ${x.id}</span></div>
+            <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+              ${tagSev(x.sev)} ${tagStatus(x.status)}
+              <span class="tag"><span class="dot" style="background:rgba(15,23,42,.35)"></span>${x.area}</span>
+              <span class="tag"><span class="dot" style="background:rgba(37,99,235,.85)"></span>${x.origem}</span>
+              <span class="tag"><span class="dot" style="background:rgba(16,185,129,.85)"></span>📷 ${(x.photos?.length||0)} foto(s)</span>
+            </div>
+          </div>
+          <div class="mono" style="opacity:.60">${fmt(x.createdAt)}</div>
+        </div>`).join("");
+
+      el.querySelectorAll(".item[data-id]").forEach(r=>r.addEventListener("click",()=>{
+        const x=S.damages.find(z=>z.id===r.getAttribute("data-id"));
+        alert(
+          `Avaria ${x.id}\nCNTR: ${x.cntr}\nDimensão: ${x.size || "—"}\nUnidade: ${x.unitType || "—"}\nOrigem: ${x.origem}\nStatus: ${x.status}\nSeveridade: ${x.sev}\n` +
+          `Área: ${x.area}\nTipo: ${x.tipo}\nFotos: ${(x.photos&&x.photos.length)?x.photos.join(", "):"—"}\n\nDescrição:\n${x.desc||"—"}`
+        );
+      }));
     }
 
-    /* ------------------ RESET / RENDER ------------------ */
-    function resetAll(){
-      state.audit=[];
-      state.gate={ step:0, risk:71, cntr:'MSCU1234567', plate:'BRA-2E19', wScale:31840, wDecl:29900, exceptionId:null };
-      state.deck={ step:0, selected:null, objective:'reh' };
-      state.doc={ step:0, blockers:['Chave NF com DV inválido'], approved:false };
-      state.dispatch=[];
-      render();
-      showToast('Reset','Demo reiniciada.');
-    }
+    $("#a_save").addEventListener("click", saveAvaria);
+    $("#a_new").addEventListener("click", resetAvaria);
+    $("#a_apply").addEventListener("click", renderAvarias);
+    $("#a_clear").addEventListener("click", ()=>{ $("#a_fcntr").value=""; $("#a_fstatus").value=""; $("#a_fsev").value=""; $("#a_forigem").value=""; renderAvarias(); });
 
-    function render(){
-      renderAudit();
-      if(state.page==='gate') renderGate();
-      if(state.page==='deck') renderDeck();
-      if(state.page==='doc')  renderDoc();
-      if(state.page==='disp') renderDispatch();
-    }
 
-    // initial
-    logAudit('Sessão iniciada');
-    render();
+    // Init
+    persist(); resetInspect(); resetAvaria(); renderChips();
+    renderInspect(); renderAvarias(); setPage("inspect");
+
   </script>
 
 
